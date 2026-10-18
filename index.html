@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="zh-CN">
+<!--
+拾光 · 错题本 1.1.0 — 独立单文件版
+来源：https://shiguang-mistake-notes-m24.duskyboar5.chatgpt.site/
+
+使用：用较新的浏览器打开此文件即可。样式、图标和所有逻辑均内嵌，
+无需 CDN、安装依赖或登录账号。支持拍照/上传、裁切与左右旋转、
+学科/原因/时间分类、日周月时间轴、首页语句设置、JSON 存档与 JPG 导出。
+
+浏览器可能限制本地文件的相机和持久存储权限；如受限制，可将本文件
+放到 HTTPS 静态托管或 localhost 上运行。相册上传和手动录入也可使用。
+记录保存在当前浏览器；原网站记录请先导出 JSON 存档，再在此文件中导入。
+本文件只包含程序源码，不包含个人题目、照片、存档或账号凭据。
+-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f7f9">
+  <meta name="description" content="拾光错题本：拍照记录，按学科与错误原因整理，用日、周、月时间轴看见自己的进步。">
+  <title>拾光 · 错题本</title>
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iMTIiIGZpbGw9IiMxNjc0ZWMiLz48cGF0aCBkPSJNMTEgMTBoOGE2IDYgMCAwIDEgNiA2djEzaC04YTYgNiAwIDAgMS02LTZ6IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iLjk1Ii8+PHBhdGggZD0iTTI1IDExaDR2MTloLTR6IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iLjU1Ii8+PC9zdmc+Cg==" type="image/svg+xml">
+  <!-- 全部 CSS 样式（包括响应式布局、裁切和图片导出） -->
+<style>
+@charset "UTF-8";
+:root{--bg:#f6f7f9;--surface:#fff;--text:#24262a;--muted:#92969d;--line:#eceef1;--blue:#1975e9;--blue-soft:#eef5ff;--shadow:0 5px 25px #202f4b04;--radius:23px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--text);font-synthesis:none}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-size:14px;-webkit-font-smoothing:antialiased}button,input,textarea,select{font:inherit}button,a,input,textarea,select{-webkit-tap-highlight-color:transparent}button{cursor:pointer;color:inherit}button{border:0;background:none}a{color:inherit;text-decoration:none}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #8abaff;outline-offset:4px}button:disabled{opacity:.45;cursor:wait}svg{display:block;flex-shrink:0}button{transition:background .2s,transform .2s,box-shadow .2s}button:active{transform:scale(.98)}.icon{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.topbar{height:78px;border-bottom:1px solid #e9ebef;background:#ffffffd9;backdrop-filter:blur(20px);position:sticky;top:0;z-index:20}.top-inner{max-width:1240px;padding:0 36px;margin:auto;display:flex;height:100%;align-items:center;justify-content:space-between;gap:30px}.brand{display:flex;align-items:center;gap:11px;white-space:nowrap}.brand-icon{width:32px;height:32px;border-radius:10px;background:#24282d;color:white;display:grid;place-items:center}.brand-icon svg{width:21px}.brand-name{font-size:21px;letter-spacing:3px;font-weight:650}.brand-divider{height:16px;width:1px;background:#dce0e6;margin:0 2px}.brand-caption{font-size:12px;color:#878c94;letter-spacing:1px}.nav{display:flex;align-items:center;height:100%;gap:36px}.nav button{height:100%;position:relative;color:#8c9198;font-size:13px;padding:0 1px}.nav button.active{color:#252a32;font-weight:600}.nav button.active:after{content:"";height:3px;width:17px;background:#287ce7;position:absolute;bottom:16px;left:calc(50% - 8px);border-radius:4px}.top-actions{display:flex;align-items:center;gap:19px}.icon-btn{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;color:#7b828c}.icon-btn:hover{background:#f0f2f5}.primary{background:var(--blue);color:#fff;border-radius:11px;padding:12px 20px;font-weight:550;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 3px 6px #1975e912}.primary:hover{background:#0966d9;box-shadow:0 5px 15px #1975e92b}.primary.small{padding:10px 15px;font-size:12px;border-radius:9px}.primary.small .icon{width:16px;height:16px}.secondary{border:1px solid #e0e4ea;background:#fff;border-radius:10px;padding:10px 17px;display:inline-flex;align-items:center;justify-content:center;gap:7px}.secondary:hover{background:#f7f8fa}.text-btn{color:var(--blue);display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:6px 0}.text-btn .icon{width:14px;height:14px}.container{max-width:1240px;margin:auto;padding:47px 36px 0}.intro{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:31px}.eyebrow{color:#828991;letter-spacing:2px;font-size:10px;margin:0 0 13px;display:flex;align-items:center;gap:8px;font-weight:600}.eyebrow .tiny-dot{height:5px;width:5px;background:#aeb7c3;border-radius:50%}h1{font-size:35px;line-height:1.4;letter-spacing:-1px;font-weight:630;margin:0}h1 em{font-style:normal;color:#898e97}.intro-text{font-size:12px;color:#8d939b;margin:13px 0 0;letter-spacing:.3px}.date-block{text-align:right;padding-bottom:3px}.date-line{display:flex;gap:7px;justify-content:flex-end;align-items:center;font-size:12px;color:#737c87}.date-line .icon{width:15px;height:15px}.date-sub{margin-top:10px;font-size:11px;color:#a2a7ae}.workspace-grid{display:grid;grid-template-columns:1.04fr 1fr;gap:22px}.capture-card{background:linear-gradient(145deg,#fff 45%,#f0f5fc);border:1px solid #e8edf4;border-radius:var(--radius);height:330px;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:29px;box-shadow:var(--shadow)}.capture-card:before{content:"";position:absolute;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,#e5effc50 0%,#f8fbff00 69%);top:8px;left:calc(50% - 180px);pointer-events:none}.card-label{font-size:11px;color:#969da8;align-self:flex-start;display:flex;align-items:center;gap:6px;z-index:1}.card-label .icon{height:14px;width:14px}.capture-orbit{position:relative;margin-top:12px;display:grid;place-items:center;width:136px;height:127px}.orbit{position:absolute;border:1px solid #dbe6f347;border-radius:50%;width:125px;height:125px}.orbit.two{width:150px;height:150px;border-color:#e2eaf436}.camera-button{height:87px;width:87px;border-radius:27px;background:linear-gradient(155deg,#3c91ff,#0d6be4);box-shadow:0 12px 30px #3789ed32,inset 0 1px 1px #ffffff6b;display:grid;place-items:center;color:white;z-index:1}.camera-button:hover{transform:translateY(-4px);box-shadow:0 16px 32px #3789ed45}.camera-button .icon{height:39px;width:39px;stroke-width:1.5}.capture-title{font-size:21px;font-weight:600;letter-spacing:.5px;margin:11px 0 9px;z-index:1}.capture-caption{font-size:12px;color:#969da6;z-index:1}.capture-footer{display:flex;gap:21px;align-items:center;margin-top:23px;z-index:1}.capture-footer .text-btn{color:#7a8696;font-size:11px}.capture-footer .divider{height:10px;width:1px;background:#d8e0e9}.capture-corner{position:absolute;bottom:23px;right:25px;display:flex;align-items:center;gap:5px;color:#a8b3c0;font-size:10px}.capture-corner .icon{width:12px;height:12px}.folders-panel{background:white;border:1px solid var(--line);border-radius:var(--radius);padding:25px 26px 23px;box-shadow:var(--shadow);height:330px}.section-top{display:flex;align-items:center;justify-content:space-between;gap:16px}.section-title{font-size:16px;font-weight:600;margin:0;display:flex;align-items:center;gap:9px;letter-spacing:.2px}.section-title .icon{color:#687282;width:17px;height:17px}.section-subtitle{font-size:11px;color:#9ba1a9;margin-top:7px}.folders{display:grid;grid-template-columns:repeat(3,1fr);gap:15px 13px;margin-top:25px}.folder-card{display:flex;flex-direction:column;align-items:flex-start;background:#f8f9fb;border:1px solid #eff1f4;border-radius:13px;padding:14px 15px 13px;min-width:0;position:relative;text-align:left}.folder-card:hover{background:var(--tint);border-color:var(--tint);transform:translateY(-3px);box-shadow:0 6px 14px #17263a08}.folder-symbol{color:var(--accent);position:relative;width:31px;height:26px;display:grid;place-items:center;margin:0 0 10px}.folder-symbol:before{content:"";position:absolute;inset:3px 0 0;background:var(--accent);opacity:.13;border:1px solid var(--accent);border-radius:3px 4px 4px 4px}.folder-symbol:after{content:"";position:absolute;left:1px;top:0;width:13px;height:5px;background:var(--accent);border-radius:3px 3px 0 0;opacity:.21}.folder-symbol span{z-index:1;font-size:13px;font-weight:600;line-height:1}.folder-title{font-size:12px;font-weight:550}.folder-count{font-size:10px;color:#a1a7b0;margin-top:5px}.folder-arrow{position:absolute;right:11px;bottom:24px;width:12px;height:12px;color:#bdc3cb}.insight-bar{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:21px 8px 25px;border-bottom:1px solid #e6e9ef;margin-top:3px}.insight-message{display:flex;align-items:center;gap:9px;color:#8d96a2;font-size:11px}.insight-message .icon{height:15px;width:15px;color:#8c9cb0}.stats{display:flex;align-items:center;gap:28px}.stat{display:flex;align-items:baseline;gap:7px;font-size:10px;color:#9299a4}.stat strong{font-size:19px;color:#45505f;font-weight:600;font-variant-numeric:tabular-nums}.stat strong.blue{color:var(--blue)}.stat-separator{height:20px;width:1px;background:#e0e4eb}.records-section{padding-top:27px}.records-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px}.records-title{display:flex;align-items:center;gap:12px}.records-title h2{font-size:17px;font-weight:600;letter-spacing:.2px;margin:0}.demo-badge{font-size:9px;color:#9b8a63;background:#f2eee6;border-radius:5px;padding:3px 6px;white-space:nowrap}.segmented{display:inline-flex;background:#eaedf2;border-radius:9px;padding:3px;gap:2px}.segmented button{padding:7px 13px;border-radius:7px;color:#8d96a1;font-size:11px;display:flex;align-items:center;gap:5px;white-space:nowrap}.segmented button.active{background:white;box-shadow:0 1px 5px #1b263b0c;color:#515e6e}.segmented .icon{height:13px;width:13px}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:19px;flex-wrap:wrap}.chips{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.chip{font-size:11px;color:#89929e;white-space:nowrap;border-radius:7px;padding:7px 12px}.chip:hover{background:#edf0f4}.chip.active{background:#e6effc;color:#2677dd;font-weight:550}.filter-actions{display:flex;align-items:center;gap:14px}.filter-select{appearance:none;border:0;background:transparent;color:#8a939f;font-size:11px;padding:6px 18px 6px 4px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='m3 4.5 3 3 3-3' stroke='%23949ca7' fill='none'/%3E%3C/svg%3E");background-position:right center;background-repeat:no-repeat;cursor:pointer;max-width:155px}.note-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:17px}.note-card{background:white;border:1px solid #e7eaf0;border-radius:15px;padding:0;overflow:hidden;text-align:left;box-shadow:0 2px 4px #1c2a3d02;transition:transform .2s,box-shadow .2s;min-width:0}.note-card:hover{transform:translateY(-4px);box-shadow:0 10px 24px #2634470b}.note-preview{height:141px;overflow:hidden;position:relative;background:#f8f8f5;display:flex;align-items:center;justify-content:center}.note-preview img{width:100%;height:100%;object-fit:cover;transition:transform .35s}.note-card:hover .note-preview img{transform:scale(1.035)}.subject-pill{position:absolute;left:12px;top:11px;font-size:9px;padding:4px 7px;border-radius:5px;background:#ffffffed;color:var(--accent);backdrop-filter:blur(8px);border:1px solid #ffffffd9;z-index:1}.mastered-pill{position:absolute;right:10px;top:11px;background:#effaf1;color:#43845c;border-radius:5px;padding:4px 6px;font-size:9px;z-index:1}.paper{width:100%;height:100%;padding:38px 20px 10px;background-color:#fdfcf9;background-image:linear-gradient(#d8ddd71f 1px,transparent 1px);background-size:100% 24px;color:#505e69;transform:rotate(-1deg) scale(1.03);font-family:"KaiTi","STKaiti",Georgia,serif}.paper-text{font-size:12px;line-height:1.9;white-space:pre-line;overflow:hidden}.paper-red{color:#c17c71;font-size:11px;margin-top:7px;font-family:inherit}.note-body{padding:15px 15px 13px}.note-title{font-size:12px;font-weight:550;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0 0 11px}.reason-tags{display:flex;align-items:center;gap:5px;min-height:18px;flex-wrap:wrap}.reason-tag{font-size:9px;background:#f2f3f6;border-radius:4px;padding:3px 6px;color:#9a9eaa}.note-meta{display:flex;align-items:center;justify-content:space-between;margin-top:15px;color:#a7adb5;font-size:9px}.note-meta .icon{width:13px;height:13px;color:#b3bdc9}.note-meta-date{display:flex;align-items:center;gap:5px}.view-all{display:flex;justify-content:center;margin:23px 0}.view-all button{font-size:11px;color:#8c96a2;display:flex;align-items:center;gap:6px;padding:8px 18px}.view-all .icon{height:13px;width:13px}.footer{display:flex;align-items:center;justify-content:space-between;gap:15px;max-width:1168px;margin:0 auto;padding:22px 0 27px;border-top:1px solid #e7eaf0;color:#aab0ba;font-size:10px}.footer-left,.footer-right{display:flex;align-items:center;gap:16px}.footer button{color:#99a1ad;padding:2px;font-size:10px}.footer button:hover{color:var(--blue)}.footer-brand{letter-spacing:1px;color:#88929f}.footer .icon{width:11px;height:11px}.local-badge{display:flex;align-items:center;gap:4px}.local-badge i{width:4px;height:4px;border-radius:50%;background:#a3c8b1}.page-head{margin-bottom:28px}.back-btn{display:flex;align-items:center;gap:6px;font-size:12px;color:#8995a2;padding:0;margin-bottom:22px}.back-btn .icon{width:14px;height:14px}.page-title-row{display:flex;align-items:center;justify-content:space-between;gap:16px}.page-title-row h1{font-size:30px}.page-description{margin:9px 0 0;font-size:12px;color:#929ba6}.full-folders{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:28px 0 40px}.full-folders .folder-card{padding:29px;background:white;border-color:#e6eaf1;border-radius:20px;min-height:190px}.full-folders .folder-symbol{width:49px;height:42px;margin-bottom:24px}.full-folders .folder-symbol span{font-size:20px}.full-folders .folder-title{font-size:17px}.full-folders .folder-count{margin-top:9px;font-size:11px}.full-folders .folder-arrow{right:26px;bottom:35px;height:18px;width:18px}.empty-state{border:1px dashed #dbe1e9;border-radius:18px;background:#ffffff80;padding:48px 20px;text-align:center;grid-column:1/-1;color:#8e99a7}.empty-icon{height:51px;width:51px;display:grid;place-items:center;background:#edf2f9;border-radius:15px;margin:0 auto 17px;color:#9eacc0}.empty-state h3{font-size:16px;font-weight:550;color:#646f7f;margin:0 0 9px}.empty-state p{font-size:12px;margin:0 0 20px;line-height:1.8}.empty-state .primary{font-size:12px}.search-bar{margin-bottom:22px;position:relative}.search-bar input{width:100%;background:white;border:1px solid #e1e6ee;border-radius:12px;padding:14px 45px;font-size:13px;outline:none}.search-bar>.icon{position:absolute;left:15px;top:14px;color:#a1adbc}.search-bar>.icon-btn{position:absolute;right:8px;top:7px}.search-bar input:focus{border-color:#80aff0;box-shadow:0 0 0 3px #1975e90b}.timeline-panel{background:white;border:1px solid #e8ecf2;border-radius:19px;padding:25px;margin-bottom:32px}.timeline-controls{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:27px}.date-navigator{display:flex;align-items:center;gap:9px}.date-navigator input{border:0;background:transparent;color:#5e6c7e;font-size:12px;width:120px;padding:5px;cursor:pointer}.date-navigator span{font-size:13px;font-weight:550}.today-btn{color:#7c8ca0;border:1px solid #e6ebf1;border-radius:7px;padding:6px 9px;font-size:10px}.timeline-summary{display:flex;align-items:baseline;gap:8px;margin:0 0 23px;color:#a0a8b4;font-size:11px}.timeline-summary strong{font-size:24px;color:#4d607b;font-weight:550}.hour-row{display:grid;grid-template-columns:64px 1fr;position:relative;min-height:65px}.hour-label{font-size:11px;color:#a1aab7;padding:13px 0;font-variant-numeric:tabular-nums}.hour-content{padding:0 0 17px 25px;border-left:1px solid #e5eaf1;position:relative}.hour-content:before{position:absolute;left:-4px;top:16px;content:"";height:7px;width:7px;border-radius:50%;background:#bac8da;box-shadow:0 0 0 4px #fff}.hour-content.has-notes:before{background:#3c88ee}.timeline-note{padding:11px 14px;border:1px solid #e8edf4;background:#fbfcfe;border-radius:10px;display:flex;align-items:center;gap:12px;width:100%;text-align:left;margin:3px 0 6px}.timeline-note:hover{background:#f2f7ff;border-color:#d0e2fc}.tiny-subject{color:var(--accent);background:var(--tint);border-radius:6px;font-size:10px;padding:5px 7px;white-space:nowrap}.timeline-note-title{flex:1;font-size:12px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.timeline-note time{font-size:10px;color:#a1aaba}.hour-empty{color:#bec5cf;font-size:10px;padding-top:12px}.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:9px}.week-day{min-height:220px;border:1px solid #e8edf4;border-radius:12px;background:#fcfdff;padding:12px 8px}.week-day.is-today{background:#f5f9ff;border-color:#cbdffd}.week-day-head{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:10px;color:#98a4b3;padding:3px 0 15px;border-bottom:1px solid #eaf0f7;margin-bottom:10px}.week-day-head strong{font-size:20px;color:#738398;font-weight:500}.week-day.is-today strong{color:var(--blue)}.week-item{display:flex;flex-direction:column;align-items:flex-start;width:100%;text-align:left;border-radius:7px;background:var(--tint);padding:9px 7px;margin-bottom:6px;color:var(--accent);font-size:10px;line-height:1.6;gap:4px}.week-item time{font-size:8px;opacity:.8}.week-no{font-size:10px;color:#c6ccd4;text-align:center;padding-top:25px}.month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.month-weekday{text-align:center;color:#9ba6b4;font-size:10px;padding:7px}.month-cell{min-height:91px;border:1px solid #edf0f5;border-radius:10px;padding:11px;text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:9px;background:#fcfdff;font-size:11px;color:#98a4b4}.month-cell:hover{background:#edf5ff}.month-cell.has-records{background:#f4f8ff;border-color:#dfeafb}.month-cell.is-today{border-color:#85b6f9}.month-cell.is-today .day-number{background:#2780ed;color:white;border-radius:5px;padding:3px 5px;margin:-3px -5px}.month-dots{display:flex;gap:4px}.month-dots i{width:5px;height:5px;border-radius:50%}.month-count{color:#7292bb;font-size:9px}.month-blank{min-height:91px}.modal-backdrop{position:fixed;inset:0;background:#1f2e465b;backdrop-filter:blur(7px);z-index:100;display:flex;align-items:center;justify-content:center;padding:28px;animation:fade-in .18s ease}.modal{background:#fff;border-radius:24px;box-shadow:0 20px 90px #10234129;width:min(860px,100%);max-height:calc(100dvh - 56px);overflow:auto;position:relative;animation:slide-in .25s ease}.modal.small-modal{width:min(470px,100%)}.modal-head{display:flex;align-items:center;justify-content:space-between;padding:24px 28px 19px;border-bottom:1px solid #eef1f5}.modal-head h2{font-size:18px;font-weight:600;margin:0}.modal-head p{margin:6px 0 0;font-size:11px;color:#9aa4b2}.modal-content{padding:24px 28px}.editor-layout{display:grid;grid-template-columns:.9fr 1fr;gap:28px}.editor-photo{border-radius:14px;background:#f5f7fa;min-height:300px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}.editor-photo img{width:100%;max-height:430px;object-fit:contain}.editor-photo .paper{min-height:300px;padding:65px 25px}.editor-photo .paper-text{font-size:18px}.photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:15px;color:#b5bfcb;padding:40px}.photo-placeholder .icon{width:50px;height:50px}.photo-actions{display:flex;justify-content:center;margin-top:12px}.photo-actions button{font-size:11px;color:#7f91a8}.form-field{margin-bottom:19px}.form-field label,.field-label{display:block;font-size:11px;font-weight:550;color:#69778a;margin-bottom:9px}.form-field input,.form-field textarea{border:1px solid #e1e7f0;border-radius:9px;padding:10px 12px;background:#fdfefe;width:100%;font-size:12px;color:#38475a;resize:vertical}.form-field input:focus,.form-field textarea:focus{border-color:#88b6ef;outline:0;box-shadow:0 0 0 3px #1975e90b}.form-field textarea{min-height:78px;line-height:1.8}.form-subjects{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.select-chip{border:1px solid #e5eaf1;border-radius:8px;padding:8px 9px;color:#8a95a5;font-size:11px;background:#fff}.select-chip.selected{border-color:#a5c9f7;background:#edf5ff;color:#2074df}.form-reasons{display:flex;gap:7px;flex-wrap:wrap}.form-reasons .select-chip{font-size:10px;padding:7px 9px}.custom-reason{display:flex;align-items:center;gap:5px;margin-top:8px}.custom-reason input{font-size:10px;padding:8px 10px}.custom-reason button{font-size:11px;color:#7588a2;padding:7px;white-space:nowrap}.modal-actions{border-top:1px solid #edf0f5;display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:18px 28px;position:sticky;bottom:0;background:#fff;z-index:2}.modal-actions .hint{font-size:10px;color:#a1aab6;margin-right:auto;display:flex;align-items:center;gap:5px}.modal-actions .hint .icon{width:13px;height:13px}.modal-actions button{font-size:12px}.form-error{color:#ce6565;font-size:11px;line-height:1.6;margin:0 0 12px}.camera-modal{background:#152130;color:#fff;width:min(740px,100%)}.camera-modal .modal-head{border-color:#ffffff15}.camera-modal .icon-btn{color:#c2cbd9}.video-area{position:relative;min-height:330px;background:#0b1420;display:flex;align-items:center;justify-content:center}.video-area video{width:100%;max-height:56vh;object-fit:contain}.camera-guide{position:absolute;inset:40px;border:1px solid #ffffff4d;border-radius:12px;pointer-events:none}.camera-state{text-align:center;padding:40px;color:#abb8ca;font-size:13px;line-height:1.8}.camera-state .icon{width:45px;height:45px;margin:0 auto 20px;color:#6d829e}.camera-state h3{font-size:17px;font-weight:500;color:#dbe4ef}.camera-state p{font-size:12px;max-width:350px}.camera-controls{padding:24px;display:flex;align-items:center;justify-content:center;gap:32px}.shutter{height:63px;width:63px;border-radius:50%;border:4px solid white;background:white;box-shadow:inset 0 0 0 3px #23354b}.camera-alternate{font-size:11px;color:#b2c1d4;min-width:70px;display:flex;flex-direction:column;align-items:center;gap:7px}.camera-alternate .icon{width:20px;height:20px}.camera-tip{text-align:center;font-size:11px;color:#8092a8;padding:0 20px 22px}.detail-title{font-size:20px;line-height:1.6;margin:0 0 20px;word-break:break-word}.detail-info{font-size:12px;line-height:1.8;color:#8a98aa}.detail-info .reason-tags{margin-bottom:20px}.detail-notes{font-size:13px;line-height:1.9;color:#6a788c;white-space:pre-wrap;word-break:break-word;margin:10px 0 23px}.detail-date{font-size:11px;color:#9da9b8;display:flex;align-items:center;gap:7px}.detail-date .icon{width:14px;height:14px}.danger-btn{color:#c77a7a;margin-right:auto;padding:9px;font-size:11px!important;display:flex;align-items:center;gap:5px}.danger-btn .icon{width:14px;height:14px}.detail-actions{display:flex;gap:8px;flex-wrap:wrap}.detail-actions .secondary{font-size:11px;padding:9px 11px}.confirm-copy{font-size:13px;line-height:1.9;color:#8291a5;margin:0 0 10px}.storage-row{padding:13px 0;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid #eff2f6}.storage-row h3{font-size:13px;margin:0 0 6px;font-weight:550}.storage-row p{font-size:11px;margin:0;color:#a2acba}.storage-note{color:#95a2b3;font-size:11px;line-height:1.9;margin:20px 0 0}.demo-callout{font-size:11px;color:#a29373;background:#faf8f2;border-radius:10px;padding:12px 16px;margin-bottom:20px;line-height:1.8}.demo-callout button{color:#8c7851;text-decoration:underline;font-size:11px;margin-left:8px}.loading{padding:100px 20px;text-align:center;color:#99a5b4}.spinner{height:26px;width:26px;border:2px solid #e0e8f3;border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}#toast{position:fixed;bottom:30px;left:50%;transform:translate(-50%,10px);background:#253346f0;backdrop-filter:blur(15px);color:white;border-radius:11px;padding:13px 20px;font-size:12px;z-index:200;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;box-shadow:0 5px 20px #1c2b4b20;max-width:90vw;text-align:center}#toast.show{opacity:1;transform:translate(-50%,0)}.mobile-label{display:none}.notice{padding:13px 20px;color:#ab6354;background:#fff5ef;border-radius:12px;font-size:12px;margin-bottom:20px}.main-page{min-height:calc(100vh - 155px);padding-bottom:20px}.view-toggle-right{display:flex;align-items:center;gap:16px}.status-filter{display:flex;gap:14px;font-size:11px}.status-filter button{padding:4px 0;color:#a2aab5}.status-filter button.active{color:#367dcc}.file-note{color:#a0abba;font-size:10px;margin-top:7px}.more-row{display:flex;justify-content:center;margin:22px}.clear-filters{font-size:11px;color:var(--blue);padding:8px}.month-hint{font-size:10px;color:#a7b1be;margin-top:17px}.all-count{font-size:10px;color:#a0a9b6}.settings-text{font-size:11px;color:#97a3b3;line-height:1.9}.short-divider{height:12px;width:1px;background:#e0e5ed}.animate{animation:fade-in .22s ease}@keyframes spin{to{transform:rotate(360deg)}}@keyframes fade-in{from{opacity:0}to{opacity:1}}@keyframes slide-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(min-width:1450px){.container{padding-top:58px}.intro{margin-bottom:36px}h1{font-size:40px}.capture-card,.folders-panel{height:345px}.capture-orbit{margin-top:18px}.folders{gap:18px 15px}.folder-card{padding-top:16px;padding-bottom:15px}.note-preview{height:155px}}
+@media(max-width:1000px){.top-inner{padding:0 25px;gap:20px}.nav{gap:24px}.brand-caption,.brand-divider{display:none}.container{padding:35px 25px 0}.footer{margin:0 25px}.note-grid{gap:12px}.folders-panel{padding:24px 20px}.folders{gap:14px 9px}.folder-card{padding-left:11px}.note-body{padding:13px 11px}.note-title{font-size:11px}.paper{padding-left:15px;padding-right:10px}.stats{gap:18px}.insight-message{font-size:10px}.week-grid{gap:5px}.week-day{padding:10px 5px}.week-item{font-size:9px}}
+@media(max-width:760px){.topbar{height:65px}.top-inner{padding:0 20px;gap:10px}.brand-name{font-size:19px}.brand-icon{height:29px;width:29px}.nav{gap:20px}.nav button{font-size:12px}.nav button.active:after{bottom:9px}.top-actions{gap:8px}.top-actions .primary.small{width:31px;height:31px;padding:0;border-radius:9px}.top-actions .primary span{display:none}.top-actions>.icon-btn{display:none}.container{padding:29px 20px 0}.intro{align-items:flex-start;margin-bottom:25px}h1{font-size:28px;line-height:1.45}.eyebrow{font-size:9px;margin-bottom:12px}.intro-text{font-size:11px;max-width:245px;line-height:1.8;margin-top:10px}.date-block{display:none}.workspace-grid{grid-template-columns:1fr;gap:17px}.capture-card{height:300px;padding:22px}.capture-orbit{margin-top:2px}.capture-title{font-size:20px}.capture-corner{bottom:20px;right:20px}.folders-panel{height:auto;padding:22px 20px}.folders{margin-top:20px;gap:12px}.folder-card{padding:13px 15px}.folder-symbol{margin-bottom:8px}.folder-count{font-size:9px}.section-title{font-size:14px}.insight-bar{margin-top:3px;display:block;padding:22px 4px}.insight-message{display:none}.stats{justify-content:space-between}.stat{font-size:10px;gap:5px}.stat strong{font-size:20px}.stat-separator{height:17px}.records-section{padding-top:25px}.records-heading{gap:9px}.records-title{gap:8px}.records-title h2{font-size:16px}.segmented button{font-size:10px;padding:7px 9px}.segmented .icon{display:none}.view-toggle-right{gap:8px}.note-grid{grid-template-columns:repeat(2,1fr);gap:13px}.note-preview{height:142px}.note-body{padding:13px}.note-title{font-size:12px}.toolbar{gap:11px;margin-bottom:15px}.chips{gap:4px}.chip{font-size:10px;padding:7px 9px}.filter-actions{width:100%;justify-content:flex-end;gap:8px}.note-meta{font-size:8px}.footer{margin:0 20px;gap:15px;padding:20px 0;font-size:9px;align-items:flex-start}.footer-left{flex-wrap:wrap;gap:7px 12px}.footer-right{gap:10px;flex-shrink:0}.footer button{font-size:9px}.footer-left>.footer-brand{width:100%}.full-folders{grid-template-columns:repeat(2,1fr);gap:14px;margin-top:25px}.full-folders .folder-card{min-height:170px;padding:24px}.full-folders .folder-title{font-size:15px}.full-folders .folder-symbol{margin-bottom:20px}.page-title-row h1{font-size:27px}.page-title-row>.primary{font-size:11px;padding:10px 12px}.page-title-row>.primary .icon{width:15px;height:15px}.modal-backdrop{padding:13px}.modal{max-height:calc(100dvh - 26px);border-radius:19px}.modal-head{padding:19px 20px 16px}.modal-head h2{font-size:17px}.modal-content{padding:20px}.editor-layout{grid-template-columns:1fr;gap:23px}.editor-photo{min-height:160px;max-height:230px}.editor-photo img{max-height:230px}.photo-placeholder{padding:25px}.photo-placeholder .icon{height:35px;width:35px}.editor-photo .paper{min-height:230px;padding-top:40px}.modal-actions{padding:15px 20px;gap:8px}.modal-actions .hint{display:none}.modal-actions .primary{padding:11px 14px}.modal-actions .secondary{padding:10px 14px}.video-area{min-height:290px}.video-area video{max-height:48vh}.timeline-panel{padding:17px 13px}.timeline-controls{gap:14px;margin-bottom:20px}.date-navigator{gap:3px;flex:1;justify-content:flex-end}.date-navigator input{font-size:11px;width:111px}.date-navigator .icon-btn{width:25px;height:29px}.today-btn{font-size:9px;padding:5px}.week-grid{display:flex;overflow-x:auto;gap:9px;padding-bottom:10px;scroll-snap-type:x proximity}.week-day{min-width:130px;scroll-snap-align:start;min-height:215px;padding:12px 9px}.week-item{font-size:11px;padding:10px 8px}.month-grid{gap:4px}.month-cell{padding:8px 5px;min-height:73px;gap:8px;border-radius:7px}.month-blank{min-height:73px}.month-count{font-size:8px}.month-dots{gap:2px}.month-dots i{width:4px;height:4px}.timeline-note{gap:8px;padding:10px}.timeline-note .reason-tag{display:none}.hour-row{grid-template-columns:46px 1fr}.hour-content{padding-left:17px}.timeline-note-title{font-size:11px}.tiny-subject{font-size:9px;padding:4px 6px}.timeline-note time{font-size:9px}.status-filter{font-size:10px;gap:10px}.capture-footer{margin-top:19px}.search-bar input{font-size:12px}.detail-title{font-size:18px}.demo-badge{font-size:8px}.all-count{display:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.settings-trigger{display:flex;align-items:center;justify-content:center;gap:6px;color:#788392;font-size:11px;padding:8px 9px;border-radius:9px;white-space:nowrap}.settings-trigger:hover{background:#edf1f6;color:#367cd4}.settings-trigger .icon{width:17px;height:17px}.top-actions{gap:12px}.quote-line{display:flex;align-items:flex-start;gap:10px;max-width:560px;min-height:24px;line-height:1.8}.quote-line>span{display:block;overflow-wrap:anywhere}.quote-next{color:#a3aebb;flex-shrink:0;width:25px;height:25px;border-radius:7px;display:grid;place-items:center;margin-top:-2px}.quote-next:hover{color:var(--blue);background:#e9f1fc}.quote-next .icon{width:13px;height:13px}.settings-modal{max-width:540px}.quote-settings-preview{display:flex;align-items:flex-start;gap:12px;background:linear-gradient(130deg,#f1f6fd,#f9fbff);border:1px solid #e7eef9;border-radius:14px;padding:18px;margin-bottom:24px;color:#7e96b5}.quote-settings-preview .icon{width:19px;height:19px;margin-top:2px}.quote-settings-preview p{margin:0;font-size:13px;line-height:1.9;overflow-wrap:anywhere}.label-hint{font-weight:400;color:#a7b1bf}.form-field #custom-quotes{min-height:180px;line-height:2;resize:vertical}.quote-option{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0;border-top:1px solid #edf0f5;color:#67768b;font-size:12px}.quote-option p{font-size:10px;color:#9ba7b6;margin:7px 0 0;line-height:1.6}.quote-option select{border:1px solid #e1e7f0;border-radius:8px;background:#fafcff;color:#75869d;padding:7px 11px;font-size:11px}.switch{position:relative;display:inline-flex;flex-shrink:0;width:42px;height:24px;cursor:pointer}.switch input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}.switch-track{width:100%;height:100%;border-radius:20px;background:#d7dfe9;pointer-events:none;transition:background .2s}.switch-track:after{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:white;box-shadow:0 1px 3px #0002;transition:transform .2s}.switch input:checked+.switch-track{background:var(--blue)}.switch input:checked+.switch-track:after{transform:translateX(18px)}.switch input:focus-visible+.switch-track{outline:3px solid #9cc6fa;outline-offset:3px}.restore-quotes{margin-top:14px}.settings-text{margin:13px 0 0}.photo-actions{gap:20px}.photo-actions button{display:flex;align-items:center;gap:6px}.photo-actions .icon{width:14px;height:14px}.crop-modal{max-width:820px}.crop-content{padding:24px 28px 15px}.crop-viewport{display:flex;align-items:center;justify-content:center;background:#1f2834;border-radius:14px;overflow:hidden;min-height:160px;padding:0;user-select:none;-webkit-user-select:none}.crop-loading{padding:50px 20px;color:#a5b4c9;font-size:12px;text-align:center}.crop-stage{position:relative;flex-shrink:0;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}.crop-stage[hidden],.crop-loading[hidden]{display:none}.crop-stage canvas{width:100%;height:100%;display:block}.crop-selection{position:absolute;border:2px solid #fff;box-shadow:0 0 0 9999px #101a2b8c;cursor:move;touch-action:none;outline:none!important;min-width:0;min-height:0}.crop-selection:focus-visible{border-color:#6dafff;box-shadow:0 0 0 9999px #101a2b8c,0 0 0 2px #6dafff}.crop-selection.dragging{cursor:grabbing}.crop-grid-line{position:absolute;pointer-events:none;background:#ffffff50}.crop-grid-line.vertical{width:1px;top:0;bottom:0}.crop-grid-line.horizontal{height:1px;left:0;right:0}.crop-grid-line.vertical.one{left:33.333%}.crop-grid-line.vertical.two{left:66.666%}.crop-grid-line.horizontal.one{top:33.333%}.crop-grid-line.horizontal.two{top:66.666%}.crop-handle{width:30px;height:30px;position:absolute;background:transparent;touch-action:none;padding:0;transform:none!important;z-index:1;outline:none!important}.crop-handle:before{content:'';position:absolute;inset:7px;border:3px solid #fff;border-radius:3px;background:#1f75e8;box-shadow:0 1px 5px #152a4750}.crop-handle:focus-visible:before{background:#fff;border-color:#60a5ff;box-shadow:0 0 0 3px #2584ff}.crop-handle.nw{left:-16px;top:-16px;cursor:nwse-resize}.crop-handle.ne{right:-16px;top:-16px;cursor:nesw-resize}.crop-handle.sw{left:-16px;bottom:-16px;cursor:nesw-resize}.crop-handle.se{right:-16px;bottom:-16px;cursor:nwse-resize}.crop-tools{display:flex;align-items:center;gap:10px;margin-top:17px}.crop-tools .secondary{font-size:11px;padding:9px 12px;background:#fbfcfe}.crop-tools .icon{height:15px;width:15px}.crop-size{margin-left:auto;color:#a0aebe;font-size:10px;font-variant-numeric:tabular-nums}.crop-instruction{color:#a4aebb;font-size:10px;line-height:1.8;margin:13px 0 0}.crop-cancel{margin-right:auto}.crop-modal .modal-actions{background:#fff}.crop-modal .modal-head p{line-height:1.7}
+.backup-bar{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 19px;background:#ffffffb5;border:1px solid #e5eaf1;border-radius:15px;margin:-8px 0 22px}.backup-bar-label{display:flex;align-items:center;gap:10px;color:#91a1b7}.backup-bar-label>.icon{width:20px;height:20px}.backup-bar-label>div{display:flex;align-items:center;gap:15px}.backup-bar-label strong{font-size:12px;font-weight:550;color:#65758b;white-space:nowrap}.backup-bar-label span{font-size:11px;color:#a1aab8}.backup-bar-actions{display:flex;gap:9px;flex-shrink:0}.backup-bar-actions .secondary{font-size:11px;padding:9px 13px;white-space:nowrap}.backup-bar-actions .icon{width:15px;height:15px}.backup-bar-actions .backup-export{color:#2875d4;border-color:#d8e6f9;background:#f5f9ff}
+@media(max-width:760px){.settings-trigger{width:31px;height:31px;padding:5px}.settings-trigger span{display:none}.settings-trigger .icon{width:18px;height:18px}.top-actions{gap:7px}.nav{gap:16px}.quote-line{max-width:350px;min-height:40px;font-size:11px;gap:6px}.quote-next{margin-top:0;min-width:25px}.crop-content{padding:18px 16px 13px}.crop-tools{gap:8px}.crop-tools .secondary{font-size:10px;padding:8px 10px}.crop-size{font-size:9px}.crop-instruction{font-size:9px}.crop-modal .modal-actions{padding:15px 16px;gap:7px}.crop-modal .modal-actions button{font-size:11px;padding:10px 12px}.crop-modal .modal-actions .primary .icon{display:none}.crop-modal .modal-head{padding:18px 16px 15px}.crop-modal .modal-head p{font-size:10px}.settings-modal .modal-content{padding:18px}.quote-settings-preview{padding:15px;margin-bottom:20px}.quote-settings-preview p{font-size:12px}}
+@media(max-width:400px){.top-inner{padding:0 13px;gap:7px}.brand{gap:7px}.brand-name{font-size:18px;letter-spacing:2px}.nav{gap:12px}.nav button{font-size:11px}.top-actions{gap:4px}.settings-trigger{width:28px}.quote-line{max-width:300px}}
+@media(max-width:760px){.backup-bar{padding:12px;margin:-4px 0 18px;gap:8px}.backup-bar-label{gap:6px}.backup-bar-label>div{display:block}.backup-bar-label span{display:none}.backup-bar-label strong{font-size:10px}.backup-bar-label>.icon{width:16px;height:16px}.backup-bar-actions{gap:6px}.backup-bar-actions .secondary{padding:9px 10px;font-size:10px;gap:5px}.backup-bar-actions .icon{width:13px;height:13px}}
+:root{color-scheme:light}
+.compatibility-message{max-width:480px;margin:16vh auto;padding:28px;line-height:1.8}.compatibility-message h1{font-size:26px}.compatibility-message p{color:#667085;margin-top:16px}
+.rotate-left-icon{transform:scaleX(-1)}.crop-tools{flex-wrap:wrap}.image-export-modal{max-width:780px}.image-export-content{background:#f6f8fb}.export-status{text-align:center;padding:40px 12px;color:#7c8ba0}.export-preview{max-height:56vh;overflow:auto;border:1px solid #e2e8f0;border-radius:12px;background:#fff;box-shadow:0 8px 24px #152a4708}.export-preview img{display:block;width:100%;height:auto;user-select:auto;-webkit-user-select:auto}.export-pages{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:18px}.export-pages span{font-size:12px;color:#748499}.export-help{font-size:11px;color:#8c99aa;line-height:1.8;margin:15px 0 0}.export-preview[hidden],.export-pages[hidden],.export-status[hidden]{display:none}.modal-actions:has([data-action="export-note"]){flex-wrap:wrap}.modal-actions [data-action="export-note"]{margin-right:auto}.image-export-modal .modal-head p{line-height:1.6}@media(max-width:760px){.crop-tools{gap:7px}.crop-tools .secondary{padding:8px;font-size:10px}.crop-size{flex-basis:100%;text-align:right}.export-preview{max-height:49vh}.export-pages{gap:12px}.modal-actions [data-action="export-note"]{flex-basis:100%;justify-content:center;margin:0}.image-export-modal .modal-content{padding:16px}}
+
+</style>
+
+</head>
+<body>
+  <div id="app"></div>
+  <div id="overlay-root"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <input id="photo-input" type="file" accept="image/*" hidden>
+  <input id="restore-input" type="file" accept="application/json,.json" hidden>
+<!-- 全部 JavaScript 逻辑：按模块划分作用域，已移除外部 import / script 引用 -->
+<script>
+"use strict";
+// This small entry point also runs on old WebViews, where the main module cannot parse.
+(function () {
+  function showError(message) {
+    var root = document.getElementById('app');
+    root.innerHTML = '';
+    var panel = document.createElement('section');
+    panel.className = 'compatibility-message';
+    var heading = document.createElement('h1');
+    heading.textContent = '让拾光顺利打开';
+    var copy = document.createElement('p');
+    copy.textContent = message;
+    panel.appendChild(heading);
+    panel.appendChild(copy);
+    root.appendChild(panel);
+  }
+  if (!window.crypto || typeof window.crypto.randomUUID !== 'function' || typeof Array.prototype.at !== 'function') {
+    showError('请更新当前浏览器；Android App 请更新 Android System WebView 和 Chrome，然后重新打开拾光。已保存的记录不会因此被删除。');
+    return;
+  }
+  // All modules are embedded below; no network or external files are needed.
+  const __modules = Object.create(null);
+// ─── note-image.js ───
+__modules["note-image.js"] = (function () {
+const WIDTH=1200, PAD=64, BOTTOM=3480;
+const FONT='-apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif';
+
+function wrapText(value,measure,maxWidth){
+  const lines=[];
+  const text=String(value??'').replace(/\r\n?/g,'\n').replace(/\n{3,}/g,'\n\n');
+  const segmenter=typeof Intl.Segmenter==='function'?new Intl.Segmenter('zh',{granularity:'grapheme'}):null;
+  for(const paragraph of text.split('\n')){
+    const characters=segmenter?[...segmenter.segment(paragraph)].map(s=>s.segment):Array.from(paragraph);
+    let line='';
+    for(const character of characters){
+      if(line&&measure(line+character)>maxWidth){lines.push(line);line='';}
+      line+=character;
+    }
+    lines.push(line);
+  }
+  return lines;
+}
+
+function paginateRows(rows,{firstTop=160,nextTop=160,bottom=BOTTOM}={}){
+  const pages=[[]];let y=firstTop;
+  for(let i=0;i<rows.length;i++){
+    const row=rows[i];
+    const needed=row.height+(row.keepNext?(rows[i+1]?.height||0):0);
+    if(y+needed>bottom){if(row.text===undefined)continue;pages.push([]);y=nextTop;}
+    pages.at(-1).push({...row,y});y+=row.height;
+  }
+  return pages;
+}
+
+function imageFilename(title,page,total){
+  const clean=Array.from(String(title||'错题').replace(/[<>:"/\\|?*\u0000-\u001f]/g,'_').trim()).slice(0,45).join('')||'错题';
+  return `拾光-${clean}${total>1?'-'+page+'共'+total+'页':''}.jpg`;
+}
+
+function noteFields(note,subject){
+  const date=new Date(note.createdAt);
+  const time=Number.isFinite(date.getTime())?`${date.getFullYear()}年${date.getMonth()+1}月${date.getDate()}日 ${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`:'未设置';
+  return [
+    ['题目名称',note.title||'未命名错题'],['学科',subject.name],
+    ['错误原因',note.reasons?.join(' · ')||'未填写'],['记录时间',time],
+    ['复习状态',note.mastered?'已掌握':'待复习'],['我的笔记',note.notes?.trim()?note.notes:'未填写']
+  ];
+}
+
+async function loadImage(src){
+  if(!/^data:image\/(jpeg|png|webp);base64,/i.test(src))throw new Error('这张照片的格式暂不支持导出。');
+  const img=new Image();
+  await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(new Error('照片读取失败，请重新选择照片后再试。'));img.src=src;});
+  return img;
+}
+
+async function renderNoteImages(note,subject){
+  if(document.fonts?.ready)await document.fonts.ready;
+  const image=note.photo?await loadImage(note.photo):null;
+  const canvas=document.createElement('canvas');canvas.width=WIDTH;
+  const ctx=canvas.getContext('2d');
+  if(!ctx)throw new Error('当前设备无法生成图片，请更新浏览器或 Android System WebView。');
+  const rows=[];
+  function add(text,size=32,color='#273344',weight=400,keepNext=false){
+    ctx.font=`${weight} ${size}px ${FONT}`;
+    for(const line of wrapText(text,t=>ctx.measureText(t).width,WIDTH-PAD*2))rows.push({text:line,size,color,weight,height:Math.ceil(size*1.55),keepNext});
+  }
+  let photo=null, firstTop=156;
+  if(image){
+    const scale=Math.min((WIDTH-PAD*2)/image.naturalWidth,1800/image.naturalHeight,1);
+    photo={width:Math.round(image.naturalWidth*scale),height:Math.round(image.naturalHeight*scale)};
+    firstTop=160+photo.height+64;
+  }else if(note.paper){
+    add('题目内容',25,'#768395',500,true);add(note.paper,34);rows.push({height:28});
+  }else{add('文字记录',25,'#768395',500,true);add('这道题未附照片，以下为完整记录。',30,'#768395');rows.push({height:28});}
+  for(const [label,value] of noteFields(note,subject)){
+    add(label,24,'#78879a',500,true);
+    add(value,label==='题目名称'?40:32,'#263344',label==='题目名称'?600:400);
+    rows.push({height:24});
+  }
+  const pages=paginateRows(rows,{firstTop});
+  const results=[];
+  try{
+    for(let i=0;i<pages.length;i++){
+      const page=pages[i];
+      const end=page.length?page.at(-1).y+page.at(-1).height:firstTop;
+      canvas.height=Math.min(3600,Math.max(520,Math.ceil(end+100)));
+      ctx.fillStyle='#fff';ctx.fillRect(0,0,WIDTH,canvas.height);
+      ctx.textBaseline='top';
+      ctx.fillStyle='#1674ec';ctx.fillRect(PAD,58,6,42);
+      ctx.font=`600 30px ${FONT}`;ctx.fillStyle='#263344';ctx.fillText('拾光 · 错题记录',PAD+24,62);
+      ctx.font=`400 24px ${FONT}`;ctx.fillStyle='#78879a';ctx.textAlign='right';ctx.fillText(subject.name+(note.example?' · 示例':''),WIDTH-PAD,68);ctx.textAlign='left';
+      ctx.strokeStyle='#e6ebf1';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(PAD,124);ctx.lineTo(WIDTH-PAD,124);ctx.stroke();
+      if(i===0&&photo){ctx.drawImage(image,(WIDTH-photo.width)/2,160,photo.width,photo.height);ctx.beginPath();ctx.moveTo(PAD,firstTop-32);ctx.lineTo(WIDTH-PAD,firstTop-32);ctx.stroke();}
+      for(const row of page){if(row.text===undefined)continue;ctx.font=`${row.weight} ${row.size}px ${FONT}`;ctx.fillStyle=row.color;ctx.fillText(row.text,PAD,row.y);}
+      ctx.font=`400 21px ${FONT}`;ctx.fillStyle='#94a0af';ctx.fillText('把每一次出错，变成进步。',PAD,canvas.height-58);
+      ctx.textAlign='right';ctx.fillText(`${i+1} / ${pages.length}`,WIDTH-PAD,canvas.height-58);ctx.textAlign='left';
+      const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.94));
+      if(!blob)throw new Error('图片生成失败，请重试。');
+      results.push({blob,width:WIDTH,height:canvas.height,filename:imageFilename(note.title,i+1,pages.length)});
+    }
+    return results;
+  }finally{canvas.width=1;canvas.height=1;}
+}
+return {wrapText, paginateRows, imageFilename, noteFields, renderNoteImages};
+})();
+
+// ─── android-bridge.js ───
+__modules["android-bridge.js"] = (function () {
+// Keep Unicode pairs intact when moving large JSON archives across the native bridge.
+function* archiveChunks(text, size = 131072) {
+  if (!Number.isInteger(size) || size < 2) throw new Error('Invalid chunk size');
+  for (let start = 0; start < text.length;) {
+    let end = Math.min(start + size, text.length);
+    const last = text.charCodeAt(end - 1);
+    if (end < text.length && last >= 0xD800 && last <= 0xDBFF) end--;
+    yield text.slice(start, end);
+    start = end;
+  }
+}
+
+async function saveAndroidArchive(bridge, filename, data, target = window) {
+  if (!bridge.beginExport(filename)) throw new Error('导出尚未完成，或手机空间不足。请完成当前导出后重试。');
+  let complete;
+  const done = new Promise(resolve => { complete = resolve; });
+  const receive = event => complete(event.detail);
+  target.addEventListener('shiguang-export-result', receive, {once: true});
+  try {
+    let count = 0;
+    for (const chunk of archiveChunks(JSON.stringify(data))) {
+      if (!bridge.appendExport(chunk)) throw new Error('准备存档失败，请检查手机剩余空间后重试。');
+      // Let progress indicators and input render while preparing a large photo archive.
+      if (++count % 8 === 0) await new Promise(resolve => setTimeout(resolve, 0));
+    }
+    if (!bridge.finishExport()) throw new Error('无法准备存档，请稍后重试。');
+    return await done;
+  } catch (error) {
+    bridge.cancelExport();
+    throw error;
+  } finally {
+    target.removeEventListener('shiguang-export-result', receive);
+  }
+}
+
+async function saveAndroidImage(bridge,filename,blob,target=window){
+  if(typeof bridge.beginImage!=='function')throw new Error('请更新拾光 Android 安装包后使用图片导出。');
+  if(!bridge.beginImage(filename))throw new Error('请先完成当前保存，或检查手机剩余空间。');
+  let complete;
+  const done=new Promise(resolve=>{complete=resolve;});
+  const receive=event=>complete(event.detail);
+  target.addEventListener('shiguang-export-result',receive,{once:true});
+  try{
+    const bytes=new Uint8Array(await blob.arrayBuffer());
+    // Each independent base64 block contains whole bytes, avoiding string bridge limits.
+    for(let start=0;start<bytes.length;start+=49152){
+      const chunk=bytes.subarray(start,start+49152);
+      let binary='';for(const value of chunk)binary+=String.fromCharCode(value);
+      if(!bridge.appendImage(btoa(binary)))throw new Error('图片准备失败，请检查剩余空间后重试。');
+      if(start%393216===0)await new Promise(resolve=>setTimeout(resolve,0));
+    }
+    if(!bridge.finishExport())throw new Error('无法打开图片保存窗口，请重试。');
+    return await done;
+  }catch(error){bridge.cancelExport();throw error;}
+  finally{target.removeEventListener('shiguang-export-result',receive);}
+}
+return {archiveChunks, saveAndroidArchive, saveAndroidImage};
+})();
+
+// ─── note-export.js ───
+__modules["note-export.js"] = (function () {
+const {renderNoteImages} = __modules["note-image.js"];
+const {saveAndroidImage} = __modules["android-bridge.js"];
+function mountNoteExport({root,note,subject,renderModal,icon,onBack,onMessage}){
+  let disposed=false,pages=[],urls=[],page=0,saving=false;
+  renderModal('把这道题，存成一张照片。','题目在上，完整信息在下，方便保存、打印或分享。',
+    '<div class="modal-content image-export-content"><div class="export-status" role="status"><div class="spinner"></div>正在排版照片与笔记…</div><div class="export-preview" hidden><img alt="导出照片预览，包含题目及下方的完整信息"></div><div class="export-pages" hidden><button class="secondary" data-image-action="prev">上一张</button><span aria-live="polite"></span><button class="secondary" data-image-action="next">下一张</button></div><p class="export-help">包含题目名称、学科、错误原因、记录时间、复习状态和笔记。</p></div>',
+    '<button class="secondary" data-image-action="back">返回题目</button><button class="primary" data-image-action="save" disabled>'+icon('download')+' 保存图片</button>','image-export-modal');
+  const status=root.querySelector('.export-status'),preview=root.querySelector('.export-preview'),pager=root.querySelector('.export-pages'),save=root.querySelector('[data-image-action="save"]');
+  function paint(){
+    preview.hidden=false;preview.querySelector('img').src=urls[page];
+    pager.hidden=pages.length<2;pager.querySelector('span').textContent=`第 ${page+1} / ${pages.length} 张`;
+    pager.querySelector('[data-image-action="prev"]').disabled=page===0||saving;
+    pager.querySelector('[data-image-action="next"]').disabled=page===pages.length-1||saving;
+    save.disabled=saving;save.innerHTML=icon('download')+(saving?' 正在保存…':pages.length>1?` 保存第 ${page+1} 张`:' 保存图片');
+    const help=root.querySelector('.export-help');
+    help.textContent=pages.length>1?'内容较长，已完整排成 '+pages.length+' 张图片。请切换后逐张保存，文字不会被截断。':window.AndroidArchive?'点击保存后，在系统窗口中选择图片的保存位置。':'点击保存下载 JPG 图片；手机上也可以长按预览图保存。';
+  }
+  async function download(){
+    if(saving||!pages.length)return;saving=true;paint();
+    const selected=pages[page];
+    try{
+      if(window.AndroidArchive){const result=await saveAndroidImage(window.AndroidArchive,selected.filename,selected.blob);onMessage(result.message);}
+      else{
+        const url=URL.createObjectURL(selected.blob);const a=document.createElement('a');a.href=url;a.download=selected.filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+        onMessage('已开始下载题目图片');
+      }
+    }catch(error){onMessage(error.message||'保存失败，请重试。');}
+    finally{saving=false;if(!disposed)paint();}
+  }
+  function click(event){const action=event.target.closest('[data-image-action]')?.dataset.imageAction;if(!action||saving)return;if(action==='back'){dispose();onBack();}if(action==='prev'&&page>0){page--;paint();preview.scrollTop=0;}if(action==='next'&&page<pages.length-1){page++;paint();preview.scrollTop=0;}if(action==='save')download();}
+  function dispose(){if(disposed)return;disposed=true;root.removeEventListener('click',click);urls.forEach(URL.revokeObjectURL);urls=[];pages=[];}
+  root.addEventListener('click',click);
+  renderNoteImages(note,subject).then(results=>{if(disposed)return;pages=results;urls=pages.map(p=>URL.createObjectURL(p.blob));status.hidden=true;paint();}).catch(error=>{if(disposed)return;status.textContent=error.message||'图片生成失败，请返回后重试。';onMessage(status.textContent);});
+  return dispose;
+}
+return {mountNoteExport};
+})();
+
+// ─── model.js ───
+__modules["model.js"] = (function () {
+const SUBJECTS = [
+  { id:'chinese', name:'语文', symbol:'文', color:'#a180c1', tint:'#f3eef9' },
+  { id:'math', name:'数学', symbol:'π', color:'#5a95df', tint:'#edf4fd' },
+  { id:'english', name:'英语', symbol:'A', color:'#cfac65', tint:'#faf5e8' },
+  { id:'physics', name:'物理', symbol:'↗', color:'#7aa69f', tint:'#edf6f3' },
+  { id:'chemistry', name:'化学', symbol:'⚗', color:'#cc9299', tint:'#fbf0f2' },
+  { id:'geography', name:'地理', symbol:'◎', color:'#8b9bc2', tint:'#eff2fa' },
+];
+const REASONS = ['计算错误','审题不清','概念不清','方法不熟','粗心马虎','记忆模糊'];
+const subjectOf = id => SUBJECTS.find(s=>s.id===id) || SUBJECTS[0];
+function localDate(d = new Date()) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function localInput(d = new Date()) { return `${localDate(d)}T${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; }
+function dateFrom(value) { const [y,m,d]=value.split('-').map(Number); return new Date(y,m-1,d); }
+function periodBounds(date, period) {
+  const start = dateFrom(date); let end;
+  if(period==='week') start.setDate(start.getDate() - (start.getDay()+6)%7);
+  if(period==='month') start.setDate(1);
+  end = new Date(start);
+  if(period==='month') end.setMonth(end.getMonth()+1); else end.setDate(end.getDate()+(period==='week'?7:1));
+  return {start,end};
+}
+function shiftDate(date, period, step) {
+  const d=dateFrom(date);
+  if(period==='month') { d.setDate(1); d.setMonth(d.getMonth()+step); }
+  else d.setDate(d.getDate()+step*(period==='week'?7:1));
+  return localDate(d);
+}
+function inPeriod(note,date,period) { const {start,end}=periodBounds(date,period); const t=new Date(note.createdAt); return t>=start && t<end; }
+function filterNotes(notes,{subject='all',reason='all',status='all',query='',time='all',today=localDate()}={}) {
+  const q=query.trim().toLocaleLowerCase();
+  return notes.filter(n=> (subject==='all'||n.subject===subject) && (reason==='all'||n.reasons.includes(reason)) && (status==='all'||(status==='mastered')===n.mastered) && (time==='all'||inPeriod(n,today,time)) && (!q||[n.title,n.notes,subjectOf(n.subject).name,...n.reasons].join(' ').toLocaleLowerCase().includes(q))).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+}
+function validateBackup(data) {
+  if(!data || data.app!=='shiguang' || data.version!==1 || !Array.isArray(data.notes)) throw new Error('这不是有效的拾光备份文件。');
+  const seen=new Set();
+  return data.notes.map(n=>{
+    if(!n || typeof n.id!=='string' || !/^[a-zA-Z0-9-]{1,100}$/.test(n.id) || seen.has(n.id)) throw new Error('备份中的记录编号无效或重复。');
+    seen.add(n.id);
+    if(typeof n.title!=='string' || !n.title.trim() || n.title.length>100 || !SUBJECTS.some(s=>s.id===n.subject) || !Array.isArray(n.reasons) || !n.reasons.length || n.reasons.length>20 || n.reasons.some(r=>typeof r!=='string'||!r.trim()||r.length>30) || typeof n.notes!=='string' || n.notes.length>5000 || typeof n.createdAt!=='string' || !Number.isFinite(Date.parse(n.createdAt)) || typeof n.mastered!=='boolean') throw new Error('备份中存在格式不正确的错题。');
+    if(typeof n.photo!=='string' || (n.photo && (!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(n.photo) || n.photo.length>10000000))) throw new Error('备份中的图片格式不受支持。');
+    return {id:n.id,title:n.title.trim(),subject:n.subject,reasons:[...new Set(n.reasons)],notes:n.notes,createdAt:new Date(n.createdAt).toISOString(),mastered:n.mastered,photo:n.photo};
+  });
+}
+return {SUBJECTS, REASONS, subjectOf, localDate, localInput, dateFrom, periodBounds, shiftDate, inPeriod, filterNotes, validateBackup};
+})();
+
+// ─── enhancements-model.js ───
+__modules["enhancements-model.js"] = (function () {
+const DEFAULT_QUOTES = [
+  '收集暂时没解开的疑问，在回看中找到答案。',
+  '今天多想明白一点，明天就多一分从容。',
+  '每一道错题，都是通往答案的一小步。',
+  '不必一次做到最好，但可以一次比一次更好。',
+  '慢慢来，认真走过的路，每一步都算数。',
+  '把不会留在今天，把进步带去明天。',
+];
+const DEFAULT_QUOTE_SETTINGS = {quotes:DEFAULT_QUOTES,rotate:true,interval:8};
+function parseQuotes(text){
+  const quotes=[...new Set(text.split(/\r?\n/).map(s=>s.trim()).filter(Boolean))];
+  if(!quotes.length)throw new Error('至少写下一句话，也可以恢复默认语句。');
+  if(quotes.length>30)throw new Error('最多保存 30 句话。');
+  if(quotes.some(q=>q.length>100))throw new Error('每句话请控制在 100 个字以内。');
+  return quotes;
+}
+function normalizeQuoteSettings(value){
+  if(!value || !Array.isArray(value.quotes) || !value.quotes.every(q=>typeof q==='string'))return {...DEFAULT_QUOTE_SETTINGS,quotes:[...DEFAULT_QUOTES]};
+  try{return {quotes:parseQuotes(value.quotes.join('\n')),rotate:typeof value.rotate==='boolean'?value.rotate:true,interval:[5,8,12,20].includes(Number(value.interval))?Number(value.interval):8};}
+  catch{return {...DEFAULT_QUOTE_SETTINGS,quotes:[...DEFAULT_QUOTES]};}
+}
+const clamp=(n,a,b)=>Math.min(b,Math.max(a,n));
+const FULL_RECT = {x:0,y:0,w:1,h:1};
+const INITIAL_RECT = {x:.05,y:.08,w:.9,h:.84};
+function moveRect(rect,dx,dy){return {...rect,x:clamp(rect.x+dx,0,1-rect.w),y:clamp(rect.y+dy,0,1-rect.h)};}
+function resizeRect(rect,corner,dx,dy,min=.06){
+  let left=rect.x,top=rect.y,right=left+rect.w,bottom=top+rect.h;
+  if(corner.includes('w'))left=clamp(left+dx,0,right-min);
+  if(corner.includes('e'))right=clamp(right+dx,left+min,1);
+  if(corner.includes('n'))top=clamp(top+dy,0,bottom-min);
+  if(corner.includes('s'))bottom=clamp(bottom+dy,top+min,1);
+  return {x:left,y:top,w:right-left,h:bottom-top};
+}
+function cropPixels(rect,width,height){
+  const x=clamp(Math.round(rect.x*width),0,width-1),y=clamp(Math.round(rect.y*height),0,height-1);
+  return {x,y,w:clamp(Math.round(rect.w*width),1,width-x),h:clamp(Math.round(rect.h*height),1,height-y)};
+}
+function rotateAngle(angle,direction){return ((angle+(direction==='left'?-90:90))%360+360)%360;}
+return {DEFAULT_QUOTES, DEFAULT_QUOTE_SETTINGS, parseQuotes, normalizeQuoteSettings, FULL_RECT, INITIAL_RECT, moveRect, resizeRect, cropPixels, rotateAngle};
+})();
+
+// ─── cropper.js ───
+__modules["cropper.js"] = (function () {
+const {INITIAL_RECT,FULL_RECT,moveRect,resizeRect,cropPixels,rotateAngle} = __modules["enhancements-model.js"];
+// The cropper owns only a temporary image. The caller decides when to update its draft.
+function mountCropper({root,photo,renderModal,icon,onConfirm,onCancel,onError}){
+  let disposed=false,angle=0,rect={...INITIAL_RECT},drag=null,ready=false,observer=null;
+  const source=new Image();
+  renderModal('只留下，这一道题。','拖动四角调整范围，拖动选框移动位置。',
+    `<div class="crop-content"><div class="crop-viewport"><div class="crop-loading"><div class="spinner"></div>正在准备照片…</div><div class="crop-stage" hidden><canvas aria-label="待裁切的题目照片"></canvas><div class="crop-selection" tabindex="0" role="group" aria-label="裁切范围，可用方向键移动"><span class="crop-grid-line vertical one"></span><span class="crop-grid-line vertical two"></span><span class="crop-grid-line horizontal one"></span><span class="crop-grid-line horizontal two"></span>${[['nw','左上'],['ne','右上'],['sw','左下'],['se','右下']].map(([id,name])=>`<button type="button" class="crop-handle ${id}" data-corner="${id}" aria-label="调整${name}角，用方向键微调"></button>`).join('')}</div></div></div><div class="crop-tools"><button type="button" class="secondary" data-crop="rotate-left">${icon('refresh','rotate-left-icon')} 向左旋转</button><button type="button" class="secondary" data-crop="rotate">${icon('refresh')} 向右旋转</button><button type="button" class="secondary" data-crop="reset">${icon('crop')} 重置选框</button><span class="crop-size" role="status"></span></div><p class="crop-instruction">框内区域会保留。选中裁切框或四角后，也可用方向键微调。</p></div>`,
+    `<button class="secondary crop-cancel" data-crop="cancel">取消裁切</button><button class="secondary" data-crop="full" disabled>保留整张</button><button class="primary" data-crop="confirm" disabled>${icon('check')} 完成裁切</button>`,'crop-modal');
+  const viewport=root.querySelector('.crop-viewport'),stage=root.querySelector('.crop-stage'),canvas=stage.querySelector('canvas'),selection=stage.querySelector('.crop-selection');
+  const ctx=canvas.getContext('2d');
+  function paintSelection(){
+    Object.assign(selection.style,{left:`${rect.x*100}%`,top:`${rect.y*100}%`,width:`${rect.w*100}%`,height:`${rect.h*100}%`});
+    const pixels=cropPixels(rect,canvas.width,canvas.height);
+    root.querySelector('.crop-size').textContent=`${pixels.w} × ${pixels.h}`;
+  }
+  function fit(){if(!ready||disposed)return;const ratio=canvas.width/canvas.height;const width=Math.max(1,Math.min(viewport.clientWidth,680,window.innerHeight*.48*ratio));stage.style.width=`${width}px`;stage.style.height=`${width/ratio}px`;}
+  function draw(){
+    const sideways=angle%180!==0;canvas.width=sideways?source.naturalHeight:source.naturalWidth;canvas.height=sideways?source.naturalWidth:source.naturalHeight;
+    ctx.save();ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.translate(canvas.width/2,canvas.height/2);ctx.rotate(angle*Math.PI/180);ctx.drawImage(source,-source.naturalWidth/2,-source.naturalHeight/2);ctx.restore();fit();paintSelection();
+  }
+  function endDrag(){if(drag){if(stage.hasPointerCapture(drag.id))stage.releasePointerCapture(drag.id);drag=null;}selection.classList.remove('dragging');}
+  function down(e){if(!ready||drag||(e.pointerType==='mouse'&&e.button!==0))return;const box=e.target.closest('.crop-selection');if(!box)return;e.preventDefault();const handle=e.target.closest('[data-corner]');const bounds=stage.getBoundingClientRect();drag={id:e.pointerId,x:e.clientX,y:e.clientY,rect:{...rect},corner:handle?.dataset.corner,bounds};stage.setPointerCapture(e.pointerId);(handle||selection).focus({preventScroll:true});selection.classList.add('dragging');}
+  function move(e){if(!drag||drag.id!==e.pointerId)return;e.preventDefault();const dx=(e.clientX-drag.x)/drag.bounds.width,dy=(e.clientY-drag.y)/drag.bounds.height;rect=drag.corner?resizeRect(drag.rect,drag.corner,dx,dy):moveRect(drag.rect,dx,dy);paintSelection();}
+  function key(e){if(!ready||!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))return;e.preventDefault();e.stopPropagation();const step=e.shiftKey?.05:.005;const dx=e.key==='ArrowLeft'?-step:e.key==='ArrowRight'?step:0,dy=e.key==='ArrowUp'?-step:e.key==='ArrowDown'?step:0;const corner=e.target.dataset.corner;rect=corner?resizeRect(rect,corner,dx,dy):moveRect(rect,dx,dy);paintSelection();}
+  function exportImage(full=false){
+    if(!ready||disposed)return;
+    try{const p=cropPixels(full?FULL_RECT:rect,canvas.width,canvas.height);const scale=Math.min(1,1600/Math.max(p.w,p.h));const output=document.createElement('canvas');output.width=Math.max(1,Math.round(p.w*scale));output.height=Math.max(1,Math.round(p.h*scale));output.getContext('2d').drawImage(canvas,p.x,p.y,p.w,p.h,0,0,output.width,output.height);const result=output.toDataURL('image/jpeg',.88);dispose();onConfirm(result);}catch{onError('照片处理失败，请重试或保留原图。');}
+  }
+  function click(e){const action=e.target.closest('[data-crop]')?.dataset.crop;if(!action)return;if(action==='cancel'){dispose();onCancel();return;}if(!ready)return;if(action==='rotate'||action==='rotate-left'){endDrag();angle=rotateAngle(angle,action==='rotate-left'?'left':'right');rect={...INITIAL_RECT};draw();}if(action==='reset'){endDrag();rect={...FULL_RECT};paintSelection();}if(action==='full')exportImage(true);if(action==='confirm')exportImage(false);}
+  function dispose(){if(disposed)return;disposed=true;endDrag();observer?.disconnect();window.removeEventListener('resize',fit);root.removeEventListener('click',click);stage.removeEventListener('pointerdown',down);stage.removeEventListener('pointermove',move);stage.removeEventListener('pointerup',endDrag);stage.removeEventListener('pointercancel',endDrag);stage.removeEventListener('lostpointercapture',endDrag);selection.removeEventListener('keydown',key);source.onload=null;source.onerror=null;}
+  root.addEventListener('click',click);stage.addEventListener('pointerdown',down);stage.addEventListener('pointermove',move);stage.addEventListener('pointerup',endDrag);stage.addEventListener('pointercancel',endDrag);stage.addEventListener('lostpointercapture',endDrag);selection.addEventListener('keydown',key);window.addEventListener('resize',fit);
+  source.onload=()=>{if(disposed)return;ready=true;root.querySelector('.crop-loading').hidden=true;stage.hidden=false;draw();root.querySelectorAll('[data-crop]').forEach(b=>b.disabled=false);observer=new ResizeObserver(()=>{endDrag();fit();});observer.observe(viewport);selection.focus({preventScroll:true});};
+  source.onerror=()=>{if(disposed)return;onError('无法读取这张照片，请返回后选择其他照片。');root.querySelector('.crop-loading').textContent='无法读取照片，请取消裁切后重试。';};
+  source.src=photo;
+  return dispose;
+}
+return {mountCropper};
+})();
+
+// ─── app.js ───
+__modules["app.js"] = (function () {
+const {mountNoteExport} = __modules["note-export.js"];
+const {saveAndroidArchive} = __modules["android-bridge.js"];
+const {SUBJECTS,REASONS,subjectOf,localDate,localInput,dateFrom,periodBounds,shiftDate,inPeriod,filterNotes,validateBackup} = __modules["model.js"];
+const {DEFAULT_QUOTES,DEFAULT_QUOTE_SETTINGS,parseQuotes,normalizeQuoteSettings} = __modules["enhancements-model.js"];
+const {mountCropper} = __modules["cropper.js"];
+const paths={crop:'M6 3v15h15 M3 6h15v15 M6 6h12',book:'M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-3H4z M20 4h-4 M17 8h3v10h-4',camera:'M14.5 5 13 3H7L5.5 5H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z M15.5 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0',plus:'M12 5v14 M5 12h14',search:'M20 20l-4.3-4.3 M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0',arrow:'m9 5 7 7-7 7',back:'m15 5-7 7 7 7',close:'m6 6 12 12 M6 18 18 6',image:'M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1 M3 16l6-6 5 5 3-3 4 4 M16 7h.01',folder:'M3 6V4h7l2 3h9v13H3z',grid:'M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h7v7h-7z',clock:'M12 8v5l3 2 M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0',calendar:'M4 5h16v16H4z M8 3v4 M16 3v4 M4 10h16 M8 14h2 M14 14h2',spark:'m12 3 2.4 6.6L21 12l-6.6 2.4L12 21l-2.4-6.6L3 12l6.6-2.4z',check:'m5 12 4 4L19 6',shield:'m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z M8 12l3 3 5-6',edit:'m14 5 5 5 M4 20l5-1L21 7l-5-5L4 14z',trash:'M3 6h18 M9 6V3h6v3 M5 6l1 15h12l1-15 M10 10v7 M14 10v7',download:'M12 3v12 m-5-5 5 5 5-5 M4 16v5h16v-5',upload:'M12 16V4 m-5 5 5-5 5 5 M4 16v5h16v-5',refresh:'M20 7v5h-5 M4 17v-5h5 M5 8a8 8 0 0 1 13-3l2 3 M4 16l2 3a8 8 0 0 0 13-3',sliders:'M4 7h8 M16 7h4 M4 17h3 M11 17h9 M12 4v6 M7 14v6',list:'M8 6h13 M8 12h13 M8 18h13 M3 6h.01 M3 12h.01 M3 18h.01',info:'M12 11v6 M12 7h.01 M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0'};
+const icon=(name,cls='')=>`<svg class="icon ${cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="${paths[name]||paths.book}"/></svg>`;
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const colors=s=>`--accent:${s.color};--tint:${s.tint}`;
+const app=document.querySelector('#app'), overlay=document.querySelector('#overlay-root');
+const state={page:'home',subject:'all',reason:'all',status:'all',query:'',time:'all',view:'grid',period:'day',date:localDate(),demo:false,search:false,limit:24};
+let records=[],db=null,storageError='',draft=null,stream=null,cameraToken=0,restorePending=null,toastTimer,lastFocus=null,busy=false;
+let imageExportCleanup=null;
+let quoteSettings=loadQuoteSettings(),quoteIndex=0,quoteTimer=null,cropCleanup=null,photoRequestId=0,settingsOpen=false;
+const examples=makeExamples();
+function loadQuoteSettings(){try{return normalizeQuoteSettings(JSON.parse(localStorage.getItem('shiguang-quotes')));}catch{return normalizeQuoteSettings(null);}}
+function currentQuote(){return quoteSettings.quotes[quoteIndex%quoteSettings.quotes.length];}
+function nextQuote(){
+  quoteIndex=(quoteIndex+1)%quoteSettings.quotes.length;
+  const el=document.querySelector('#rotating-quote');
+  if(el){el.textContent=currentQuote();if(!matchMedia('(prefers-reduced-motion: reduce)').matches)el.animate([{opacity:0,transform:'translateY(3px)'},{opacity:1,transform:'translateY(0)'}],{duration:350,easing:'ease-out'});}
+}
+function syncQuoteRotation(){clearInterval(quoteTimer);quoteTimer=null;if(state.page==='home'&&quoteSettings.rotate&&quoteSettings.quotes.length>1)quoteTimer=setInterval(()=>{if(!document.hidden&&!overlay.innerHTML)nextQuote();},quoteSettings.interval*1000);}
+function settingsValues(){const form=document.querySelector('#quote-form');return form?{quotes:form.elements.quotes.value,rotate:form.elements.rotate.checked,interval:Number(form.elements.interval.value)}:{quotes:quoteSettings.quotes.join('\n'),rotate:quoteSettings.rotate,interval:quoteSettings.interval};}
+function openSettings(values=null,error=''){
+  settingsOpen=true;const v=values||settingsValues();
+  modal('让首页，说你喜欢的话。','给自己留一点鼓励，让每次打开都有新的力量。',
+    '<div class="modal-content"><form id="quote-form">'+
+    (error?'<p class="form-error" role="alert">'+esc(error)+'</p>':'')+
+    '<div class="quote-settings-preview">'+icon('spark')+'<p id="quote-preview">'+esc(v.quotes.split(/\r?\n/).find(s=>s.trim())||'在下面写下你想对自己说的话。')+'</p></div>'+
+    '<div class="form-field"><label for="custom-quotes">首页语句 <span class="label-hint">· 每行一句，最多 30 句</span></label><textarea id="custom-quotes" name="quotes" maxlength="3030" rows="7" placeholder="今天多想明白一点，明天就多一分从容。\n慢慢来，每一步都算数。">'+esc(v.quotes)+'</textarea><p class="file-note">可以修改默认语句，也可以全部换成自己的话。每句不超过 100 个字。</p></div>'+
+    '<div class="quote-option"><div><label for="quote-rotate">自动轮换</label><p>关闭后固定显示第一句，仍可手动换一句。</p></div><label class="switch"><input id="quote-rotate" name="rotate" type="checkbox" '+(v.rotate?'checked':'')+'><span class="switch-track"></span></label></div>'+
+    '<div class="quote-option"><label for="quote-interval">轮换间隔</label><select id="quote-interval" name="interval">'+[5,8,12,20].map(n=>'<option value="'+n+'" '+(v.interval===n?'selected':'')+'>'+n+' 秒</option>').join('')+'</select></div>'+
+    '<button type="button" class="text-btn restore-quotes" data-action="default-quotes">恢复默认语句</button><p class="settings-text">拾光 1.1.0 · 设置保存在本机，点击保存后生效。</p></form></div>',
+    '<button class="secondary" data-action="close-modal">取消</button><button class="primary" type="submit" form="quote-form">'+icon('check')+' 保存设置</button>','settings-modal');
+}
+function saveQuoteSettings(){const values=settingsValues();let next;try{next={quotes:parseQuotes(values.quotes),rotate:values.rotate,interval:values.interval};}catch(e){return openSettings(values,e.message);}try{localStorage.setItem('shiguang-quotes',JSON.stringify(next));}catch{return openSettings(values,'暂时无法保存设置，内容已保留，请检查设备剩余空间。');}quoteSettings=next;quoteIndex=0;closeModal();render();toast('已保存，下次打开也会记得这些话。');}
+function beginCrop(photo){
+  readDraft();if(cropCleanup){cropCleanup();cropCleanup=null;}
+  if(!draft)draft={id:null,title:'',subject:state.subject!=='all'?state.subject:'',reasons:[],notes:'',createdAt:localInput(),mastered:false,photo};
+  cropCleanup=mountCropper({root:overlay,photo,renderModal:modal,icon,onConfirm:result=>{cropCleanup=null;draft.photo=result;openEditor();},onCancel:()=>{cropCleanup=null;openEditor();},onError:toast});
+}
+function cancelCrop(){if(cropCleanup){cropCleanup();cropCleanup=null;openEditor();}}
+
+function makeExamples(){
+  const specs=[['math','一元二次方程 · 配方法',['计算错误','方法不熟'],'x² − 6x + 5 = 0\nx² − 6x = −5\n(x − 3)² = 4','移项后记得两边同时加 9。',0,19,42],['english','定语从句 · 关系词的选择',['概念不清'],'This is the book _____\nI borrowed from the library.\nA. who   B. which   C. where','先判断先行词，再看从句缺少什么成分。',0,17,20],['physics','受力分析 · 斜面上的物体',['审题不清'],'已知：m = 2 kg，θ = 30°\nF∥ = mg sin θ\nF⊥ = mg cos θ','先画受力图，区分平行和垂直斜面的分力。',0,14,35],['chinese','古诗词鉴赏 · 意象与情感',['记忆模糊'],'“山重水复疑无路，\n柳暗花明又一村。”\n—— 陆游《游山西村》','结合上下文理解景物背后的情感。',0,10,16],['chemistry','化学方程式 · 配平练习',['粗心马虎'],'Fe + O₂ → Fe₃O₄\n3Fe + 2O₂ = Fe₃O₄','核对每种元素在等号两边的原子个数。',1,20,10],['geography','地球运动 · 昼夜长短变化',['概念不清'],'太阳直射点 → 北半球\n北半球：昼长夜短\n纬度越高，昼越长','结合太阳直射点的位置判断。',2,16,30],['math','函数图像 · 二次函数顶点',['计算错误'],'y = x² − 4x + 3\n  = (x − 2)² − 1\n顶点坐标：(2, −1)','配方时不要漏掉常数项。',5,18,5],['english','时态辨析 · 现在完成时',['粗心马虎'],'She has lived here\nsince 2020.\nsince + 时间点','since 和 for 后的时间表达不同。',9,9,25]];
+  return specs.map((x,i)=>{const d=new Date();d.setDate(d.getDate()-x[5]);d.setHours(x[6],x[7],0,0);return {id:`example-${i}`,subject:x[0],title:x[1],reasons:x[2],paper:x[3],notes:x[4],createdAt:d.toISOString(),mastered:i===5,photo:'',example:true};});
+}
+function activeRecords(){return state.demo?examples:records;}
+function toast(msg){clearTimeout(toastTimer);const t=document.querySelector('#toast');t.textContent=msg;t.classList.add('show');toastTimer=setTimeout(()=>t.classList.remove('show'),3500);}
+function timeLabel(iso){return new Date(iso).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',hour12:false});}
+function dayLabel(iso){const d=new Date(iso);return `${d.getMonth()+1}月${d.getDate()}日`;}
+function fullLabel(iso){return `${new Date(iso).getFullYear()}年${dayLabel(iso)} ${timeLabel(iso)}`;}
+function relativeLabel(iso){const d=new Date(iso);return `${localDate(d)===localDate()?'今天':dayLabel(iso)} ${timeLabel(iso)}`;}
+function persistPreference(){try{localStorage.setItem('shiguang-demo',state.demo?'yes':'no');}catch{}}
+function openDB(){return new Promise((resolve,reject)=>{if(!window.indexedDB)return reject(new Error('当前环境不支持本地数据库，请更新浏览器或 Android System WebView。'));const r=indexedDB.open('shiguang-notebook',1);r.onupgradeneeded=()=>r.result.createObjectStore('notes',{keyPath:'id'});r.onerror=()=>reject(r.error);r.onsuccess=()=>resolve(r.result);r.onblocked=()=>reject(new Error('请关闭旧版页面后重试。'));});}
+function readAll(){return new Promise((resolve,reject)=>{const tx=db.transaction('notes','readonly');const r=tx.objectStore('notes').getAll();r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
+function writeNotes(notes){return new Promise((resolve,reject)=>{if(!db)return reject(new Error('本地存储不可用，请重新打开后重试。'));const tx=db.transaction('notes','readwrite');for(const n of notes)tx.objectStore('notes').put(n);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||new Error('保存被中断'));});}
+function removeNote(id){return new Promise((resolve,reject)=>{const tx=db.transaction('notes','readwrite');tx.objectStore('notes').delete(id);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error);});}
+function showStorageError(e){toast(e?.name==='QuotaExceededError'?'存储空间不足，请先导出备份并删除不需要的照片。':`保存失败：${e?.message||'请重试'}`);}
+function filtered(){return filterNotes(activeRecords(),{...state,subject:state.page==='subject'?state.subject:state.subject});}
+function resetFilters(){Object.assign(state,{subject:'all',reason:'all',status:'all',time:'all',query:'',limit:24});}
+function navigate(page,subject){resetFilters();state.page=page;state.search=false;state.view='grid';if(subject)state.subject=subject;render();window.scrollTo({top:0,behavior:'smooth'});}
+function header(){return `<header class="topbar"><div class="top-inner"><button class="brand" data-action="home" aria-label="拾光首页"><span class="brand-icon">${icon('book')}</span><span class="brand-name">拾光</span><span class="brand-divider"></span><span class="brand-caption">错题本</span></button><nav class="nav" aria-label="主要导航">${[['home','首页'],['folders','学科收藏'],['timeline','时间轴']].map(([id,t])=>`<button data-action="navigate" data-page="${id}" class="${state.page===id||(id==='folders'&&state.page==='subject')?'active':''}" ${state.page===id?'aria-current="page"':''}>${t}</button>`).join('')}</nav><div class="top-actions"><button class="settings-trigger" data-action="settings" aria-label="设置首页语句">${icon('sliders')}<span>设置</span></button><button class="icon-btn" data-action="search" aria-label="搜索错题">${icon('search')}</button><button class="primary small" data-action="camera">${icon('plus')}<span>记录错题</span></button></div></div></header>`;}
+function footer(){return `<footer class="footer"><div class="footer-left"><span class="footer-brand">拾光 · 让进步有迹可循</span><span class="local-badge"><i></i>记录保存在当前设备</span></div><div class="footer-right"><button data-action="toggle-demo">${state.demo?'进入我的错题':'体验示例'}</button><span class="short-divider"></span><button data-action="storage">数据与备份</button></div></footer>`;}
+function demoBadge(){return state.demo?'<span class="demo-badge">示例体验</span>':'';}
+function searchBar(){return `<div class="search-bar">${icon('search')}<input id="search-field" type="search" maxlength="100" placeholder="搜索题目、学科、错误原因或笔记…" value="${esc(state.query)}" aria-label="搜索错题"><button class="icon-btn" data-action="close-search" aria-label="关闭搜索">${icon('close')}</button></div>`;}
+function folder(s,large=false){const list=activeRecords().filter(n=>n.subject===s.id);const todo=list.filter(n=>!n.mastered).length;return `<button class="folder-card" data-action="folder" data-id="${s.id}" style="${colors(s)}"><span class="folder-symbol"><span>${s.symbol}</span></span><span class="folder-title">${s.name}</span><span class="folder-count">${list.length} 道错题${large?` · ${todo} 道待复习`:''}</span>${icon('arrow','folder-arrow')}</button>`;}
+function home(){const now=new Date();const today=activeRecords().filter(n=>inPeriod(n,localDate(),'day')).length;const mastered=activeRecords().filter(n=>n.mastered).length;return `<div class="intro"><div><p class="eyebrow"><span class="tiny-dot"></span> A LITTLE BETTER, EVERY DAY</p><h1>把每一次出错，<em>变成进步。</em></h1><p class="intro-text quote-line"><span id="rotating-quote">${esc(currentQuote())}</span><button class="quote-next" data-action="next-quote" aria-label="换一句励志语句" title="换一句">${icon('refresh')}</button></p></div><div class="date-block"><div class="date-line">${icon('calendar')}${now.getMonth()+1}月${now.getDate()}日 · ${['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][now.getDay()]}</div><div class="date-sub">${state.demo?'示例体验 · 保存后进入你的错题本':'今天，也是积累的一天。'}</div></div></div><section class="backup-bar" aria-label="导入与导出存档"><div class="backup-bar-label">${icon('shield')}<div><strong>我的存档</strong><span>把错题与照片，好好保存。</span></div></div><div class="backup-bar-actions"><button class="secondary" data-action="import">${icon('upload')} 导入存档</button><button class="secondary backup-export" data-action="export">${icon('download')} 导出存档</button></div></section><section class="workspace-grid" aria-label="录入和学科收藏"><div class="capture-card"><span class="card-label">${icon('plus')} 记录一个新的发现</span><div class="capture-orbit"><span class="orbit"></span><span class="orbit two"></span><button class="camera-button" data-action="camera" aria-label="启动相机，拍摄错题">${icon('camera')}</button></div><h2 class="capture-title">拍下来，慢慢想明白。</h2><span class="capture-caption">拍摄错题 · 选择分类 · 留给未来的自己</span><div class="capture-footer"><button class="text-btn" data-action="upload">${icon('image')} 从相册上传</button><span class="divider"></span><button class="text-btn" data-action="manual">${icon('edit')} 手动记录</button></div><span class="capture-corner">${icon('shield')} 只属于你的积累</span></div><div class="folders-panel"><div class="section-top"><div><h2 class="section-title">学科收藏夹</h2><div class="section-subtitle">分门别类，让知识各就其位。</div></div><button class="text-btn" data-action="navigate" data-page="folders">全部收藏 ${icon('arrow')}</button></div><div class="folders">${SUBJECTS.map(s=>folder(s)).join('')}</div></div></section><div class="insight-bar"><div class="insight-message">${icon('spark')} 每一道被认真对待的错题，都在悄悄拉近你与答案的距离。</div><div class="stats"><div class="stat"><strong class="blue">${today}</strong><span>今日记录</span></div><span class="stat-separator"></span><div class="stat"><strong>${activeRecords().length}</strong><span>累计收藏</span></div><span class="stat-separator"></span><div class="stat"><strong>${mastered}</strong><span>已经掌握</span></div></div></div><section class="records-section"><div class="records-heading"><div class="records-title"><h2>${state.view==='grid'?'最近记录':'复习时间轴'}</h2>${demoBadge()}</div><div class="segmented" aria-label="记录视图"><button data-action="view" data-id="grid" class="${state.view==='grid'?'active':''}">${icon('grid')} 卡片视图</button><button data-action="view" data-id="timeline" class="${state.view==='timeline'?'active':''}">${icon('clock')} 时间视图</button></div></div>${state.search?searchBar():''}${toolbar()}${state.view==='timeline'?timeline():noteGrid(filtered().slice(0,4))}${state.view==='grid'?`<div class="view-all"><button data-action="navigate" data-page="library">查看全部记录 ${icon('arrow')}</button></div>`:''}</section>`;}
+function toolbar(){const currentReasons=[...new Set([...REASONS,...activeRecords().flatMap(n=>n.reasons)])];return `<div class="toolbar">${state.page!=='subject'?`<div class="chips" aria-label="按学科筛选">${[{id:'all',name:'全部'},...SUBJECTS].map(s=>`<button class="chip ${state.subject===s.id?'active':''}" aria-pressed="${state.subject===s.id}" data-action="subject-filter" data-id="${s.id}">${s.name}</button>`).join('')}</div>`:`<div class="status-filter">${[['all','全部记录'],['pending','待复习'],['mastered','已掌握']].map(([id,label])=>`<button data-action="status-filter" data-id="${id}" class="${state.status===id?'active':''}">${label}</button>`).join('')}</div>`}<div class="filter-actions"><select class="filter-select" id="reason-filter" aria-label="按错误原因筛选"><option value="all">所有错误原因</option>${currentReasons.map(r=>`<option ${state.reason===r?'selected':''} value="${esc(r)}">${esc(r)}</option>`).join('')}</select>${state.view!=='timeline'&&state.page!=='timeline'?`<select class="filter-select" id="time-filter" aria-label="按记录时间筛选">${[['all','全部时间'],['day','今天'],['week','本周'],['month','本月']].map(([v,t])=>`<option value="${v}" ${state.time===v?'selected':''}>${t}</option>`).join('')}</select>`:''}<button class="icon-btn" data-action="search" aria-label="搜索错题">${icon('search')}</button></div></div>`;}
+function paper(n){return `<div class="paper"><div class="paper-text">${esc(n.paper||n.title)}</div><div class="paper-red">${esc(n.example?'↳ '+n.notes:'认真记录，慢慢想明白。')}</div></div>`;}
+function noteCard(n){const s=subjectOf(n.subject);return `<button class="note-card" data-action="detail" data-id="${n.id}" style="${colors(s)}" aria-label="查看错题：${esc(n.title)}"><div class="note-preview"><span class="subject-pill">${s.name}</span>${n.mastered?'<span class="mastered-pill">已掌握</span>':''}${n.photo?`<img src="${n.photo}" alt="${esc(n.title)}的题目照片" loading="lazy">`:paper(n)}</div><div class="note-body"><h3 class="note-title">${esc(n.title)}</h3><div class="reason-tags">${n.reasons.slice(0,2).map(r=>`<span class="reason-tag">${esc(r)}</span>`).join('')}${n.reasons.length>2?`<span class="reason-tag">+${n.reasons.length-2}</span>`:''}</div><div class="note-meta"><span class="note-meta-date">${icon('clock')}${relativeLabel(n.createdAt)}</span>${icon('arrow')}</div></div></button>`;}
+function noteGrid(notes){return `<div class="note-grid">${notes.length?notes.map(noteCard).join(''):emptyState()}</div>`;}
+function emptyState(){const hasFilters=state.reason!=='all'||state.query||state.status!=='all'||state.time!=='all';return `<div class="empty-state"><div class="empty-icon">${icon(hasFilters?'search':'book')}</div><h3>${hasFilters?'还没有符合条件的错题':'把第一道错题留在这里'}</h3><p>${hasFilters?'换一个关键词或筛选条件，再找找看。':'不急着学会所有答案，从记录一个疑问开始。'}</p>${hasFilters?'<button class="secondary" data-action="clear-filters">清除筛选</button>':'<button class="primary" data-action="camera">'+icon('camera')+' 拍下第一道错题</button>'}</div>`;}
+function foldersPage(){return `<div class="page-head"><div class="page-title-row"><div><p class="eyebrow">YOUR COLLECTION</p><h1>让知识，各就其位。</h1><p class="page-description">六个学科收藏夹，装下每一次思考。${state.demo?'当前展示示例内容。':''}</p></div>${demoBadge()}</div></div><div class="full-folders">${SUBJECTS.map(s=>folder(s,true)).join('')}</div>`;}
+function collectionPage(){const s=state.page==='subject'?subjectOf(state.subject):null;const list=filtered();return `<div class="page-head"><button class="back-btn" data-action="navigate" data-page="${s?'folders':'home'}">${icon('back')}${s?'所有收藏夹':'返回首页'}</button><div class="page-title-row"><div><p class="eyebrow">${s?'SUBJECT COLLECTION':'EVERY QUESTION MATTERS'}</p><div class="records-title"><h1>${s?s.name+'收藏夹':'所有错题'}</h1>${demoBadge()}</div><p class="page-description">${s?'在每一次回看里，让 '+s.name+' 更清晰。':'每一个疑问，都值得一个认真想明白的答案。'}</p></div><button class="primary" data-action="camera">${icon('plus')} 记录错题</button></div></div><div class="records-heading"><span class="all-count">${list.length} 道记录</span><div class="segmented"><button data-action="view" data-id="grid" class="${state.view==='grid'?'active':''}">${icon('grid')} 卡片视图</button><button data-action="view" data-id="timeline" class="${state.view==='timeline'?'active':''}">${icon('clock')} 时间视图</button></div></div>${state.search?searchBar():''}${toolbar()}${state.view==='timeline'?timeline():noteGrid(list.slice(0,state.limit))}${state.view==='grid'&&list.length>state.limit?'<div class="more-row"><button class="secondary" data-action="load-more">加载更多</button></div>':''}`;}
+function timelinePage(){return `<div class="page-head"><div class="page-title-row"><div><p class="eyebrow">A TIMELINE OF GROWTH</p><h1>每一步，都有迹可循。</h1><p class="page-description">把时间拉近或拉远，看看自己一路走来的积累。</p></div>${demoBadge()}</div></div>${state.search?searchBar():''}${toolbar()}${timeline()}`;}
+function timeline(){const notes=filterNotes(activeRecords(),{...state,time:'all'}).filter(n=>inPeriod(n,state.date,state.period));const {start,end}=periodBounds(state.date,state.period);let label=state.period==='day'?`${start.getMonth()+1}月${start.getDate()}日`:state.period==='month'?`${start.getFullYear()}年${start.getMonth()+1}月`:`${dayLabel(start)} — ${dayLabel(new Date(end.getTime()-1))}`;return `<section class="timeline-panel"><div class="timeline-controls"><div class="segmented" aria-label="时间范围">${[['day','日'],['week','周'],['month','月']].map(([id,t])=>`<button data-action="period" data-id="${id}" class="${state.period===id?'active':''}" aria-pressed="${state.period===id}">${t}</button>`).join('')}</div><div class="date-navigator"><button class="icon-btn" data-action="prev-date" aria-label="上一个时间段">${icon('back')}</button><input type="date" id="timeline-date" value="${state.date}" aria-label="选择时间轴日期"><button class="icon-btn" data-action="next-date" aria-label="下一个时间段">${icon('arrow')}</button><button class="today-btn" data-action="today">今天</button></div></div><div class="timeline-summary"><strong>${notes.length}</strong> 道错题 <span>· ${label}</span></div>${state.period==='day'?dayTimeline(notes):state.period==='week'?weekTimeline(notes,start):monthTimeline(notes,start)}${state.period==='month'?'<div class="month-hint">点击日期，查看当天每个小时的记录。</div>':''}</section>`;}
+function dayTimeline(notes){if(!notes.length)return `<div class="empty-state"><div class="empty-icon">${icon('calendar')}</div><h3>这一天，还没有留下记录</h3><p>可以选择其他日期，或记录一道新的错题。</p><button class="primary" data-action="camera">${icon('plus')} 记录错题</button></div>`;const groups=new Map();for(const n of [...notes].sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt))){const h=new Date(n.createdAt).getHours();if(!groups.has(h))groups.set(h,[]);groups.get(h).push(n);}return `<div class="day-timeline">${[...groups.entries()].map(([h,list])=>`<div class="hour-row"><time class="hour-label">${String(h).padStart(2,'0')}:00</time><div class="hour-content has-notes">${list.map(n=>{const s=subjectOf(n.subject);return `<button class="timeline-note" data-action="detail" data-id="${n.id}" style="${colors(s)}"><span class="tiny-subject">${s.name}</span><span class="timeline-note-title">${esc(n.title)}</span><span class="reason-tag">${esc(n.reasons[0])}</span><time>${timeLabel(n.createdAt)}</time>${icon('arrow')}</button>`;}).join('')}</div></div>`).join('')}</div>`;}
+function weekTimeline(notes,start){return `<div class="week-grid">${Array.from({length:7},(_,i)=>{const d=new Date(start);d.setDate(d.getDate()+i);const key=localDate(d),list=notes.filter(n=>localDate(new Date(n.createdAt))===key);return `<div class="week-day ${key===localDate()?'is-today':''}"><button class="week-day-head" style="width:100%" data-action="day" data-id="${key}" aria-label="查看${dayLabel(d)}记录"><span>周${'一二三四五六日'[i]}</span><strong>${d.getDate()}</strong></button>${list.length?list.map(n=>{const s=subjectOf(n.subject);return `<button class="week-item" data-action="detail" data-id="${n.id}" style="${colors(s)}"><span>${esc(n.title)}</span><time>${timeLabel(n.createdAt)} · ${s.name}</time></button>`;}).join(''):'<div class="week-no">暂无记录</div>'}</div>`;}).join('')}</div>`;}
+function monthTimeline(notes,start){const offset=(start.getDay()+6)%7;const last=new Date(start.getFullYear(),start.getMonth()+1,0).getDate();return `<div class="month-grid">${[...'一二三四五六日'].map(x=>`<div class="month-weekday">${x}</div>`).join('')}${'<div class="month-blank"></div>'.repeat(offset)}${Array.from({length:last},(_,i)=>{const d=new Date(start);d.setDate(i+1);const key=localDate(d),list=notes.filter(n=>localDate(new Date(n.createdAt))===key),subjects=[...new Set(list.map(n=>n.subject))];return `<button class="month-cell ${list.length?'has-records':''} ${key===localDate()?'is-today':''}" data-action="day" data-id="${key}" aria-label="${dayLabel(d)}，${list.length}道错题"><span class="day-number">${i+1}</span>${list.length?`<span class="month-dots">${subjects.map(s=>`<i style="background:${subjectOf(s).color}"></i>`).join('')}</span><span class="month-count">${list.length} 道记录</span>`:''}</button>`;}).join('')}</div>`;}
+function render(){app.innerHTML=header()+`<main class="container main-page animate">${storageError?`<div class="notice">${esc(storageError)}</div>`:''}${state.page==='home'?home():state.page==='folders'?foldersPage():state.page==='timeline'?timelinePage():collectionPage()}</main>`+footer();syncQuoteRotation();}
+function modal(title,subtitle,content,actions='',classes=''){if(!overlay.innerHTML)lastFocus=document.activeElement;overlay.innerHTML=`<div class="modal-backdrop"><section class="modal ${classes}" role="dialog" aria-modal="true" aria-labelledby="modal-title"><header class="modal-head"><div><h2 id="modal-title">${title}</h2>${subtitle?`<p>${subtitle}</p>`:''}</div><button class="icon-btn" data-action="close-modal" aria-label="关闭弹窗">${icon('close')}</button></header>${content}${actions?`<footer class="modal-actions">${actions}</footer>`:''}</section></div>`;document.body.style.overflow='hidden';requestAnimationFrame(()=>overlay.querySelector('[autofocus],button,input')?.focus());}
+function stopCamera(){cameraToken++;if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}}
+function closeModal(force=false){if(busy&&!force)return;if(imageExportCleanup){imageExportCleanup();imageExportCleanup=null;}photoRequestId++;if(cropCleanup){cropCleanup();cropCleanup=null;}settingsOpen=false;stopCamera();overlay.innerHTML='';document.body.style.overflow='';draft=null;restorePending=null;lastFocus?.focus?.();}
+function createDraft(photo=''){const existingSubject=state.subject!=='all'?state.subject:'';draft={id:null,title:'',subject:existingSubject,reasons:[],notes:'',createdAt:localInput(),mastered:false,photo};openEditor();}
+function readDraft(){if(!draft)return;const form=document.querySelector('#note-form');if(form){draft.title=form.elements.title.value;draft.notes=form.elements.notes.value;draft.createdAt=form.elements.createdAt.value;}}
+function openEditor(error=''){const n=draft;const allReasons=[...new Set([...REASONS,...n.reasons])];modal(n.id?'编辑这道错题':'给这道错题，找到位置。',n.id?'每一次补充，都是一次新的理解。':'选好学科与错误原因，方便下一次回看。',`<div class="modal-content"><form id="note-form"><div class="editor-layout"><div><div class="editor-photo">${n.photo?`<img src="${n.photo}" alt="待归档的错题照片">`:`<div class="photo-placeholder">${icon('image')}<span>也可以只用文字记录</span></div>`}</div><div class="photo-actions">${n.photo?`<button type="button" data-action="crop-photo">${icon('crop')} 裁切照片</button>`:''}<button type="button" data-action="replace-photo">${icon('image')} ${n.photo?'更换题目照片':'添加题目照片'}</button></div><p class="file-note" style="text-align:center">支持 JPG、PNG、WebP，照片会自动压缩。</p></div><div>${error?`<p class="form-error" role="alert">${esc(error)}</p>`:''}<div class="form-field"><label for="note-title">题目名称 <span style="color:#adb7c5">· 便于查找</span></label><input id="note-title" name="title" required maxlength="100" placeholder="例如：一元二次方程的配方法" value="${esc(n.title)}"></div><div class="form-field"><span class="field-label">所属学科 <span style="color:#df8e8e">*</span></span><div class="form-subjects">${SUBJECTS.map(s=>`<button type="button" class="select-chip ${n.subject===s.id?'selected':''}" data-action="draft-subject" data-id="${s.id}" aria-pressed="${n.subject===s.id}">${s.name}</button>`).join('')}</div></div><div class="form-field"><span class="field-label">错误原因 <span style="color:#adb7c5">· 可多选</span> <span style="color:#df8e8e">*</span></span><div class="form-reasons">${allReasons.map(r=>`<button type="button" class="select-chip ${n.reasons.includes(r)?'selected':''}" data-action="draft-reason" data-id="${esc(r)}" aria-pressed="${n.reasons.includes(r)}">${esc(r)}</button>`).join('')}</div><div class="custom-reason"><input id="custom-reason" maxlength="30" placeholder="其他原因，自己定义" aria-label="自定义错误原因"><button type="button" data-action="add-reason">+ 添加</button></div></div><div class="form-field"><label for="note-date">记录时间</label><input id="note-date" name="createdAt" type="datetime-local" required value="${esc(n.createdAt)}"></div><div class="form-field" style="margin-bottom:0"><label for="note-notes">留一点思路 <span style="color:#adb7c5">· 选填</span></label><textarea id="note-notes" name="notes" maxlength="5000" placeholder="当时哪里没想明白？下次要注意什么？">${esc(n.notes)}</textarea></div></div></div></form></div>`,`<span class="hint">${icon('shield')} 仅保存在这台设备</span><button class="secondary" data-action="cancel-editor">取消</button><button class="primary" form="note-form" type="submit">${icon('check')} 保存到收藏夹</button>`);}
+async function saveDraft(){if(busy)return;readDraft();if(!draft.title.trim())return openEditor('给这道错题取一个名字吧。');if(!draft.subject)return openEditor('请选择一个学科。');if(!draft.reasons.length)return openEditor('请至少选择一个错误原因。');if(draft.reasons.length>20)return openEditor('最多可以选择 20 个错误原因。');const date=new Date(draft.createdAt);if(!Number.isFinite(date.getTime()))return openEditor('请选择有效的记录时间。');if(date.getTime()>Date.now()+60000)return openEditor('记录时间不能晚于当前时间。');const n={...draft,id:draft.id||crypto.randomUUID(),title:draft.title.trim(),createdAt:date.toISOString()};busy=true;const saveButton=overlay.querySelector('[type="submit"]');if(saveButton){saveButton.disabled=true;saveButton.textContent='正在保存…';}try{await writeNotes([n]);const idx=records.findIndex(r=>r.id===n.id);if(idx>=0)records[idx]=n;else records.push(n);state.demo=false;persistPreference();busy=false;closeModal();navigate('subject',n.subject);toast('已收进'+subjectOf(n.subject).name+'收藏夹');}catch(e){busy=false;showStorageError(e);openEditor('保存未完成，填写的内容已保留。');}}
+function findNote(id){return activeRecords().find(n=>n.id===id);}
+function openDetail(id){if(imageExportCleanup){imageExportCleanup();imageExportCleanup=null;}const n=findNote(id);if(!n)return;const s=subjectOf(n.subject);modal('回看这道错题',n.example?'这是示例内容，可用来体验查看与分类。':n.mastered?'已经掌握，继续保持。':'慢一点想，把它真正弄明白。',`<div class="modal-content"><div class="editor-layout"><div class="editor-photo">${n.photo?`<img src="${n.photo}" alt="${esc(n.title)}的完整题目照片">`:paper(n)}</div><div><div class="tiny-subject" style="${colors(s)};display:inline-block;margin-bottom:13px">${s.name}</div><h3 class="detail-title">${esc(n.title)}</h3><div class="detail-info"><span class="field-label">错误原因</span><div class="reason-tags">${n.reasons.map(r=>`<span class="reason-tag">${esc(r)}</span>`).join('')}</div><span class="field-label">思路与反思</span><p class="detail-notes">${esc(n.notes||'还没有留下思路，点击编辑补充吧。')}</p><div class="detail-date">${icon('clock')}${fullLabel(n.createdAt)}</div></div></div></div></div>`,`<button class="secondary" data-action="export-note" data-id="${n.id}">${icon('download')} 导出图片</button>`+(n.example?`<button class="secondary" data-action="close-modal">关闭</button><button class="primary" data-action="copy-example" data-id="${n.id}">以此为模板记录</button>`:`<button class="danger-btn" data-action="delete-confirm" data-id="${n.id}">${icon('trash')} 删除</button><button class="secondary" data-action="edit-note" data-id="${n.id}">${icon('edit')} 编辑</button><button class="primary" data-action="master-note" data-id="${n.id}">${icon(n.mastered?'refresh':'check')}${n.mastered?'设为待复习':'我已掌握'}</button>`));}
+async function startCamera(){stopCamera();draft=null;const token=cameraToken;modal('拍下此刻的疑问','将题目放在画面中央，尽量保持清晰。',`<div class="video-area"><div class="camera-state"><div class="spinner"></div>正在开启相机…</div></div><div class="camera-controls"><button class="camera-alternate" data-action="upload">${icon('image')} 从相册选择</button><button class="shutter" data-action="shutter" aria-label="拍摄照片" disabled></button><button class="camera-alternate" data-action="manual">${icon('edit')} 文字记录</button></div><div class="camera-tip">拍摄后先裁切题目，再选择学科与错误原因。</div>`,'','camera-modal');try{if(!navigator.mediaDevices?.getUserMedia)throw new Error('unsupported');const media=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1600},height:{ideal:1200}},audio:false});if(token!==cameraToken){media.getTracks().forEach(t=>t.stop());return;}stream=media;const area=overlay.querySelector('.video-area');area.innerHTML='<video autoplay playsinline muted aria-label="相机预览"></video><div class="camera-guide"></div>';const video=area.querySelector('video');video.srcObject=media;await video.play();if(token===cameraToken)overlay.querySelector('.shutter').disabled=false;}catch(e){if(token!==cameraToken)return;if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}const denied=e.name==='NotAllowedError';const message=denied?(window.AndroidArchive?'请在手机设置 → 应用 → 拾光错题本 → 权限中允许相机，也可以从相册选择照片。':'请在浏览器的网站权限中允许相机，也可以从相册选择照片。'):e.name==='NotFoundError'?'没有检测到相机。你可以上传已经拍好的题目照片。':'暂时无法使用相机。请检查相机是否被其他应用占用，或从相册选择照片。';overlay.querySelector('.video-area').innerHTML=`<div class="camera-state">${icon('camera')}<h3>${denied?'给相机一点权限':'也可以，从一张照片开始。'}</h3><p>${message}</p><button class="primary" data-action="upload">${icon('image')} 从相册选择</button></div>`;}}
+function shutter(){const video=overlay.querySelector('video');if(!video?.videoWidth)return toast('相机还没准备好，请稍后再试。');const scale=Math.min(1,3200/Math.max(video.videoWidth,video.videoHeight));const canvas=document.createElement('canvas');canvas.width=Math.round(video.videoWidth*scale);canvas.height=Math.round(video.videoHeight*scale);canvas.getContext('2d').drawImage(video,0,0,canvas.width,canvas.height);const photo=canvas.toDataURL('image/jpeg',.85);stopCamera();beginCrop(photo);}
+function choosePhoto(){readDraft();stopCamera();photoRequestId++;document.querySelector('#photo-input').click();}
+async function loadPhoto(file){if(!file)return;const request=++photoRequestId;const ownerDraft=draft;if(!file.type.startsWith('image/'))return toast('请选择图片文件。');if(file.size>25*1024*1024)return toast('图片过大，请选择小于 25 MB 的照片。');toast('正在整理照片…');try{const url=URL.createObjectURL(file);const img=new Image();try{await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(new Error('decode'));img.src=url;});if(request!==photoRequestId||draft!==ownerDraft)return;const factor=Math.min(1,3200/Math.max(img.naturalWidth,img.naturalHeight));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.naturalWidth*factor));c.height=Math.max(1,Math.round(img.naturalHeight*factor));const ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);const photo=c.toDataURL('image/jpeg',.85);stopCamera();beginCrop(photo);}finally{URL.revokeObjectURL(url);}}catch{if(request===photoRequestId)toast('暂时无法读取这张照片，请转换为 JPG、PNG 或 WebP 后重试。');}}
+function confirmDiscard(){readDraft();if(draft&&(draft.title.trim()||draft.notes.trim()||draft.photo||draft.reasons.length)){modal('离开这次记录？','',`<div class="modal-content"><p class="confirm-copy">这道错题还没有保存。离开后，本次填写的内容将被丢弃。</p></div>`,`<button class="secondary" data-action="resume-editor">继续编辑</button><button class="primary" data-action="discard">放弃记录</button>`,'small-modal');}else closeModal();}
+function openStorage(){modal('好好保存，每一份积累。','照片和记录保存在当前设备，无需登录即可使用。',`<div class="modal-content"><div class="storage-row"><div><h3>导出备份</h3><p>包含 ${records.length} 道真实错题、照片与笔记</p></div><button class="secondary" data-action="export">${icon('download')} 导出</button></div><div class="storage-row"><div><h3>从备份恢复</h3><p>支持导入拾光导出的 JSON 文件</p></div><button class="secondary" data-action="import">${icon('upload')} 导入</button></div><p class="storage-note">网页与 Android 的功能保持一致，记录保存在各自设备中，通过 JSON 存档互相迁移。清除浏览器数据或卸载 App 会删除本地记录，请定期导出存档。</p><p class="storage-note">${state.demo?'当前为示例体验模式。示例题目不会混入你的记录，也不会被导出。':'当前正在查看你的真实记录。'}</p></div>`,'','small-modal');}
+let archiveBusy = false;
+async function exportBackup(){
+  if(archiveBusy)return toast('正在导出，请先完成当前保存。');
+  if(!records.length)return toast('还没有真实错题可导出。先记录一道题，示例题目不会加入存档。');
+  const data={app:'shiguang',version:1,exportedAt:new Date().toISOString(),notes:records};
+  const filename='拾光错题备份-'+localDate()+'.json';
+  if(window.AndroidArchive){
+    archiveBusy=true;toast('正在准备存档，请选择保存位置…');
+    try {const result=await saveAndroidArchive(window.AndroidArchive,filename,data);toast(result.message);}
+    catch(error){toast(error.message||'导出失败，请重试。');}
+    finally {archiveBusy=false;}
+    return;
+  }
+  const url=URL.createObjectURL(new Blob([JSON.stringify(data)],{type:'application/json'}));
+  const a=document.createElement('a');a.href=url;a.download=filename;a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),2000);toast('已导出 '+records.length+' 道错题的备份');
+}
+async function readBackup(file){if(!file)return;if(file.size>50*1024*1024)toast('正在读取较大的备份，请稍候…');try{const list=validateBackup(JSON.parse(await file.text()));restorePending=list;const existing=new Set(records.map(n=>n.id));const updates=list.filter(n=>existing.has(n.id)).length;modal('恢复这些记录？','',`<div class="modal-content"><p class="confirm-copy">这份备份包含 ${list.length} 道错题，将新增 ${list.length-updates} 道${updates?`，并更新 ${updates} 道相同编号的记录`:''}。现有的其他记录会保留。</p></div>`,`<button class="secondary" data-action="close-modal">取消</button><button class="primary" data-action="restore-confirm">确认恢复</button>`,'small-modal');}catch(e){toast(e instanceof SyntaxError?'文件内容无法读取，请选择有效的拾光备份。':e.message);}}
+async function restoreBackup(){if(!restorePending||busy)return;busy=true;try{await writeNotes(restorePending);const map=new Map(records.map(n=>[n.id,n]));for(const n of restorePending)map.set(n.id,n);records=[...map.values()];state.demo=false;persistPreference();busy=false;closeModal();navigate('library');toast('备份已恢复，所有记录都在这里。');}catch(e){busy=false;showStorageError(e);}}
+
+document.addEventListener('click',async event=>{
+  const button=event.target.closest('[data-action]');if(!button||button.disabled)return;const a=button.dataset.action,id=button.dataset.id;
+  if(busy&&button.closest('#overlay-root'))return;
+  if(a==='home')return navigate('home');
+  if(a==='navigate')return navigate(button.dataset.page);
+  if(a==='folder')return navigate('subject',id);
+  if(a==='camera')return startCamera();
+  if(a==='upload'||a==='replace-photo')return choosePhoto();
+  if(a==='manual'){stopCamera();return createDraft();}
+  if(a==='shutter')return shutter();
+  if(a==='close-modal')return cropCleanup?cancelCrop():draft?confirmDiscard():closeModal();
+  if(a==='settings')return openSettings();
+  if(a==='next-quote'){nextQuote();syncQuoteRotation();return;}
+  if(a==='default-quotes'){const v=settingsValues();return openSettings({...v,quotes:DEFAULT_QUOTES.join('\n')});}
+  if(a==='crop-photo'){readDraft();return beginCrop(draft.photo);}
+  if(a==='cancel-editor')return confirmDiscard();
+  if(a==='discard')return closeModal();
+  if(a==='resume-editor')return openEditor();
+  if(a==='view'){state.view=id;state.time='all';render();return;}
+  if(a==='subject-filter'){state.subject=id;state.limit=24;render();return;}
+  if(a==='status-filter'){state.status=id;render();return;}
+  if(a==='clear-filters'){const s=state.subject;resetFilters();if(state.page==='subject')state.subject=s;render();return;}
+  if(a==='search'){if(state.page==='folders')state.page='library';state.search=true;render();document.querySelector('#search-field')?.focus();return;}
+  if(a==='close-search'){state.query='';state.search=false;render();return;}
+  if(a==='period'){state.period=id;render();return;}
+  if(a==='prev-date'||a==='next-date'){state.date=shiftDate(state.date,state.period,a==='prev-date'?-1:1);render();return;}
+  if(a==='today'){state.date=localDate();render();return;}
+  if(a==='day'){state.date=id;state.period='day';render();return;}
+  if(a==='toggle-demo'){state.demo=!state.demo;persistPreference();resetFilters();state.page='home';render();toast(state.demo?'正在体验示例，真实记录已保留。':'已切换到你的错题本');return;}
+  if(a==='draft-subject'){draft.subject=id;overlay.querySelectorAll('[data-action="draft-subject"]').forEach(b=>{b.classList.toggle('selected',b.dataset.id===id);b.setAttribute('aria-pressed',String(b.dataset.id===id));});return;}
+  if(a==='draft-reason'){if(!draft.reasons.includes(id)&&draft.reasons.length>=20)return toast('最多可以选择 20 个原因。');draft.reasons=draft.reasons.includes(id)?draft.reasons.filter(r=>r!==id):[...draft.reasons,id];button.classList.toggle('selected',draft.reasons.includes(id));button.setAttribute('aria-pressed',String(draft.reasons.includes(id)));return;}
+  if(a==='add-reason'){const el=document.querySelector('#custom-reason');const r=el.value.trim();if(!r)return el.focus();if(draft.reasons.length>=20)return toast('最多可以选择 20 个原因。');readDraft();draft.reasons=[...new Set([...draft.reasons,r])];openEditor();return;}
+  if(a==='export-note'){const note=findNote(id);if(!note)return;if(imageExportCleanup)imageExportCleanup();imageExportCleanup=mountNoteExport({root:overlay,note,subject:subjectOf(note.subject),renderModal:modal,icon,onBack:()=>openDetail(id),onMessage:toast});return;}
+  if(a==='detail')return openDetail(id);
+  if(a==='edit-note'||a==='copy-example'){const n=findNote(id);if(!n)return;draft={...n,reasons:[...n.reasons],createdAt:localInput(a==='copy-example'?new Date():new Date(n.createdAt))};delete draft.paper;delete draft.example;if(a==='copy-example'){draft.id=null;draft.mastered=false;}return openEditor();}
+  if(a==='master-note'){const n=findNote(id);if(!n)return;busy=true;try{const updated={...n,mastered:!n.mastered};await writeNotes([updated]);records=records.map(r=>r.id===id?updated:r);busy=false;closeModal();render();toast(updated.mastered?'又掌握了一道，积累正在发生。':'已放回待复习列表');}catch(e){busy=false;showStorageError(e);}return;}
+  if(a==='delete-confirm'){modal('删除这道错题？','',`<div class="modal-content"><p class="confirm-copy">题目照片和笔记也会一起删除。删除后无法撤销，建议先导出备份。</p></div>`,`<button class="secondary" data-action="detail" data-id="${id}">保留记录</button><button class="primary" style="background:#c66b6b" data-action="delete-note" data-id="${id}">确认删除</button>`,'small-modal');return;}
+  if(a==='delete-note'){busy=true;try{await removeNote(id);records=records.filter(n=>n.id!==id);busy=false;closeModal();render();toast('已删除这道错题');}catch(e){busy=false;showStorageError(e);}return;}
+  if(a==='load-more'){state.limit+=24;render();return;}
+  if(a==='storage')return openStorage();
+  if(a==='export')return exportBackup();
+  if(a==='import')return document.querySelector('#restore-input').click();
+  if(a==='restore-confirm')return restoreBackup();
+});
+document.addEventListener('submit',e=>{if(e.target.id==='quote-form'){e.preventDefault();saveQuoteSettings();return;}if(e.target.id==='note-form'){e.preventDefault();saveDraft();}});
+document.addEventListener('change',e=>{if(e.target.id==='photo-input'){const f=e.target.files[0];e.target.value='';loadPhoto(f);}if(e.target.id==='restore-input'){const f=e.target.files[0];e.target.value='';readBackup(f);}if(e.target.id==='reason-filter'){state.reason=e.target.value;render();}if(e.target.id==='time-filter'){state.time=e.target.value;render();}if(e.target.id==='timeline-date'&&e.target.value){state.date=e.target.value;render();}});
+let searchTimer;
+document.addEventListener('input',e=>{if(e.target.id==='custom-quotes'){const line=e.target.value.split(/\r?\n/).find(s=>s.trim());document.querySelector('#quote-preview').textContent=line||'在下面写下你想对自己说的话。';}if(e.target.id==='search-field'){state.query=e.target.value;clearTimeout(searchTimer);searchTimer=setTimeout(()=>{const pos=document.querySelector('#search-field')?.selectionStart;render();const field=document.querySelector('#search-field');field?.focus();if(field?.type==='text')field.setSelectionRange(pos,pos);},160);}});
+document.addEventListener('keydown',e=>{if(e.target.id==='custom-reason'&&e.key==='Enter'){e.preventDefault();overlay.querySelector('[data-action="add-reason"]').click();return;}if(e.key==='Escape'&&overlay.innerHTML){if(!busy)(cropCleanup?cancelCrop():draft?confirmDiscard():closeModal());return;}if(e.key==='Tab'&&overlay.innerHTML){const els=[...overlay.querySelectorAll('button:not(:disabled),a[href],input:not(:disabled),textarea,select,[tabindex="0"]')].filter(el=>el.offsetParent!==null);const first=els[0],last=els.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}}});
+window.addEventListener('pagehide',()=>{stopCamera();clearInterval(quoteTimer);photoRequestId++;});
+window.addEventListener('pageshow',()=>syncQuoteRotation());
+window.addEventListener('beforeunload',e=>{if(draft){readDraft();if(draft.title||draft.photo||draft.notes){e.preventDefault();e.returnValue='';}}});
+async function init(){app.innerHTML='<div class="loading"><div class="spinner"></div>正在打开你的错题本…</div>';try{db=await openDB();records=await readAll();db.onversionchange=()=>{db.close();db=null;storageError='本地数据库已更新，请刷新页面继续使用。';render();};try{const pref=localStorage.getItem('shiguang-demo');state.demo=pref==='yes'||(!pref&&records.length===0);}catch{state.demo=records.length===0;}}catch(e){storageError='当前无法使用本地存储，暂时可浏览示例。请检查设备空间，并更新浏览器或 Android System WebView 后重试。';state.demo=true;}render();}
+init();
+
+window.shiguangBack=()=>{
+  if(busy)return true;
+  if(overlay.innerHTML){cropCleanup?cancelCrop():draft?confirmDiscard():closeModal();return true;}
+  if(state.page!=='home'){navigate('home');return true;}
+  if(state.search){state.search=false;state.query='';render();return true;}
+  return false;
+};
+let resumeCamera=false;
+function pauseNativeCamera(){if(stream){stopCamera();resumeCamera=true;}}
+function resumeNativeCamera(){if(resumeCamera){resumeCamera=false;if(overlay.querySelector('.camera-modal'))startCamera();}}
+window.addEventListener('shiguang-pause',pauseNativeCamera);
+window.addEventListener('shiguang-resume',resumeNativeCamera);
+window.addEventListener('shiguang-picker-cancelled',()=>{if(!stream&&overlay.querySelector('.camera-modal'))startCamera();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseNativeCamera();else resumeNativeCamera();});
+
+document.querySelector('#photo-input').addEventListener('cancel',()=>{if(!window.AndroidArchive&&!stream&&overlay.querySelector('.camera-modal'))startCamera();});
+return {};
+})();
+})();
+
+</script>
+</body>
+</html>
