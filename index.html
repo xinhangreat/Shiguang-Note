@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="zh-CN">
 <!--
-拾光 · 错题本 1.1.0 — 独立单文件版
-来源：https://shiguang-mistake-notes-m24.duskyboar5.chatgpt.site/
+拾光 · 错题本 1.2.0 — 独立单文件版
 
 使用：用较新的浏览器打开此文件即可。样式、图标和所有逻辑均内嵌，
 无需 CDN、安装依赖或登录账号。支持拍照/上传、裁切与左右旋转、
-学科/原因/时间分类、日周月时间轴、首页语句设置、JSON 存档与 JPG 导出。
+自定义收藏夹/原因/时间分类、日周月时间轴、自定义话语、版本更新记录、
+含话语与收藏夹的 JSON 存档，以及底部随机显示自定义话语的 JPG 导出。
 
 浏览器可能限制本地文件的相机和持久存储权限；如受限制，可将本文件
 放到 HTTPS 静态托管或 localhost 上运行。相册上传和手动录入也可使用。
@@ -35,6 +35,8 @@
 @media(max-width:400px){.top-inner{padding:0 13px;gap:7px}.brand{gap:7px}.brand-name{font-size:18px;letter-spacing:2px}.nav{gap:12px}.nav button{font-size:11px}.top-actions{gap:4px}.settings-trigger{width:28px}.quote-line{max-width:300px}}
 @media(max-width:760px){.backup-bar{padding:12px;margin:-4px 0 18px;gap:8px}.backup-bar-label{gap:6px}.backup-bar-label>div{display:block}.backup-bar-label span{display:none}.backup-bar-label strong{font-size:10px}.backup-bar-label>.icon{width:16px;height:16px}.backup-bar-actions{gap:6px}.backup-bar-actions .secondary{padding:9px 10px;font-size:10px;gap:5px}.backup-bar-actions .icon{width:13px;height:13px}}
 :root{color-scheme:light}
+.page-actions{display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap}.page-actions button{white-space:nowrap}.folder-title,.managed-folder-name strong,.subject-pill,.tiny-subject{overflow-wrap:anywhere}.folder-title{line-height:1.5}.folders-panel{height:auto;min-height:310px}.folders-panel .folders{max-height:338px;overflow:auto;padding:2px 4px 3px 1px}.folder-add-empty{grid-column:1/-1;border:1px dashed #cdd9e9;border-radius:14px;color:#5983b9;min-height:160px}.folders-empty{text-align:center;padding:60px 20px;background:#fff;border:1px solid #e5eaf2;border-radius:22px;margin-top:28px}.folders-empty .empty-icon{margin:0 auto 18px}.folders-empty h2{font-size:21px}.folders-empty p{color:#8c99aa;margin:14px 0 22px;font-size:13px}.unfiled-link{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:20px 24px;margin:20px 0 0;border:1px dashed #dce3ed;border-radius:14px;color:#72839a;font-size:13px}.unfiled-link span{font-size:11px;color:#98a5b5;flex:1}.unfiled-link:hover{background:#edf3fb}.folder-manager-modal{max-width:600px}.folder-input-row{display:flex;gap:9px}.folder-input-row input,.form-field #folder-move-target{width:100%;min-width:0;padding:12px 14px;border:1px solid #dfe6ef;border-radius:11px;font-size:13px;background:#fafcfe;color:#344459;outline-color:#9bc8ff}.folder-input-row .primary{flex-shrink:0}.quick-folders{padding:26px 0;border-bottom:1px solid #edf0f5}.folder-section-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px}.folder-section-head h3{font-size:13px;font-weight:600;color:#516176}.folder-section-head>span{font-size:11px;color:#95a2b4}.quick-folder-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:14px}.quick-folder{display:flex;align-items:center;gap:9px;padding:12px;border:1px solid #e6ebf3;border-radius:11px;font-size:12px;color:#5a6b83;background:#fcfdff}.quick-folder>span,.managed-symbol{color:var(--accent);background:var(--tint);display:grid;place-items:center;width:30px;height:30px;border-radius:9px;flex-shrink:0}.quick-folder>.icon{width:14px;height:14px;margin-left:auto;color:#849bbc}.quick-folder:hover{border-color:#a5c7f6;background:#f5f9ff}.managed-folders{padding-top:24px}.managed-folder{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid #f0f3f7}.managed-folder:last-child{border-bottom:0}.managed-folder-name{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}.managed-folder-name strong{font-size:13px;color:#526279;font-weight:500}.managed-folder-name>span{font-size:10px;color:#9ca9ba}.folder-delete:hover{color:#bd6b76;background:#fff2f4}.danger-primary{background:#be727e}.footer-right{flex-wrap:wrap;justify-content:flex-end}.changelog-trigger{white-space:nowrap}.changelog-trigger span{font-size:9px;color:#9ba9bb;margin-left:4px}.changelog-modal{max-width:620px}.release-item{padding:3px 0 27px 22px;margin-left:5px;border-left:1px solid #e4eaf3;position:relative}.release-item:before{content:'';position:absolute;width:7px;height:7px;left:-4px;top:10px;border-radius:50%;background:#c9d5e5}.release-item:first-child:before{background:#287fec;box-shadow:0 0 0 4px #edf4ff}.release-item:last-child{padding-bottom:4px}.release-heading{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.release-heading h3{font-size:17px;color:#33445b}.release-heading time{margin-left:auto;font-size:10px;color:#9aa6b6}.release-current{font-size:9px;color:#4182da;background:#edf5ff;padding:4px 7px;border-radius:6px}.release-item h4{font-size:13px;font-weight:500;color:#677992;margin:14px 0 10px}.release-item ul{margin:0;padding-left:17px;color:#8694a7;font-size:12px;line-height:1.9}.release-item li{padding-left:2px;margin:7px 0}.release-item li::marker{color:#b0bfd2}.form-subjects .select-chip{overflow-wrap:anywhere;max-width:100%}.page-title-row>div:first-child{min-width:0}.page-title-row h1{overflow-wrap:anywhere}
+@media(max-width:760px){.page-title-row{flex-wrap:wrap;gap:20px}.page-actions{width:100%;justify-content:flex-end;gap:8px}.page-actions button{font-size:11px;padding:10px 13px}.page-actions .icon{width:15px;height:15px}.folder-manager-modal .modal-content{padding:20px}.quick-folder-grid{gap:7px}.quick-folder{padding:9px;gap:6px}.quick-folder>span{width:24px;height:26px}.quick-folder>.icon{width:12px;height:12px}.folder-manager-modal .modal-head p{line-height:1.7}.managed-folder{gap:10px}.footer{flex-wrap:wrap}.footer-right{width:100%;justify-content:flex-start;padding-top:7px;gap:13px}.footer button{font-size:10px}.unfiled-link{padding:16px;flex-wrap:wrap}.unfiled-link span{font-size:10px}.folders-panel .folders{max-height:360px}.folder-input-row input{font-size:12px;padding:11px}.release-item{padding-left:17px}.release-item ul{font-size:11px}.changelog-modal .modal-head p{font-size:11px}}
 .compatibility-message{max-width:480px;margin:16vh auto;padding:28px;line-height:1.8}.compatibility-message h1{font-size:26px}.compatibility-message p{color:#667085;margin-top:16px}
 .rotate-left-icon{transform:scaleX(-1)}.crop-tools{flex-wrap:wrap}.image-export-modal{max-width:780px}.image-export-content{background:#f6f8fb}.export-status{text-align:center;padding:40px 12px;color:#7c8ba0}.export-preview{max-height:56vh;overflow:auto;border:1px solid #e2e8f0;border-radius:12px;background:#fff;box-shadow:0 8px 24px #152a4708}.export-preview img{display:block;width:100%;height:auto;user-select:auto;-webkit-user-select:auto}.export-pages{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:18px}.export-pages span{font-size:12px;color:#748499}.export-help{font-size:11px;color:#8c99aa;line-height:1.8;margin:15px 0 0}.export-preview[hidden],.export-pages[hidden],.export-status[hidden]{display:none}.modal-actions:has([data-action="export-note"]){flex-wrap:wrap}.modal-actions [data-action="export-note"]{margin-right:auto}.image-export-modal .modal-head p{line-height:1.6}@media(max-width:760px){.crop-tools{gap:7px}.crop-tools .secondary{padding:8px;font-size:10px}.crop-size{flex-basis:100%;text-align:right}.export-preview{max-height:49vh}.export-pages{gap:12px}.modal-actions [data-action="export-note"]{flex-basis:100%;justify-content:center;margin:0}.image-export-modal .modal-content{padding:16px}}
 
@@ -125,12 +127,15 @@ async function loadImage(src){
   return img;
 }
 
-async function renderNoteImages(note,subject){
+async function renderNoteImages(note,subject,quote=''){
   if(document.fonts?.ready)await document.fonts.ready;
   const image=note.photo?await loadImage(note.photo):null;
   const canvas=document.createElement('canvas');canvas.width=WIDTH;
   const ctx=canvas.getContext('2d');
   if(!ctx)throw new Error('当前设备无法生成图片，请更新浏览器或 Android System WebView。');
+  ctx.font=`400 21px ${FONT}`;
+  const footerLines=wrapText(quote,t=>ctx.measureText(t).width,WIDTH-PAD*2-140);
+  const footerHeight=Math.max(1,footerLines.length)*32+60;
   const rows=[];
   function add(text,size=32,color='#273344',weight=400,keepNext=false){
     ctx.font=`${weight} ${size}px ${FONT}`;
@@ -149,22 +154,23 @@ async function renderNoteImages(note,subject){
     add(value,label==='题目名称'?40:32,'#263344',label==='题目名称'?600:400);
     rows.push({height:24});
   }
-  const pages=paginateRows(rows,{firstTop});
+  const pages=paginateRows(rows,{firstTop,bottom:Math.min(BOTTOM,3600-footerHeight-28)});
   const results=[];
   try{
     for(let i=0;i<pages.length;i++){
       const page=pages[i];
       const end=page.length?page.at(-1).y+page.at(-1).height:firstTop;
-      canvas.height=Math.min(3600,Math.max(520,Math.ceil(end+100)));
+      canvas.height=Math.min(3600,Math.max(520,Math.ceil(end+footerHeight+28)));
       ctx.fillStyle='#fff';ctx.fillRect(0,0,WIDTH,canvas.height);
       ctx.textBaseline='top';
       ctx.fillStyle='#1674ec';ctx.fillRect(PAD,58,6,42);
       ctx.font=`600 30px ${FONT}`;ctx.fillStyle='#263344';ctx.fillText('拾光 · 错题记录',PAD+24,62);
-      ctx.font=`400 24px ${FONT}`;ctx.fillStyle='#78879a';ctx.textAlign='right';ctx.fillText(subject.name+(note.example?' · 示例':''),WIDTH-PAD,68);ctx.textAlign='left';
+      ctx.font=`400 24px ${FONT}`;ctx.fillStyle='#78879a';ctx.textAlign='right';ctx.fillText(subject.name+(note.example?' · 示例':''),WIDTH-PAD,68,WIDTH/2);ctx.textAlign='left';
       ctx.strokeStyle='#e6ebf1';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(PAD,124);ctx.lineTo(WIDTH-PAD,124);ctx.stroke();
       if(i===0&&photo){ctx.drawImage(image,(WIDTH-photo.width)/2,160,photo.width,photo.height);ctx.beginPath();ctx.moveTo(PAD,firstTop-32);ctx.lineTo(WIDTH-PAD,firstTop-32);ctx.stroke();}
       for(const row of page){if(row.text===undefined)continue;ctx.font=`${row.weight} ${row.size}px ${FONT}`;ctx.fillStyle=row.color;ctx.fillText(row.text,PAD,row.y);}
-      ctx.font=`400 21px ${FONT}`;ctx.fillStyle='#94a0af';ctx.fillText('把每一次出错，变成进步。',PAD,canvas.height-58);
+      ctx.font=`400 21px ${FONT}`;ctx.fillStyle='#94a0af';
+      for(let line=0;line<footerLines.length;line++)ctx.fillText(footerLines[line],PAD,canvas.height-footerHeight+line*32+10);
       ctx.textAlign='right';ctx.fillText(`${i+1} / ${pages.length}`,WIDTH-PAD,canvas.height-58);ctx.textAlign='left';
       const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.94));
       if(!blob)throw new Error('图片生成失败，请重试。');
@@ -241,7 +247,7 @@ return {archiveChunks, saveAndroidArchive, saveAndroidImage};
 __modules["note-export.js"] = (function () {
 const {renderNoteImages} = __modules["note-image.js"];
 const {saveAndroidImage} = __modules["android-bridge.js"];
-function mountNoteExport({root,note,subject,renderModal,icon,onBack,onMessage}){
+function mountNoteExport({root,note,subject,quote,renderModal,icon,onBack,onMessage}){
   let disposed=false,pages=[],urls=[],page=0,saving=false;
   renderModal('把这道题，存成一张照片。','题目在上，完整信息在下，方便保存、打印或分享。',
     '<div class="modal-content image-export-content"><div class="export-status" role="status"><div class="spinner"></div>正在排版照片与笔记…</div><div class="export-preview" hidden><img alt="导出照片预览，包含题目及下方的完整信息"></div><div class="export-pages" hidden><button class="secondary" data-image-action="prev">上一张</button><span aria-live="polite"></span><button class="secondary" data-image-action="next">下一张</button></div><p class="export-help">包含题目名称、学科、错误原因、记录时间、复习状态和笔记。</p></div>',
@@ -271,58 +277,70 @@ function mountNoteExport({root,note,subject,renderModal,icon,onBack,onMessage}){
   function click(event){const action=event.target.closest('[data-image-action]')?.dataset.imageAction;if(!action||saving)return;if(action==='back'){dispose();onBack();}if(action==='prev'&&page>0){page--;paint();preview.scrollTop=0;}if(action==='next'&&page<pages.length-1){page++;paint();preview.scrollTop=0;}if(action==='save')download();}
   function dispose(){if(disposed)return;disposed=true;root.removeEventListener('click',click);urls.forEach(URL.revokeObjectURL);urls=[];pages=[];}
   root.addEventListener('click',click);
-  renderNoteImages(note,subject).then(results=>{if(disposed)return;pages=results;urls=pages.map(p=>URL.createObjectURL(p.blob));status.hidden=true;paint();}).catch(error=>{if(disposed)return;status.textContent=error.message||'图片生成失败，请返回后重试。';onMessage(status.textContent);});
+  renderNoteImages(note,subject,quote).then(results=>{if(disposed)return;pages=results;urls=pages.map(p=>URL.createObjectURL(p.blob));status.hidden=true;paint();}).catch(error=>{if(disposed)return;status.textContent=error.message||'图片生成失败，请返回后重试。';onMessage(status.textContent);});
   return dispose;
 }
 return {mountNoteExport};
 })();
 
-// ─── model.js ───
-__modules["model.js"] = (function () {
-const SUBJECTS = [
-  { id:'chinese', name:'语文', symbol:'文', color:'#a180c1', tint:'#f3eef9' },
-  { id:'math', name:'数学', symbol:'π', color:'#5a95df', tint:'#edf4fd' },
-  { id:'english', name:'英语', symbol:'A', color:'#cfac65', tint:'#faf5e8' },
-  { id:'physics', name:'物理', symbol:'↗', color:'#7aa69f', tint:'#edf6f3' },
-  { id:'chemistry', name:'化学', symbol:'⚗', color:'#cc9299', tint:'#fbf0f2' },
-  { id:'geography', name:'地理', symbol:'◎', color:'#8b9bc2', tint:'#eff2fa' },
-];
-const REASONS = ['计算错误','审题不清','概念不清','方法不熟','粗心马虎','记忆模糊'];
-const subjectOf = id => SUBJECTS.find(s=>s.id===id) || SUBJECTS[0];
-function localDate(d = new Date()) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
-function localInput(d = new Date()) { return `${localDate(d)}T${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; }
-function dateFrom(value) { const [y,m,d]=value.split('-').map(Number); return new Date(y,m-1,d); }
-function periodBounds(date, period) {
-  const start = dateFrom(date); let end;
-  if(period==='week') start.setDate(start.getDate() - (start.getDay()+6)%7);
-  if(period==='month') start.setDate(1);
-  end = new Date(start);
-  if(period==='month') end.setMonth(end.getMonth()+1); else end.setDate(end.getDate()+(period==='week'?7:1));
-  return {start,end};
+// ─── collections-model.js ───
+__modules["collections-model.js"] = (function () {
+const PRESET_FOLDERS = [
+  {id:'chinese',name:'语文',symbol:'文',color:'#a180c1',tint:'#f3eef9'},
+  {id:'math',name:'数学',symbol:'π',color:'#5a95df',tint:'#edf4fd'},
+  {id:'english',name:'英语',symbol:'A',color:'#cfac65',tint:'#faf5e8'},
+  {id:'physics',name:'物理',symbol:'↗',color:'#7aa69f',tint:'#edf6f3'},
+  {id:'chemistry',name:'化学',symbol:'⚗',color:'#cc9299',tint:'#fbf0f2'},
+  {id:'biology',name:'生物',symbol:'叶',color:'#76a378',tint:'#eff7ef'},
+  {id:'history',name:'历史',symbol:'史',color:'#c89770',tint:'#fbf2e9'},
+  {id:'politics',name:'政治',symbol:'政',color:'#bf8192',tint:'#faeff3'},
+  {id:'geography',name:'地理',symbol:'◎',color:'#8b9bc2',tint:'#eff2fa'},
+].map(folder=>({...folder,preset:folder.id}));
+const DEFAULT_FOLDERS = PRESET_FOLDERS.filter(folder=>!['biology','history','politics'].includes(folder.id));
+const UNFILED = {id:'unfiled',name:'未分类',symbol:'·',color:'#8796aa',tint:'#f0f3f7',preset:null};
+function availablePresets(folders){return PRESET_FOLDERS.filter(p=>!folders.some(f=>f.id===p.id||f.preset===p.id||f.name===p.name));}
+function folderName(value,folders,exceptId=''){
+  const name=String(value||'').trim();
+  if(!name||name.length>40)throw new Error('收藏夹名称请填写 1–40 个字。');
+  if(name===UNFILED.name)throw new Error('“未分类”用于暂存题目，请换一个名称。');
+  if(folders.some(f=>f.id!==exceptId&&f.name.toLocaleLowerCase()===name.toLocaleLowerCase()))throw new Error('已有同名收藏夹，请换一个名称。');
+  return name;
 }
-function shiftDate(date, period, step) {
-  const d=dateFrom(date);
-  if(period==='month') { d.setDate(1); d.setMonth(d.getMonth()+step); }
-  else d.setDate(d.getDate()+step*(period==='week'?7:1));
-  return localDate(d);
+function createFolder(value,folders,id){
+  const name=folderName(value,folders);
+  const preset=availablePresets(folders).find(f=>f.name===name);
+  return preset?{...preset}:{id,name,symbol:Array.from(name)[0],color:'#7d98ca',tint:'#eff3fb',preset:null};
 }
-function inPeriod(note,date,period) { const {start,end}=periodBounds(date,period); const t=new Date(note.createdAt); return t>=start && t<end; }
-function filterNotes(notes,{subject='all',reason='all',status='all',query='',time='all',today=localDate()}={}) {
-  const q=query.trim().toLocaleLowerCase();
-  return notes.filter(n=> (subject==='all'||n.subject===subject) && (reason==='all'||n.reasons.includes(reason)) && (status==='all'||(status==='mastered')===n.mastered) && (time==='all'||inPeriod(n,today,time)) && (!q||[n.title,n.notes,subjectOf(n.subject).name,...n.reasons].join(' ').toLocaleLowerCase().includes(q))).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+function validateFolders(value){
+  if(!Array.isArray(value)||value.length>500)throw new Error('收藏夹列表格式不正确。');
+  const result=[],ids=new Set(),presets=new Set();
+  for(const f of value){
+    if(!f||typeof f.id!=='string'||!/^[a-zA-Z0-9-]{1,100}$/.test(f.id)||f.id==='all'||f.id==='unfiled'||ids.has(f.id)||typeof f.name!=='string')throw new Error('收藏夹编号无效或重复。');
+    const name=folderName(f.name,result);
+    const preset=PRESET_FOLDERS.find(p=>p.id===f.id);
+    if(f.preset!=null&&(!preset||f.preset!==f.id||presets.has(f.preset)))throw new Error('快捷学科信息无效。');
+    if(!/^#[0-9a-f]{6}$/i.test(f.color)||!/^#[0-9a-f]{6}$/i.test(f.tint)||typeof f.symbol!=='string'||!f.symbol||Array.from(f.symbol).length>2)throw new Error('收藏夹外观格式不正确。');
+    ids.add(f.id);if(preset)presets.add(preset.id);
+    result.push({id:f.id,name,symbol:f.symbol,color:f.color,tint:f.tint,preset:preset?.id||null});
+  }
+  return result;
 }
-function validateBackup(data) {
-  if(!data || data.app!=='shiguang' || data.version!==1 || !Array.isArray(data.notes)) throw new Error('这不是有效的拾光备份文件。');
-  const seen=new Set();
-  return data.notes.map(n=>{
-    if(!n || typeof n.id!=='string' || !/^[a-zA-Z0-9-]{1,100}$/.test(n.id) || seen.has(n.id)) throw new Error('备份中的记录编号无效或重复。');
-    seen.add(n.id);
-    if(typeof n.title!=='string' || !n.title.trim() || n.title.length>100 || !SUBJECTS.some(s=>s.id===n.subject) || !Array.isArray(n.reasons) || !n.reasons.length || n.reasons.length>20 || n.reasons.some(r=>typeof r!=='string'||!r.trim()||r.length>30) || typeof n.notes!=='string' || n.notes.length>5000 || typeof n.createdAt!=='string' || !Number.isFinite(Date.parse(n.createdAt)) || typeof n.mastered!=='boolean') throw new Error('备份中存在格式不正确的错题。');
-    if(typeof n.photo!=='string' || (n.photo && (!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(n.photo) || n.photo.length>10000000))) throw new Error('备份中的图片格式不受支持。');
-    return {id:n.id,title:n.title.trim(),subject:n.subject,reasons:[...new Set(n.reasons)],notes:n.notes,createdAt:new Date(n.createdAt).toISOString(),mastered:n.mastered,photo:n.photo};
-  });
+function mergeFolders(current,incoming){
+  const ids=new Set(incoming.map(f=>f.id));
+  const result=current.filter(f=>!ids.has(f.id)).map(f=>({...f}));
+  for(const item of incoming){
+    let name=item.name,suffix=2;
+    while(result.some(f=>f.name.toLocaleLowerCase()===name.toLocaleLowerCase()))name=item.name.slice(0,30)+'（导入 '+suffix+++'）';
+    result.push({...item,name});
+  }
+  return validateFolders(result);
 }
-return {SUBJECTS, REASONS, subjectOf, localDate, localInput, dateFrom, periodBounds, shiftDate, inPeriod, filterNotes, validateBackup};
+function removeFolder(folders,notes,id,target='unfiled'){
+  if(!folders.some(f=>f.id===id))throw new Error('这个收藏夹已经不存在。');
+  if(target===id||(target!=='unfiled'&&!folders.some(f=>f.id===target)))throw new Error('请选择有效的目标收藏夹。');
+  return {folders:folders.filter(f=>f.id!==id),notes:notes.map(n=>n.subject===id?{...n,subject:target}:n)};
+}
+return {PRESET_FOLDERS, DEFAULT_FOLDERS, UNFILED, availablePresets, folderName, createFolder, validateFolders, mergeFolders, removeFolder};
 })();
 
 // ─── enhancements-model.js ───
@@ -348,6 +366,11 @@ function normalizeQuoteSettings(value){
   try{return {quotes:parseQuotes(value.quotes.join('\n')),rotate:typeof value.rotate==='boolean'?value.rotate:true,interval:[5,8,12,20].includes(Number(value.interval))?Number(value.interval):8};}
   catch{return {...DEFAULT_QUOTE_SETTINGS,quotes:[...DEFAULT_QUOTES]};}
 }
+function randomQuote(settings,random=Math.random){
+  const quotes=normalizeQuoteSettings(settings).quotes;
+  const index=Math.min(quotes.length-1,Math.max(0,Math.floor(random()*quotes.length)));
+  return quotes[index];
+}
 const clamp=(n,a,b)=>Math.min(b,Math.max(a,n));
 const FULL_RECT = {x:0,y:0,w:1,h:1};
 const INITIAL_RECT = {x:.05,y:.08,w:.9,h:.84};
@@ -365,7 +388,68 @@ function cropPixels(rect,width,height){
   return {x,y,w:clamp(Math.round(rect.w*width),1,width-x),h:clamp(Math.round(rect.h*height),1,height-y)};
 }
 function rotateAngle(angle,direction){return ((angle+(direction==='left'?-90:90))%360+360)%360;}
-return {DEFAULT_QUOTES, DEFAULT_QUOTE_SETTINGS, parseQuotes, normalizeQuoteSettings, FULL_RECT, INITIAL_RECT, moveRect, resizeRect, cropPixels, rotateAngle};
+return {DEFAULT_QUOTES, DEFAULT_QUOTE_SETTINGS, parseQuotes, normalizeQuoteSettings, randomQuote, FULL_RECT, INITIAL_RECT, moveRect, resizeRect, cropPixels, rotateAngle};
+})();
+
+// ─── model.js ───
+__modules["model.js"] = (function () {
+const {DEFAULT_FOLDERS,UNFILED,validateFolders,mergeFolders} = __modules["collections-model.js"];
+const {parseQuotes} = __modules["enhancements-model.js"];
+const SUBJECTS = DEFAULT_FOLDERS;
+const REASONS = ['计算错误','审题不清','概念不清','方法不熟','粗心马虎','记忆模糊'];
+const subjectOf = (id,folders=SUBJECTS) => folders.find(s=>s.id===id) || UNFILED;
+function localDate(d = new Date()) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function localInput(d = new Date()) { return `${localDate(d)}T${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; }
+function dateFrom(value) { const [y,m,d]=value.split('-').map(Number); return new Date(y,m-1,d); }
+function periodBounds(date, period) {
+  const start = dateFrom(date); let end;
+  if(period==='week') start.setDate(start.getDate() - (start.getDay()+6)%7);
+  if(period==='month') start.setDate(1);
+  end = new Date(start);
+  if(period==='month') end.setMonth(end.getMonth()+1); else end.setDate(end.getDate()+(period==='week'?7:1));
+  return {start,end};
+}
+function shiftDate(date, period, step) {
+  const d=dateFrom(date);
+  if(period==='month') { d.setDate(1); d.setMonth(d.getMonth()+step); }
+  else d.setDate(d.getDate()+step*(period==='week'?7:1));
+  return localDate(d);
+}
+function inPeriod(note,date,period) { const {start,end}=periodBounds(date,period); const t=new Date(note.createdAt); return t>=start && t<end; }
+function filterNotes(notes,{subject='all',reason='all',status='all',query='',time='all',today=localDate(),folders=SUBJECTS}={}) {
+  const q=query.trim().toLocaleLowerCase();
+  return notes.filter(n=> (subject==='all'||n.subject===subject) && (reason==='all'||n.reasons.includes(reason)) && (status==='all'||(status==='mastered')===n.mastered) && (time==='all'||inPeriod(n,today,time)) && (!q||[n.title,n.notes,subjectOf(n.subject,folders).name,...n.reasons].join(' ').toLocaleLowerCase().includes(q))).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+}
+function validateArchive(data) {
+  if(!data || data.app!=='shiguang' || ![1,2].includes(data.version) || !Array.isArray(data.notes)) throw new Error('这不是有效的拾光备份文件。');
+  const folders=data.version===2?validateFolders(data.folders):SUBJECTS.map(f=>({...f}));
+  let quoteSettings=null;
+  if(data.version===2){
+    const value=data.quoteSettings;
+    if(!value||!Array.isArray(value.quotes)||!value.quotes.length||value.quotes.some(q=>typeof q!=='string'||q.includes('\n')||q.includes('\r'))||typeof value.rotate!=='boolean'||![5,8,12,20].includes(value.interval))throw new Error('存档中的自定义话语设置无效。');
+    quoteSettings={quotes:parseQuotes(value.quotes.join('\n')),rotate:value.rotate,interval:value.interval};
+  }
+  const seen=new Set();
+  const notes=data.notes.map(n=>{
+    if(!n || typeof n.id!=='string' || !/^[a-zA-Z0-9-]{1,100}$/.test(n.id) || seen.has(n.id)) throw new Error('备份中的记录编号无效或重复。');
+    seen.add(n.id);
+    if(typeof n.title!=='string' || !n.title.trim() || n.title.length>100 || !(folders.some(s=>s.id===n.subject)||(data.version===2&&n.subject==='unfiled')) || !Array.isArray(n.reasons) || !n.reasons.length || n.reasons.length>20 || n.reasons.some(r=>typeof r!=='string'||!r.trim()||r.length>30) || typeof n.notes!=='string' || n.notes.length>5000 || typeof n.createdAt!=='string' || !Number.isFinite(Date.parse(n.createdAt)) || typeof n.mastered!=='boolean') throw new Error('备份中存在格式不正确的错题。');
+    if(typeof n.photo!=='string' || (n.photo && (!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(n.photo) || n.photo.length>10000000))) throw new Error('备份中的图片格式不受支持。');
+    return {id:n.id,title:n.title.trim(),subject:n.subject,reasons:[...new Set(n.reasons)],notes:n.notes,createdAt:new Date(n.createdAt).toISOString(),mastered:n.mastered,photo:n.photo};
+  });
+  return {version:data.version,notes,folders,quoteSettings};
+}
+function validateBackup(data){return validateArchive(data).notes;}
+function createBackup(notes,folders,quoteSettings){return {app:'shiguang',version:2,appVersion:'1.2.0',exportedAt:new Date().toISOString(),notes,folders,quoteSettings};}
+function planRestore(current,incoming){
+  const notes=new Map(current.notes.map(n=>[n.id,n]));
+  for(const n of incoming.notes)notes.set(n.id,n);
+  // Old backups contain no user-defined folder names or quotes. Keep current settings.
+  const missingLegacy=incoming.folders.filter(f=>incoming.notes.some(n=>n.subject===f.id)&&!current.folders.some(c=>c.id===f.id));
+  const folders=mergeFolders(current.folders,incoming.version===1?missingLegacy:incoming.folders);
+  return {notes:[...notes.values()],folders,quoteSettings:incoming.quoteSettings||current.quoteSettings};
+}
+return {SUBJECTS, REASONS, subjectOf, localDate, localInput, dateFrom, periodBounds, shiftDate, inPeriod, filterNotes, validateArchive, validateBackup, createBackup, planRestore};
 })();
 
 // ─── cropper.js ───
@@ -409,13 +493,84 @@ function mountCropper({root,photo,renderModal,icon,onConfirm,onCancel,onError}){
 return {mountCropper};
 })();
 
+// ─── storage.js ───
+__modules["storage.js"] = (function () {
+function openDatabase(api){
+  return new Promise((resolve,reject)=>{
+    if(!api)return reject(new Error('当前环境不支持本地数据库，请更新浏览器或 Android System WebView。'));
+    const request=api.open('shiguang-notebook',2);
+    request.onupgradeneeded=()=>{
+      const db=request.result;
+      if(!db.objectStoreNames.contains('notes'))db.createObjectStore('notes',{keyPath:'id'});
+      if(!db.objectStoreNames.contains('settings'))db.createObjectStore('settings');
+    };
+    let blocked=false;
+    request.onerror=()=>reject(request.error);
+    request.onsuccess=()=>{if(blocked)request.result.close();else resolve(request.result);};
+    request.onblocked=()=>{blocked=true;reject(new Error('请先关闭其他拾光页面，再重新打开。'));};
+  });
+}
+function readSettings(db){
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction('settings','readonly');
+    const request=tx.objectStore('settings').get('preferences');
+    tx.oncomplete=()=>resolve(request.result||null);
+    tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||new Error('读取设置失败'));
+  });
+}
+function writeLibrary(db,{notes=[],folders,quoteSettings}){
+  return new Promise((resolve,reject)=>{
+    if(!db)return reject(new Error('本地存储不可用，请重新打开后重试。'));
+    // Notes and preferences share one transaction: an interrupted import never partially restores.
+    const tx=db.transaction(['notes','settings'],'readwrite');
+    const store=tx.objectStore('notes');
+    for(const note of notes)store.put(note);
+    tx.objectStore('settings').put({folders,quoteSettings},'preferences');
+    tx.oncomplete=resolve;
+    tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||new Error('保存被中断'));
+  });
+}
+return {openDatabase, readSettings, writeLibrary};
+})();
+
+// ─── releases.js ───
+__modules["releases.js"] = (function () {
+const APP_VERSION='1.2.0';
+const RELEASES=[
+  {version:'1.2.0',date:'2026-10-19',title:'让收藏和鼓励，都更像你',changes:[
+    '网页版以完整的单文件 index.html 交付，样式、图标和逻辑全部内嵌。',
+    '收藏夹支持自定义添加、改名和删除；内置九门学科快捷添加，自动隐藏已添加的学科。',
+    '删除收藏夹可将题目移入其他收藏夹或未分类，保留照片和笔记。',
+    '导出题目图片时，从设置中的话语随机选取一句放在底部；长句自动换行。',
+    '存档包含收藏夹、自定义话语和轮换设置；没有题目也可备份，并兼容旧版存档。',
+    '页面底部新增版本更新记录。'
+  ]},
+  {version:'1.1.0',date:'2026-10-18',title:'把题目和思考，一起带走',changes:[
+    '题目支持导出 JPG 图片，照片下方保留名称、学科、错误原因、时间、复习状态和笔记。',
+    '较长的笔记自动分成多张图片，可预览并逐张保存。',
+    '裁切界面增加向左旋转按钮，与向右旋转配合使用。',
+    '提供免登录网页版，与 Android 共用功能源码。'
+  ]},
+  {version:'1.0.0',date:'',title:'从一道错题开始',changes:[
+    '拍照、相册上传与手动记录，支持照片裁切和旋转。',
+    '六门学科收藏、错误原因筛选，以及按日、周、月回看时间轴。',
+    '首页轮换励志话语，可在设置中自定义。',
+    '本地保存错题，支持 JSON 存档导入导出和 Android 安装包。'
+  ]}
+];
+return {APP_VERSION, RELEASES};
+})();
+
 // ─── app.js ───
 __modules["app.js"] = (function () {
 const {mountNoteExport} = __modules["note-export.js"];
 const {saveAndroidArchive} = __modules["android-bridge.js"];
-const {SUBJECTS,REASONS,subjectOf,localDate,localInput,dateFrom,periodBounds,shiftDate,inPeriod,filterNotes,validateBackup} = __modules["model.js"];
-const {DEFAULT_QUOTES,DEFAULT_QUOTE_SETTINGS,parseQuotes,normalizeQuoteSettings} = __modules["enhancements-model.js"];
+const {SUBJECTS,REASONS,subjectOf:lookupSubject,localDate,localInput,dateFrom,periodBounds,shiftDate,inPeriod,filterNotes,validateArchive,createBackup,planRestore} = __modules["model.js"];
+const {DEFAULT_QUOTES,DEFAULT_QUOTE_SETTINGS,parseQuotes,normalizeQuoteSettings,randomQuote} = __modules["enhancements-model.js"];
 const {mountCropper} = __modules["cropper.js"];
+const {PRESET_FOLDERS,UNFILED,availablePresets,folderName,createFolder,validateFolders,removeFolder} = __modules["collections-model.js"];
+const {openDatabase,readSettings,writeLibrary} = __modules["storage.js"];
+const {APP_VERSION,RELEASES} = __modules["releases.js"];
 const paths={crop:'M6 3v15h15 M3 6h15v15 M6 6h12',book:'M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-3H4z M20 4h-4 M17 8h3v10h-4',camera:'M14.5 5 13 3H7L5.5 5H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z M15.5 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0',plus:'M12 5v14 M5 12h14',search:'M20 20l-4.3-4.3 M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0',arrow:'m9 5 7 7-7 7',back:'m15 5-7 7 7 7',close:'m6 6 12 12 M6 18 18 6',image:'M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1 M3 16l6-6 5 5 3-3 4 4 M16 7h.01',folder:'M3 6V4h7l2 3h9v13H3z',grid:'M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h7v7h-7z',clock:'M12 8v5l3 2 M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0',calendar:'M4 5h16v16H4z M8 3v4 M16 3v4 M4 10h16 M8 14h2 M14 14h2',spark:'m12 3 2.4 6.6L21 12l-6.6 2.4L12 21l-2.4-6.6L3 12l6.6-2.4z',check:'m5 12 4 4L19 6',shield:'m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z M8 12l3 3 5-6',edit:'m14 5 5 5 M4 20l5-1L21 7l-5-5L4 14z',trash:'M3 6h18 M9 6V3h6v3 M5 6l1 15h12l1-15 M10 10v7 M14 10v7',download:'M12 3v12 m-5-5 5 5 5-5 M4 16v5h16v-5',upload:'M12 16V4 m-5 5 5-5 5 5 M4 16v5h16v-5',refresh:'M20 7v5h-5 M4 17v-5h5 M5 8a8 8 0 0 1 13-3l2 3 M4 16l2 3a8 8 0 0 0 13-3',sliders:'M4 7h8 M16 7h4 M4 17h3 M11 17h9 M12 4v6 M7 14v6',list:'M8 6h13 M8 12h13 M8 18h13 M3 6h.01 M3 12h.01 M3 18h.01',info:'M12 11v6 M12 7h.01 M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0'};
 const icon=(name,cls='')=>`<svg class="icon ${cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="${paths[name]||paths.book}"/></svg>`;
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -425,7 +580,10 @@ const state={page:'home',subject:'all',reason:'all',status:'all',query:'',time:'
 let records=[],db=null,storageError='',draft=null,stream=null,cameraToken=0,restorePending=null,toastTimer,lastFocus=null,busy=false;
 let imageExportCleanup=null;
 let quoteSettings=loadQuoteSettings(),quoteIndex=0,quoteTimer=null,cropCleanup=null,photoRequestId=0,settingsOpen=false;
+let folders=SUBJECTS.map(f=>({...f}));
+const subjectOf=id=>lookupSubject(id,folders);
 const examples=makeExamples();
+function visibleFolders(){return activeRecords().some(n=>n.subject==='unfiled')?[...folders,UNFILED]:folders;}
 function loadQuoteSettings(){try{return normalizeQuoteSettings(JSON.parse(localStorage.getItem('shiguang-quotes')));}catch{return normalizeQuoteSettings(null);}}
 function currentQuote(){return quoteSettings.quotes[quoteIndex%quoteSettings.quotes.length];}
 function nextQuote(){
@@ -441,13 +599,19 @@ function openSettings(values=null,error=''){
     '<div class="modal-content"><form id="quote-form">'+
     (error?'<p class="form-error" role="alert">'+esc(error)+'</p>':'')+
     '<div class="quote-settings-preview">'+icon('spark')+'<p id="quote-preview">'+esc(v.quotes.split(/\r?\n/).find(s=>s.trim())||'在下面写下你想对自己说的话。')+'</p></div>'+
-    '<div class="form-field"><label for="custom-quotes">首页语句 <span class="label-hint">· 每行一句，最多 30 句</span></label><textarea id="custom-quotes" name="quotes" maxlength="3030" rows="7" placeholder="今天多想明白一点，明天就多一分从容。\n慢慢来，每一步都算数。">'+esc(v.quotes)+'</textarea><p class="file-note">可以修改默认语句，也可以全部换成自己的话。每句不超过 100 个字。</p></div>'+
+    '<div class="form-field"><label for="custom-quotes">自定义话语 <span class="label-hint">· 每行一句，最多 30 句</span></label><textarea id="custom-quotes" name="quotes" maxlength="3030" rows="7" placeholder="今天多想明白一点，明天就多一分从容。\n慢慢来，每一步都算数。">'+esc(v.quotes)+'</textarea><p class="file-note">首页轮换与导出图片共用这些话语。每次导出随机选取一句，每句不超过 100 个字。</p></div>'+
     '<div class="quote-option"><div><label for="quote-rotate">自动轮换</label><p>关闭后固定显示第一句，仍可手动换一句。</p></div><label class="switch"><input id="quote-rotate" name="rotate" type="checkbox" '+(v.rotate?'checked':'')+'><span class="switch-track"></span></label></div>'+
     '<div class="quote-option"><label for="quote-interval">轮换间隔</label><select id="quote-interval" name="interval">'+[5,8,12,20].map(n=>'<option value="'+n+'" '+(v.interval===n?'selected':'')+'>'+n+' 秒</option>').join('')+'</select></div>'+
-    '<button type="button" class="text-btn restore-quotes" data-action="default-quotes">恢复默认语句</button><p class="settings-text">拾光 1.1.0 · 设置保存在本机，点击保存后生效。</p></form></div>',
+    '<button type="button" class="text-btn restore-quotes" data-action="default-quotes">恢复默认语句</button><p class="settings-text">拾光 1.2.0 · 设置保存在本机，也会随存档一起导出。</p></form></div>',
     '<button class="secondary" data-action="close-modal">取消</button><button class="primary" type="submit" form="quote-form">'+icon('check')+' 保存设置</button>','settings-modal');
 }
-function saveQuoteSettings(){const values=settingsValues();let next;try{next={quotes:parseQuotes(values.quotes),rotate:values.rotate,interval:values.interval};}catch(e){return openSettings(values,e.message);}try{localStorage.setItem('shiguang-quotes',JSON.stringify(next));}catch{return openSettings(values,'暂时无法保存设置，内容已保留，请检查设备剩余空间。');}quoteSettings=next;quoteIndex=0;closeModal();render();toast('已保存，下次打开也会记得这些话。');}
+async function saveQuoteSettings(){
+  if(busy)return;const values=settingsValues();let next;
+  try{next={quotes:parseQuotes(values.quotes),rotate:values.rotate,interval:values.interval};}catch(e){return openSettings(values,e.message);}
+  busy=true;
+  try{await writeLibrary(db,{folders,quoteSettings:next});quoteSettings=next;quoteIndex=0;busy=false;closeModal();render();toast('话语已保存，也会用于导出图片。');}
+  catch(e){busy=false;openSettings(values,'暂时无法保存设置，内容已保留。'+(e.message||'请重试。'));}
+}
 function beginCrop(photo){
   readDraft();if(cropCleanup){cropCleanup();cropCleanup=null;}
   if(!draft)draft={id:null,title:'',subject:state.subject!=='all'?state.subject:'',reasons:[],notes:'',createdAt:localInput(),mastered:false,photo};
@@ -459,38 +623,38 @@ function makeExamples(){
   const specs=[['math','一元二次方程 · 配方法',['计算错误','方法不熟'],'x² − 6x + 5 = 0\nx² − 6x = −5\n(x − 3)² = 4','移项后记得两边同时加 9。',0,19,42],['english','定语从句 · 关系词的选择',['概念不清'],'This is the book _____\nI borrowed from the library.\nA. who   B. which   C. where','先判断先行词，再看从句缺少什么成分。',0,17,20],['physics','受力分析 · 斜面上的物体',['审题不清'],'已知：m = 2 kg，θ = 30°\nF∥ = mg sin θ\nF⊥ = mg cos θ','先画受力图，区分平行和垂直斜面的分力。',0,14,35],['chinese','古诗词鉴赏 · 意象与情感',['记忆模糊'],'“山重水复疑无路，\n柳暗花明又一村。”\n—— 陆游《游山西村》','结合上下文理解景物背后的情感。',0,10,16],['chemistry','化学方程式 · 配平练习',['粗心马虎'],'Fe + O₂ → Fe₃O₄\n3Fe + 2O₂ = Fe₃O₄','核对每种元素在等号两边的原子个数。',1,20,10],['geography','地球运动 · 昼夜长短变化',['概念不清'],'太阳直射点 → 北半球\n北半球：昼长夜短\n纬度越高，昼越长','结合太阳直射点的位置判断。',2,16,30],['math','函数图像 · 二次函数顶点',['计算错误'],'y = x² − 4x + 3\n  = (x − 2)² − 1\n顶点坐标：(2, −1)','配方时不要漏掉常数项。',5,18,5],['english','时态辨析 · 现在完成时',['粗心马虎'],'She has lived here\nsince 2020.\nsince + 时间点','since 和 for 后的时间表达不同。',9,9,25]];
   return specs.map((x,i)=>{const d=new Date();d.setDate(d.getDate()-x[5]);d.setHours(x[6],x[7],0,0);return {id:`example-${i}`,subject:x[0],title:x[1],reasons:x[2],paper:x[3],notes:x[4],createdAt:d.toISOString(),mastered:i===5,photo:'',example:true};});
 }
-function activeRecords(){return state.demo?examples:records;}
+function activeRecords(){return state.demo?examples.map(n=>folders.some(f=>f.id===n.subject)?n:{...n,subject:'unfiled'}):records;}
 function toast(msg){clearTimeout(toastTimer);const t=document.querySelector('#toast');t.textContent=msg;t.classList.add('show');toastTimer=setTimeout(()=>t.classList.remove('show'),3500);}
 function timeLabel(iso){return new Date(iso).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',hour12:false});}
 function dayLabel(iso){const d=new Date(iso);return `${d.getMonth()+1}月${d.getDate()}日`;}
 function fullLabel(iso){return `${new Date(iso).getFullYear()}年${dayLabel(iso)} ${timeLabel(iso)}`;}
 function relativeLabel(iso){const d=new Date(iso);return `${localDate(d)===localDate()?'今天':dayLabel(iso)} ${timeLabel(iso)}`;}
 function persistPreference(){try{localStorage.setItem('shiguang-demo',state.demo?'yes':'no');}catch{}}
-function openDB(){return new Promise((resolve,reject)=>{if(!window.indexedDB)return reject(new Error('当前环境不支持本地数据库，请更新浏览器或 Android System WebView。'));const r=indexedDB.open('shiguang-notebook',1);r.onupgradeneeded=()=>r.result.createObjectStore('notes',{keyPath:'id'});r.onerror=()=>reject(r.error);r.onsuccess=()=>resolve(r.result);r.onblocked=()=>reject(new Error('请关闭旧版页面后重试。'));});}
+function openDB(){return openDatabase(window.indexedDB);}
 function readAll(){return new Promise((resolve,reject)=>{const tx=db.transaction('notes','readonly');const r=tx.objectStore('notes').getAll();r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
 function writeNotes(notes){return new Promise((resolve,reject)=>{if(!db)return reject(new Error('本地存储不可用，请重新打开后重试。'));const tx=db.transaction('notes','readwrite');for(const n of notes)tx.objectStore('notes').put(n);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||new Error('保存被中断'));});}
 function removeNote(id){return new Promise((resolve,reject)=>{const tx=db.transaction('notes','readwrite');tx.objectStore('notes').delete(id);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error);});}
 function showStorageError(e){toast(e?.name==='QuotaExceededError'?'存储空间不足，请先导出备份并删除不需要的照片。':`保存失败：${e?.message||'请重试'}`);}
-function filtered(){return filterNotes(activeRecords(),{...state,subject:state.page==='subject'?state.subject:state.subject});}
+function filtered(){return filterNotes(activeRecords(),{...state,folders});}
 function resetFilters(){Object.assign(state,{subject:'all',reason:'all',status:'all',time:'all',query:'',limit:24});}
 function navigate(page,subject){resetFilters();state.page=page;state.search=false;state.view='grid';if(subject)state.subject=subject;render();window.scrollTo({top:0,behavior:'smooth'});}
 function header(){return `<header class="topbar"><div class="top-inner"><button class="brand" data-action="home" aria-label="拾光首页"><span class="brand-icon">${icon('book')}</span><span class="brand-name">拾光</span><span class="brand-divider"></span><span class="brand-caption">错题本</span></button><nav class="nav" aria-label="主要导航">${[['home','首页'],['folders','学科收藏'],['timeline','时间轴']].map(([id,t])=>`<button data-action="navigate" data-page="${id}" class="${state.page===id||(id==='folders'&&state.page==='subject')?'active':''}" ${state.page===id?'aria-current="page"':''}>${t}</button>`).join('')}</nav><div class="top-actions"><button class="settings-trigger" data-action="settings" aria-label="设置首页语句">${icon('sliders')}<span>设置</span></button><button class="icon-btn" data-action="search" aria-label="搜索错题">${icon('search')}</button><button class="primary small" data-action="camera">${icon('plus')}<span>记录错题</span></button></div></div></header>`;}
-function footer(){return `<footer class="footer"><div class="footer-left"><span class="footer-brand">拾光 · 让进步有迹可循</span><span class="local-badge"><i></i>记录保存在当前设备</span></div><div class="footer-right"><button data-action="toggle-demo">${state.demo?'进入我的错题':'体验示例'}</button><span class="short-divider"></span><button data-action="storage">数据与备份</button></div></footer>`;}
+function footer(){return `<footer class="footer"><div class="footer-left"><span class="footer-brand">拾光 · 让进步有迹可循</span><span class="local-badge"><i></i>记录保存在当前设备</span></div><div class="footer-right"><button data-action="toggle-demo">${state.demo?'进入我的错题':'体验示例'}</button><span class="short-divider"></span><button data-action="storage">数据与备份</button><span class="short-divider"></span><button class="changelog-trigger" data-action="changelog">版本更新 <span>v${APP_VERSION}</span></button></div></footer>`;}
 function demoBadge(){return state.demo?'<span class="demo-badge">示例体验</span>':'';}
 function searchBar(){return `<div class="search-bar">${icon('search')}<input id="search-field" type="search" maxlength="100" placeholder="搜索题目、学科、错误原因或笔记…" value="${esc(state.query)}" aria-label="搜索错题"><button class="icon-btn" data-action="close-search" aria-label="关闭搜索">${icon('close')}</button></div>`;}
-function folder(s,large=false){const list=activeRecords().filter(n=>n.subject===s.id);const todo=list.filter(n=>!n.mastered).length;return `<button class="folder-card" data-action="folder" data-id="${s.id}" style="${colors(s)}"><span class="folder-symbol"><span>${s.symbol}</span></span><span class="folder-title">${s.name}</span><span class="folder-count">${list.length} 道错题${large?` · ${todo} 道待复习`:''}</span>${icon('arrow','folder-arrow')}</button>`;}
-function home(){const now=new Date();const today=activeRecords().filter(n=>inPeriod(n,localDate(),'day')).length;const mastered=activeRecords().filter(n=>n.mastered).length;return `<div class="intro"><div><p class="eyebrow"><span class="tiny-dot"></span> A LITTLE BETTER, EVERY DAY</p><h1>把每一次出错，<em>变成进步。</em></h1><p class="intro-text quote-line"><span id="rotating-quote">${esc(currentQuote())}</span><button class="quote-next" data-action="next-quote" aria-label="换一句励志语句" title="换一句">${icon('refresh')}</button></p></div><div class="date-block"><div class="date-line">${icon('calendar')}${now.getMonth()+1}月${now.getDate()}日 · ${['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][now.getDay()]}</div><div class="date-sub">${state.demo?'示例体验 · 保存后进入你的错题本':'今天，也是积累的一天。'}</div></div></div><section class="backup-bar" aria-label="导入与导出存档"><div class="backup-bar-label">${icon('shield')}<div><strong>我的存档</strong><span>把错题与照片，好好保存。</span></div></div><div class="backup-bar-actions"><button class="secondary" data-action="import">${icon('upload')} 导入存档</button><button class="secondary backup-export" data-action="export">${icon('download')} 导出存档</button></div></section><section class="workspace-grid" aria-label="录入和学科收藏"><div class="capture-card"><span class="card-label">${icon('plus')} 记录一个新的发现</span><div class="capture-orbit"><span class="orbit"></span><span class="orbit two"></span><button class="camera-button" data-action="camera" aria-label="启动相机，拍摄错题">${icon('camera')}</button></div><h2 class="capture-title">拍下来，慢慢想明白。</h2><span class="capture-caption">拍摄错题 · 选择分类 · 留给未来的自己</span><div class="capture-footer"><button class="text-btn" data-action="upload">${icon('image')} 从相册上传</button><span class="divider"></span><button class="text-btn" data-action="manual">${icon('edit')} 手动记录</button></div><span class="capture-corner">${icon('shield')} 只属于你的积累</span></div><div class="folders-panel"><div class="section-top"><div><h2 class="section-title">学科收藏夹</h2><div class="section-subtitle">分门别类，让知识各就其位。</div></div><button class="text-btn" data-action="navigate" data-page="folders">全部收藏 ${icon('arrow')}</button></div><div class="folders">${SUBJECTS.map(s=>folder(s)).join('')}</div></div></section><div class="insight-bar"><div class="insight-message">${icon('spark')} 每一道被认真对待的错题，都在悄悄拉近你与答案的距离。</div><div class="stats"><div class="stat"><strong class="blue">${today}</strong><span>今日记录</span></div><span class="stat-separator"></span><div class="stat"><strong>${activeRecords().length}</strong><span>累计收藏</span></div><span class="stat-separator"></span><div class="stat"><strong>${mastered}</strong><span>已经掌握</span></div></div></div><section class="records-section"><div class="records-heading"><div class="records-title"><h2>${state.view==='grid'?'最近记录':'复习时间轴'}</h2>${demoBadge()}</div><div class="segmented" aria-label="记录视图"><button data-action="view" data-id="grid" class="${state.view==='grid'?'active':''}">${icon('grid')} 卡片视图</button><button data-action="view" data-id="timeline" class="${state.view==='timeline'?'active':''}">${icon('clock')} 时间视图</button></div></div>${state.search?searchBar():''}${toolbar()}${state.view==='timeline'?timeline():noteGrid(filtered().slice(0,4))}${state.view==='grid'?`<div class="view-all"><button data-action="navigate" data-page="library">查看全部记录 ${icon('arrow')}</button></div>`:''}</section>`;}
-function toolbar(){const currentReasons=[...new Set([...REASONS,...activeRecords().flatMap(n=>n.reasons)])];return `<div class="toolbar">${state.page!=='subject'?`<div class="chips" aria-label="按学科筛选">${[{id:'all',name:'全部'},...SUBJECTS].map(s=>`<button class="chip ${state.subject===s.id?'active':''}" aria-pressed="${state.subject===s.id}" data-action="subject-filter" data-id="${s.id}">${s.name}</button>`).join('')}</div>`:`<div class="status-filter">${[['all','全部记录'],['pending','待复习'],['mastered','已掌握']].map(([id,label])=>`<button data-action="status-filter" data-id="${id}" class="${state.status===id?'active':''}">${label}</button>`).join('')}</div>`}<div class="filter-actions"><select class="filter-select" id="reason-filter" aria-label="按错误原因筛选"><option value="all">所有错误原因</option>${currentReasons.map(r=>`<option ${state.reason===r?'selected':''} value="${esc(r)}">${esc(r)}</option>`).join('')}</select>${state.view!=='timeline'&&state.page!=='timeline'?`<select class="filter-select" id="time-filter" aria-label="按记录时间筛选">${[['all','全部时间'],['day','今天'],['week','本周'],['month','本月']].map(([v,t])=>`<option value="${v}" ${state.time===v?'selected':''}>${t}</option>`).join('')}</select>`:''}<button class="icon-btn" data-action="search" aria-label="搜索错题">${icon('search')}</button></div></div>`;}
+function folder(s,large=false){const list=activeRecords().filter(n=>n.subject===s.id);const todo=list.filter(n=>!n.mastered).length;return `<button class="folder-card" data-action="folder" data-id="${s.id}" style="${colors(s)}"><span class="folder-symbol"><span>${esc(s.symbol)}</span></span><span class="folder-title">${esc(s.name)}</span><span class="folder-count">${list.length} 道错题${large?` · ${todo} 道待复习`:''}</span>${icon('arrow','folder-arrow')}</button>`;}
+function home(){const now=new Date();const today=activeRecords().filter(n=>inPeriod(n,localDate(),'day')).length;const mastered=activeRecords().filter(n=>n.mastered).length;return `<div class="intro"><div><p class="eyebrow"><span class="tiny-dot"></span> A LITTLE BETTER, EVERY DAY</p><h1>把每一次出错，<em>变成进步。</em></h1><p class="intro-text quote-line"><span id="rotating-quote">${esc(currentQuote())}</span><button class="quote-next" data-action="next-quote" aria-label="换一句励志语句" title="换一句">${icon('refresh')}</button></p></div><div class="date-block"><div class="date-line">${icon('calendar')}${now.getMonth()+1}月${now.getDate()}日 · ${['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][now.getDay()]}</div><div class="date-sub">${state.demo?'示例体验 · 保存后进入你的错题本':'今天，也是积累的一天。'}</div></div></div><section class="backup-bar" aria-label="导入与导出存档"><div class="backup-bar-label">${icon('shield')}<div><strong>我的存档</strong><span>错题、收藏夹和鼓励，一起保存。</span></div></div><div class="backup-bar-actions"><button class="secondary" data-action="import">${icon('upload')} 导入存档</button><button class="secondary backup-export" data-action="export">${icon('download')} 导出存档</button></div></section><section class="workspace-grid" aria-label="录入和学科收藏"><div class="capture-card"><span class="card-label">${icon('plus')} 记录一个新的发现</span><div class="capture-orbit"><span class="orbit"></span><span class="orbit two"></span><button class="camera-button" data-action="camera" aria-label="启动相机，拍摄错题">${icon('camera')}</button></div><h2 class="capture-title">拍下来，慢慢想明白。</h2><span class="capture-caption">拍摄错题 · 选择分类 · 留给未来的自己</span><div class="capture-footer"><button class="text-btn" data-action="upload">${icon('image')} 从相册上传</button><span class="divider"></span><button class="text-btn" data-action="manual">${icon('edit')} 手动记录</button></div><span class="capture-corner">${icon('shield')} 只属于你的积累</span></div><div class="folders-panel"><div class="section-top"><div><h2 class="section-title">学科收藏夹</h2><div class="section-subtitle">分门别类，让知识各就其位。</div></div><button class="text-btn" data-action="navigate" data-page="folders">全部收藏 ${icon('arrow')}</button></div><div class="folders">${visibleFolders().map(s=>folder(s)).join('')||'<button class="folder-add-empty" data-action="manage-folders">+ 添加第一个收藏夹</button>'}</div></div></section><div class="insight-bar"><div class="insight-message">${icon('spark')} 每一道被认真对待的错题，都在悄悄拉近你与答案的距离。</div><div class="stats"><div class="stat"><strong class="blue">${today}</strong><span>今日记录</span></div><span class="stat-separator"></span><div class="stat"><strong>${activeRecords().length}</strong><span>累计收藏</span></div><span class="stat-separator"></span><div class="stat"><strong>${mastered}</strong><span>已经掌握</span></div></div></div><section class="records-section"><div class="records-heading"><div class="records-title"><h2>${state.view==='grid'?'最近记录':'复习时间轴'}</h2>${demoBadge()}</div><div class="segmented" aria-label="记录视图"><button data-action="view" data-id="grid" class="${state.view==='grid'?'active':''}">${icon('grid')} 卡片视图</button><button data-action="view" data-id="timeline" class="${state.view==='timeline'?'active':''}">${icon('clock')} 时间视图</button></div></div>${state.search?searchBar():''}${toolbar()}${state.view==='timeline'?timeline():noteGrid(filtered().slice(0,4))}${state.view==='grid'?`<div class="view-all"><button data-action="navigate" data-page="library">查看全部记录 ${icon('arrow')}</button></div>`:''}</section>`;}
+function toolbar(){const currentReasons=[...new Set([...REASONS,...activeRecords().flatMap(n=>n.reasons)])];return `<div class="toolbar">${state.page!=='subject'?`<div class="chips" aria-label="按学科筛选">${[{id:'all',name:'全部'},...visibleFolders()].map(s=>`<button class="chip ${state.subject===s.id?'active':''}" aria-pressed="${state.subject===s.id}" data-action="subject-filter" data-id="${s.id}">${esc(s.name)}</button>`).join('')}</div>`:`<div class="status-filter">${[['all','全部记录'],['pending','待复习'],['mastered','已掌握']].map(([id,label])=>`<button data-action="status-filter" data-id="${id}" class="${state.status===id?'active':''}">${label}</button>`).join('')}</div>`}<div class="filter-actions"><select class="filter-select" id="reason-filter" aria-label="按错误原因筛选"><option value="all">所有错误原因</option>${currentReasons.map(r=>`<option ${state.reason===r?'selected':''} value="${esc(r)}">${esc(r)}</option>`).join('')}</select>${state.view!=='timeline'&&state.page!=='timeline'?`<select class="filter-select" id="time-filter" aria-label="按记录时间筛选">${[['all','全部时间'],['day','今天'],['week','本周'],['month','本月']].map(([v,t])=>`<option value="${v}" ${state.time===v?'selected':''}>${t}</option>`).join('')}</select>`:''}<button class="icon-btn" data-action="search" aria-label="搜索错题">${icon('search')}</button></div></div>`;}
 function paper(n){return `<div class="paper"><div class="paper-text">${esc(n.paper||n.title)}</div><div class="paper-red">${esc(n.example?'↳ '+n.notes:'认真记录，慢慢想明白。')}</div></div>`;}
-function noteCard(n){const s=subjectOf(n.subject);return `<button class="note-card" data-action="detail" data-id="${n.id}" style="${colors(s)}" aria-label="查看错题：${esc(n.title)}"><div class="note-preview"><span class="subject-pill">${s.name}</span>${n.mastered?'<span class="mastered-pill">已掌握</span>':''}${n.photo?`<img src="${n.photo}" alt="${esc(n.title)}的题目照片" loading="lazy">`:paper(n)}</div><div class="note-body"><h3 class="note-title">${esc(n.title)}</h3><div class="reason-tags">${n.reasons.slice(0,2).map(r=>`<span class="reason-tag">${esc(r)}</span>`).join('')}${n.reasons.length>2?`<span class="reason-tag">+${n.reasons.length-2}</span>`:''}</div><div class="note-meta"><span class="note-meta-date">${icon('clock')}${relativeLabel(n.createdAt)}</span>${icon('arrow')}</div></div></button>`;}
+function noteCard(n){const s=subjectOf(n.subject);return `<button class="note-card" data-action="detail" data-id="${n.id}" style="${colors(s)}" aria-label="查看错题：${esc(n.title)}"><div class="note-preview"><span class="subject-pill">${esc(s.name)}</span>${n.mastered?'<span class="mastered-pill">已掌握</span>':''}${n.photo?`<img src="${n.photo}" alt="${esc(n.title)}的题目照片" loading="lazy">`:paper(n)}</div><div class="note-body"><h3 class="note-title">${esc(n.title)}</h3><div class="reason-tags">${n.reasons.slice(0,2).map(r=>`<span class="reason-tag">${esc(r)}</span>`).join('')}${n.reasons.length>2?`<span class="reason-tag">+${n.reasons.length-2}</span>`:''}</div><div class="note-meta"><span class="note-meta-date">${icon('clock')}${relativeLabel(n.createdAt)}</span>${icon('arrow')}</div></div></button>`;}
 function noteGrid(notes){return `<div class="note-grid">${notes.length?notes.map(noteCard).join(''):emptyState()}</div>`;}
 function emptyState(){const hasFilters=state.reason!=='all'||state.query||state.status!=='all'||state.time!=='all';return `<div class="empty-state"><div class="empty-icon">${icon(hasFilters?'search':'book')}</div><h3>${hasFilters?'还没有符合条件的错题':'把第一道错题留在这里'}</h3><p>${hasFilters?'换一个关键词或筛选条件，再找找看。':'不急着学会所有答案，从记录一个疑问开始。'}</p>${hasFilters?'<button class="secondary" data-action="clear-filters">清除筛选</button>':'<button class="primary" data-action="camera">'+icon('camera')+' 拍下第一道错题</button>'}</div>`;}
-function foldersPage(){return `<div class="page-head"><div class="page-title-row"><div><p class="eyebrow">YOUR COLLECTION</p><h1>让知识，各就其位。</h1><p class="page-description">六个学科收藏夹，装下每一次思考。${state.demo?'当前展示示例内容。':''}</p></div>${demoBadge()}</div></div><div class="full-folders">${SUBJECTS.map(s=>folder(s,true)).join('')}</div>`;}
-function collectionPage(){const s=state.page==='subject'?subjectOf(state.subject):null;const list=filtered();return `<div class="page-head"><button class="back-btn" data-action="navigate" data-page="${s?'folders':'home'}">${icon('back')}${s?'所有收藏夹':'返回首页'}</button><div class="page-title-row"><div><p class="eyebrow">${s?'SUBJECT COLLECTION':'EVERY QUESTION MATTERS'}</p><div class="records-title"><h1>${s?s.name+'收藏夹':'所有错题'}</h1>${demoBadge()}</div><p class="page-description">${s?'在每一次回看里，让 '+s.name+' 更清晰。':'每一个疑问，都值得一个认真想明白的答案。'}</p></div><button class="primary" data-action="camera">${icon('plus')} 记录错题</button></div></div><div class="records-heading"><span class="all-count">${list.length} 道记录</span><div class="segmented"><button data-action="view" data-id="grid" class="${state.view==='grid'?'active':''}">${icon('grid')} 卡片视图</button><button data-action="view" data-id="timeline" class="${state.view==='timeline'?'active':''}">${icon('clock')} 时间视图</button></div></div>${state.search?searchBar():''}${toolbar()}${state.view==='timeline'?timeline():noteGrid(list.slice(0,state.limit))}${state.view==='grid'&&list.length>state.limit?'<div class="more-row"><button class="secondary" data-action="load-more">加载更多</button></div>':''}`;}
+function foldersPage(){return '<div class="page-head"><div class="page-title-row"><div><p class="eyebrow">YOUR COLLECTION</p><h1>让知识，各就其位。</h1><p class="page-description">按你的方式收藏，装下每一次思考。'+(state.demo?'当前展示示例内容。':'')+'</p></div><div class="page-actions"><button class="secondary" data-action="manage-folders">'+icon('folder')+' 管理收藏夹</button><button class="primary" data-action="camera">'+icon('plus')+' 记录错题</button></div></div></div>'+(folders.length?'<div class="full-folders">'+folders.map(s=>folder(s,true)).join('')+'</div>':'<div class="folders-empty"><span class="empty-icon">'+icon('folder')+'</span><h2>给下一次进步，留一个位置。</h2><p>自定义名称，或从九门学科中快捷添加。</p><button class="primary" data-action="manage-folders">'+icon('plus')+' 添加收藏夹</button></div>')+unfiledLink();}
+function collectionPage(){const s=state.page==='subject'?subjectOf(state.subject):null;const list=filtered();return `<div class="page-head"><button class="back-btn" data-action="navigate" data-page="${s?'folders':'home'}">${icon('back')}${s?'所有收藏夹':'返回首页'}</button><div class="page-title-row"><div><p class="eyebrow">${s?'SUBJECT COLLECTION':'EVERY QUESTION MATTERS'}</p><div class="records-title"><h1>${s?esc(s.name)+'收藏夹':'所有错题'}</h1>${demoBadge()}</div><p class="page-description">${s?'在每一次回看里，让 '+esc(s.name)+' 更清晰。':'每一个疑问，都值得一个认真想明白的答案。'}</p></div><div class="page-actions"><button class="secondary" data-action="manage-folders">${icon('folder')} 管理收藏夹</button><button class="primary" data-action="camera">${icon('plus')} 记录错题</button></div></div></div><div class="records-heading"><span class="all-count">${list.length} 道记录</span><div class="segmented"><button data-action="view" data-id="grid" class="${state.view==='grid'?'active':''}">${icon('grid')} 卡片视图</button><button data-action="view" data-id="timeline" class="${state.view==='timeline'?'active':''}">${icon('clock')} 时间视图</button></div></div>${state.search?searchBar():''}${toolbar()}${state.view==='timeline'?timeline():noteGrid(list.slice(0,state.limit))}${state.view==='grid'&&list.length>state.limit?'<div class="more-row"><button class="secondary" data-action="load-more">加载更多</button></div>':''}`;}
 function timelinePage(){return `<div class="page-head"><div class="page-title-row"><div><p class="eyebrow">A TIMELINE OF GROWTH</p><h1>每一步，都有迹可循。</h1><p class="page-description">把时间拉近或拉远，看看自己一路走来的积累。</p></div>${demoBadge()}</div></div>${state.search?searchBar():''}${toolbar()}${timeline()}`;}
-function timeline(){const notes=filterNotes(activeRecords(),{...state,time:'all'}).filter(n=>inPeriod(n,state.date,state.period));const {start,end}=periodBounds(state.date,state.period);let label=state.period==='day'?`${start.getMonth()+1}月${start.getDate()}日`:state.period==='month'?`${start.getFullYear()}年${start.getMonth()+1}月`:`${dayLabel(start)} — ${dayLabel(new Date(end.getTime()-1))}`;return `<section class="timeline-panel"><div class="timeline-controls"><div class="segmented" aria-label="时间范围">${[['day','日'],['week','周'],['month','月']].map(([id,t])=>`<button data-action="period" data-id="${id}" class="${state.period===id?'active':''}" aria-pressed="${state.period===id}">${t}</button>`).join('')}</div><div class="date-navigator"><button class="icon-btn" data-action="prev-date" aria-label="上一个时间段">${icon('back')}</button><input type="date" id="timeline-date" value="${state.date}" aria-label="选择时间轴日期"><button class="icon-btn" data-action="next-date" aria-label="下一个时间段">${icon('arrow')}</button><button class="today-btn" data-action="today">今天</button></div></div><div class="timeline-summary"><strong>${notes.length}</strong> 道错题 <span>· ${label}</span></div>${state.period==='day'?dayTimeline(notes):state.period==='week'?weekTimeline(notes,start):monthTimeline(notes,start)}${state.period==='month'?'<div class="month-hint">点击日期，查看当天每个小时的记录。</div>':''}</section>`;}
-function dayTimeline(notes){if(!notes.length)return `<div class="empty-state"><div class="empty-icon">${icon('calendar')}</div><h3>这一天，还没有留下记录</h3><p>可以选择其他日期，或记录一道新的错题。</p><button class="primary" data-action="camera">${icon('plus')} 记录错题</button></div>`;const groups=new Map();for(const n of [...notes].sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt))){const h=new Date(n.createdAt).getHours();if(!groups.has(h))groups.set(h,[]);groups.get(h).push(n);}return `<div class="day-timeline">${[...groups.entries()].map(([h,list])=>`<div class="hour-row"><time class="hour-label">${String(h).padStart(2,'0')}:00</time><div class="hour-content has-notes">${list.map(n=>{const s=subjectOf(n.subject);return `<button class="timeline-note" data-action="detail" data-id="${n.id}" style="${colors(s)}"><span class="tiny-subject">${s.name}</span><span class="timeline-note-title">${esc(n.title)}</span><span class="reason-tag">${esc(n.reasons[0])}</span><time>${timeLabel(n.createdAt)}</time>${icon('arrow')}</button>`;}).join('')}</div></div>`).join('')}</div>`;}
-function weekTimeline(notes,start){return `<div class="week-grid">${Array.from({length:7},(_,i)=>{const d=new Date(start);d.setDate(d.getDate()+i);const key=localDate(d),list=notes.filter(n=>localDate(new Date(n.createdAt))===key);return `<div class="week-day ${key===localDate()?'is-today':''}"><button class="week-day-head" style="width:100%" data-action="day" data-id="${key}" aria-label="查看${dayLabel(d)}记录"><span>周${'一二三四五六日'[i]}</span><strong>${d.getDate()}</strong></button>${list.length?list.map(n=>{const s=subjectOf(n.subject);return `<button class="week-item" data-action="detail" data-id="${n.id}" style="${colors(s)}"><span>${esc(n.title)}</span><time>${timeLabel(n.createdAt)} · ${s.name}</time></button>`;}).join(''):'<div class="week-no">暂无记录</div>'}</div>`;}).join('')}</div>`;}
+function timeline(){const notes=filterNotes(activeRecords(),{...state,time:'all',folders}).filter(n=>inPeriod(n,state.date,state.period));const {start,end}=periodBounds(state.date,state.period);let label=state.period==='day'?`${start.getMonth()+1}月${start.getDate()}日`:state.period==='month'?`${start.getFullYear()}年${start.getMonth()+1}月`:`${dayLabel(start)} — ${dayLabel(new Date(end.getTime()-1))}`;return `<section class="timeline-panel"><div class="timeline-controls"><div class="segmented" aria-label="时间范围">${[['day','日'],['week','周'],['month','月']].map(([id,t])=>`<button data-action="period" data-id="${id}" class="${state.period===id?'active':''}" aria-pressed="${state.period===id}">${t}</button>`).join('')}</div><div class="date-navigator"><button class="icon-btn" data-action="prev-date" aria-label="上一个时间段">${icon('back')}</button><input type="date" id="timeline-date" value="${state.date}" aria-label="选择时间轴日期"><button class="icon-btn" data-action="next-date" aria-label="下一个时间段">${icon('arrow')}</button><button class="today-btn" data-action="today">今天</button></div></div><div class="timeline-summary"><strong>${notes.length}</strong> 道错题 <span>· ${label}</span></div>${state.period==='day'?dayTimeline(notes):state.period==='week'?weekTimeline(notes,start):monthTimeline(notes,start)}${state.period==='month'?'<div class="month-hint">点击日期，查看当天每个小时的记录。</div>':''}</section>`;}
+function dayTimeline(notes){if(!notes.length)return `<div class="empty-state"><div class="empty-icon">${icon('calendar')}</div><h3>这一天，还没有留下记录</h3><p>可以选择其他日期，或记录一道新的错题。</p><button class="primary" data-action="camera">${icon('plus')} 记录错题</button></div>`;const groups=new Map();for(const n of [...notes].sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt))){const h=new Date(n.createdAt).getHours();if(!groups.has(h))groups.set(h,[]);groups.get(h).push(n);}return `<div class="day-timeline">${[...groups.entries()].map(([h,list])=>`<div class="hour-row"><time class="hour-label">${String(h).padStart(2,'0')}:00</time><div class="hour-content has-notes">${list.map(n=>{const s=subjectOf(n.subject);return `<button class="timeline-note" data-action="detail" data-id="${n.id}" style="${colors(s)}"><span class="tiny-subject">${esc(s.name)}</span><span class="timeline-note-title">${esc(n.title)}</span><span class="reason-tag">${esc(n.reasons[0])}</span><time>${timeLabel(n.createdAt)}</time>${icon('arrow')}</button>`;}).join('')}</div></div>`).join('')}</div>`;}
+function weekTimeline(notes,start){return `<div class="week-grid">${Array.from({length:7},(_,i)=>{const d=new Date(start);d.setDate(d.getDate()+i);const key=localDate(d),list=notes.filter(n=>localDate(new Date(n.createdAt))===key);return `<div class="week-day ${key===localDate()?'is-today':''}"><button class="week-day-head" style="width:100%" data-action="day" data-id="${key}" aria-label="查看${dayLabel(d)}记录"><span>周${'一二三四五六日'[i]}</span><strong>${d.getDate()}</strong></button>${list.length?list.map(n=>{const s=subjectOf(n.subject);return `<button class="week-item" data-action="detail" data-id="${n.id}" style="${colors(s)}"><span>${esc(n.title)}</span><time>${timeLabel(n.createdAt)} · ${esc(s.name)}</time></button>`;}).join(''):'<div class="week-no">暂无记录</div>'}</div>`;}).join('')}</div>`;}
 function monthTimeline(notes,start){const offset=(start.getDay()+6)%7;const last=new Date(start.getFullYear(),start.getMonth()+1,0).getDate();return `<div class="month-grid">${[...'一二三四五六日'].map(x=>`<div class="month-weekday">${x}</div>`).join('')}${'<div class="month-blank"></div>'.repeat(offset)}${Array.from({length:last},(_,i)=>{const d=new Date(start);d.setDate(i+1);const key=localDate(d),list=notes.filter(n=>localDate(new Date(n.createdAt))===key),subjects=[...new Set(list.map(n=>n.subject))];return `<button class="month-cell ${list.length?'has-records':''} ${key===localDate()?'is-today':''}" data-action="day" data-id="${key}" aria-label="${dayLabel(d)}，${list.length}道错题"><span class="day-number">${i+1}</span>${list.length?`<span class="month-dots">${subjects.map(s=>`<i style="background:${subjectOf(s).color}"></i>`).join('')}</span><span class="month-count">${list.length} 道记录</span>`:''}</button>`;}).join('')}</div>`;}
 function render(){app.innerHTML=header()+`<main class="container main-page animate">${storageError?`<div class="notice">${esc(storageError)}</div>`:''}${state.page==='home'?home():state.page==='folders'?foldersPage():state.page==='timeline'?timelinePage():collectionPage()}</main>`+footer();syncQuoteRotation();}
 function modal(title,subtitle,content,actions='',classes=''){if(!overlay.innerHTML)lastFocus=document.activeElement;overlay.innerHTML=`<div class="modal-backdrop"><section class="modal ${classes}" role="dialog" aria-modal="true" aria-labelledby="modal-title"><header class="modal-head"><div><h2 id="modal-title">${title}</h2>${subtitle?`<p>${subtitle}</p>`:''}</div><button class="icon-btn" data-action="close-modal" aria-label="关闭弹窗">${icon('close')}</button></header>${content}${actions?`<footer class="modal-actions">${actions}</footer>`:''}</section></div>`;document.body.style.overflow='hidden';requestAnimationFrame(()=>overlay.querySelector('[autofocus],button,input')?.focus());}
@@ -498,35 +662,95 @@ function stopCamera(){cameraToken++;if(stream){stream.getTracks().forEach(t=>t.s
 function closeModal(force=false){if(busy&&!force)return;if(imageExportCleanup){imageExportCleanup();imageExportCleanup=null;}photoRequestId++;if(cropCleanup){cropCleanup();cropCleanup=null;}settingsOpen=false;stopCamera();overlay.innerHTML='';document.body.style.overflow='';draft=null;restorePending=null;lastFocus?.focus?.();}
 function createDraft(photo=''){const existingSubject=state.subject!=='all'?state.subject:'';draft={id:null,title:'',subject:existingSubject,reasons:[],notes:'',createdAt:localInput(),mastered:false,photo};openEditor();}
 function readDraft(){if(!draft)return;const form=document.querySelector('#note-form');if(form){draft.title=form.elements.title.value;draft.notes=form.elements.notes.value;draft.createdAt=form.elements.createdAt.value;}}
-function openEditor(error=''){const n=draft;const allReasons=[...new Set([...REASONS,...n.reasons])];modal(n.id?'编辑这道错题':'给这道错题，找到位置。',n.id?'每一次补充，都是一次新的理解。':'选好学科与错误原因，方便下一次回看。',`<div class="modal-content"><form id="note-form"><div class="editor-layout"><div><div class="editor-photo">${n.photo?`<img src="${n.photo}" alt="待归档的错题照片">`:`<div class="photo-placeholder">${icon('image')}<span>也可以只用文字记录</span></div>`}</div><div class="photo-actions">${n.photo?`<button type="button" data-action="crop-photo">${icon('crop')} 裁切照片</button>`:''}<button type="button" data-action="replace-photo">${icon('image')} ${n.photo?'更换题目照片':'添加题目照片'}</button></div><p class="file-note" style="text-align:center">支持 JPG、PNG、WebP，照片会自动压缩。</p></div><div>${error?`<p class="form-error" role="alert">${esc(error)}</p>`:''}<div class="form-field"><label for="note-title">题目名称 <span style="color:#adb7c5">· 便于查找</span></label><input id="note-title" name="title" required maxlength="100" placeholder="例如：一元二次方程的配方法" value="${esc(n.title)}"></div><div class="form-field"><span class="field-label">所属学科 <span style="color:#df8e8e">*</span></span><div class="form-subjects">${SUBJECTS.map(s=>`<button type="button" class="select-chip ${n.subject===s.id?'selected':''}" data-action="draft-subject" data-id="${s.id}" aria-pressed="${n.subject===s.id}">${s.name}</button>`).join('')}</div></div><div class="form-field"><span class="field-label">错误原因 <span style="color:#adb7c5">· 可多选</span> <span style="color:#df8e8e">*</span></span><div class="form-reasons">${allReasons.map(r=>`<button type="button" class="select-chip ${n.reasons.includes(r)?'selected':''}" data-action="draft-reason" data-id="${esc(r)}" aria-pressed="${n.reasons.includes(r)}">${esc(r)}</button>`).join('')}</div><div class="custom-reason"><input id="custom-reason" maxlength="30" placeholder="其他原因，自己定义" aria-label="自定义错误原因"><button type="button" data-action="add-reason">+ 添加</button></div></div><div class="form-field"><label for="note-date">记录时间</label><input id="note-date" name="createdAt" type="datetime-local" required value="${esc(n.createdAt)}"></div><div class="form-field" style="margin-bottom:0"><label for="note-notes">留一点思路 <span style="color:#adb7c5">· 选填</span></label><textarea id="note-notes" name="notes" maxlength="5000" placeholder="当时哪里没想明白？下次要注意什么？">${esc(n.notes)}</textarea></div></div></div></form></div>`,`<span class="hint">${icon('shield')} 仅保存在这台设备</span><button class="secondary" data-action="cancel-editor">取消</button><button class="primary" form="note-form" type="submit">${icon('check')} 保存到收藏夹</button>`);}
-async function saveDraft(){if(busy)return;readDraft();if(!draft.title.trim())return openEditor('给这道错题取一个名字吧。');if(!draft.subject)return openEditor('请选择一个学科。');if(!draft.reasons.length)return openEditor('请至少选择一个错误原因。');if(draft.reasons.length>20)return openEditor('最多可以选择 20 个错误原因。');const date=new Date(draft.createdAt);if(!Number.isFinite(date.getTime()))return openEditor('请选择有效的记录时间。');if(date.getTime()>Date.now()+60000)return openEditor('记录时间不能晚于当前时间。');const n={...draft,id:draft.id||crypto.randomUUID(),title:draft.title.trim(),createdAt:date.toISOString()};busy=true;const saveButton=overlay.querySelector('[type="submit"]');if(saveButton){saveButton.disabled=true;saveButton.textContent='正在保存…';}try{await writeNotes([n]);const idx=records.findIndex(r=>r.id===n.id);if(idx>=0)records[idx]=n;else records.push(n);state.demo=false;persistPreference();busy=false;closeModal();navigate('subject',n.subject);toast('已收进'+subjectOf(n.subject).name+'收藏夹');}catch(e){busy=false;showStorageError(e);openEditor('保存未完成，填写的内容已保留。');}}
+function openEditor(error=''){const n=draft;const allReasons=[...new Set([...REASONS,...n.reasons])];modal(n.id?'编辑这道错题':'给这道错题，找到位置。',n.id?'每一次补充，都是一次新的理解。':'选好收藏夹与错误原因，方便下一次回看。',`<div class="modal-content"><form id="note-form"><div class="editor-layout"><div><div class="editor-photo">${n.photo?`<img src="${n.photo}" alt="待归档的错题照片">`:`<div class="photo-placeholder">${icon('image')}<span>也可以只用文字记录</span></div>`}</div><div class="photo-actions">${n.photo?`<button type="button" data-action="crop-photo">${icon('crop')} 裁切照片</button>`:''}<button type="button" data-action="replace-photo">${icon('image')} ${n.photo?'更换题目照片':'添加题目照片'}</button></div><p class="file-note" style="text-align:center">支持 JPG、PNG、WebP，照片会自动压缩。</p></div><div>${error?`<p class="form-error" role="alert">${esc(error)}</p>`:''}<div class="form-field"><label for="note-title">题目名称 <span style="color:#adb7c5">· 便于查找</span></label><input id="note-title" name="title" required maxlength="100" placeholder="例如：一元二次方程的配方法" value="${esc(n.title)}"></div><div class="form-field"><span class="field-label">所属收藏夹 <span style="color:#df8e8e">*</span></span><div class="form-subjects">${[...folders,UNFILED].map(s=>`<button type="button" class="select-chip ${n.subject===s.id?'selected':''}" data-action="draft-subject" data-id="${s.id}" aria-pressed="${n.subject===s.id}">${esc(s.name)}</button>`).join('')}</div></div><div class="form-field"><span class="field-label">错误原因 <span style="color:#adb7c5">· 可多选</span> <span style="color:#df8e8e">*</span></span><div class="form-reasons">${allReasons.map(r=>`<button type="button" class="select-chip ${n.reasons.includes(r)?'selected':''}" data-action="draft-reason" data-id="${esc(r)}" aria-pressed="${n.reasons.includes(r)}">${esc(r)}</button>`).join('')}</div><div class="custom-reason"><input id="custom-reason" maxlength="30" placeholder="其他原因，自己定义" aria-label="自定义错误原因"><button type="button" data-action="add-reason">+ 添加</button></div></div><div class="form-field"><label for="note-date">记录时间</label><input id="note-date" name="createdAt" type="datetime-local" required value="${esc(n.createdAt)}"></div><div class="form-field" style="margin-bottom:0"><label for="note-notes">留一点思路 <span style="color:#adb7c5">· 选填</span></label><textarea id="note-notes" name="notes" maxlength="5000" placeholder="当时哪里没想明白？下次要注意什么？">${esc(n.notes)}</textarea></div></div></div></form></div>`,`<span class="hint">${icon('shield')} 仅保存在这台设备</span><button class="secondary" data-action="cancel-editor">取消</button><button class="primary" form="note-form" type="submit">${icon('check')} 保存到收藏夹</button>`);}
+async function saveDraft(){if(busy)return;readDraft();if(!draft.title.trim())return openEditor('给这道错题取一个名字吧。');if(!draft.subject||(!folders.some(f=>f.id===draft.subject)&&draft.subject!=='unfiled'))return openEditor('请选择一个收藏夹，也可以暂存到未分类。');if(!draft.reasons.length)return openEditor('请至少选择一个错误原因。');if(draft.reasons.length>20)return openEditor('最多可以选择 20 个错误原因。');const date=new Date(draft.createdAt);if(!Number.isFinite(date.getTime()))return openEditor('请选择有效的记录时间。');if(date.getTime()>Date.now()+60000)return openEditor('记录时间不能晚于当前时间。');const n={...draft,id:draft.id||crypto.randomUUID(),title:draft.title.trim(),createdAt:date.toISOString()};busy=true;const saveButton=overlay.querySelector('[type="submit"]');if(saveButton){saveButton.disabled=true;saveButton.textContent='正在保存…';}try{await writeNotes([n]);const idx=records.findIndex(r=>r.id===n.id);if(idx>=0)records[idx]=n;else records.push(n);state.demo=false;persistPreference();busy=false;closeModal();navigate('subject',n.subject);toast('已收进'+subjectOf(n.subject).name+'收藏夹');}catch(e){busy=false;showStorageError(e);openEditor('保存未完成，填写的内容已保留。');}}
 function findNote(id){return activeRecords().find(n=>n.id===id);}
-function openDetail(id){if(imageExportCleanup){imageExportCleanup();imageExportCleanup=null;}const n=findNote(id);if(!n)return;const s=subjectOf(n.subject);modal('回看这道错题',n.example?'这是示例内容，可用来体验查看与分类。':n.mastered?'已经掌握，继续保持。':'慢一点想，把它真正弄明白。',`<div class="modal-content"><div class="editor-layout"><div class="editor-photo">${n.photo?`<img src="${n.photo}" alt="${esc(n.title)}的完整题目照片">`:paper(n)}</div><div><div class="tiny-subject" style="${colors(s)};display:inline-block;margin-bottom:13px">${s.name}</div><h3 class="detail-title">${esc(n.title)}</h3><div class="detail-info"><span class="field-label">错误原因</span><div class="reason-tags">${n.reasons.map(r=>`<span class="reason-tag">${esc(r)}</span>`).join('')}</div><span class="field-label">思路与反思</span><p class="detail-notes">${esc(n.notes||'还没有留下思路，点击编辑补充吧。')}</p><div class="detail-date">${icon('clock')}${fullLabel(n.createdAt)}</div></div></div></div></div>`,`<button class="secondary" data-action="export-note" data-id="${n.id}">${icon('download')} 导出图片</button>`+(n.example?`<button class="secondary" data-action="close-modal">关闭</button><button class="primary" data-action="copy-example" data-id="${n.id}">以此为模板记录</button>`:`<button class="danger-btn" data-action="delete-confirm" data-id="${n.id}">${icon('trash')} 删除</button><button class="secondary" data-action="edit-note" data-id="${n.id}">${icon('edit')} 编辑</button><button class="primary" data-action="master-note" data-id="${n.id}">${icon(n.mastered?'refresh':'check')}${n.mastered?'设为待复习':'我已掌握'}</button>`));}
+function openDetail(id){if(imageExportCleanup){imageExportCleanup();imageExportCleanup=null;}const n=findNote(id);if(!n)return;const s=subjectOf(n.subject);modal('回看这道错题',n.example?'这是示例内容，可用来体验查看与分类。':n.mastered?'已经掌握，继续保持。':'慢一点想，把它真正弄明白。',`<div class="modal-content"><div class="editor-layout"><div class="editor-photo">${n.photo?`<img src="${n.photo}" alt="${esc(n.title)}的完整题目照片">`:paper(n)}</div><div><div class="tiny-subject" style="${colors(s)};display:inline-block;margin-bottom:13px">${esc(s.name)}</div><h3 class="detail-title">${esc(n.title)}</h3><div class="detail-info"><span class="field-label">错误原因</span><div class="reason-tags">${n.reasons.map(r=>`<span class="reason-tag">${esc(r)}</span>`).join('')}</div><span class="field-label">思路与反思</span><p class="detail-notes">${esc(n.notes||'还没有留下思路，点击编辑补充吧。')}</p><div class="detail-date">${icon('clock')}${fullLabel(n.createdAt)}</div></div></div></div></div>`,`<button class="secondary" data-action="export-note" data-id="${n.id}">${icon('download')} 导出图片</button>`+(n.example?`<button class="secondary" data-action="close-modal">关闭</button><button class="primary" data-action="copy-example" data-id="${n.id}">以此为模板记录</button>`:`<button class="danger-btn" data-action="delete-confirm" data-id="${n.id}">${icon('trash')} 删除</button><button class="secondary" data-action="edit-note" data-id="${n.id}">${icon('edit')} 编辑</button><button class="primary" data-action="master-note" data-id="${n.id}">${icon(n.mastered?'refresh':'check')}${n.mastered?'设为待复习':'我已掌握'}</button>`));}
 async function startCamera(){stopCamera();draft=null;const token=cameraToken;modal('拍下此刻的疑问','将题目放在画面中央，尽量保持清晰。',`<div class="video-area"><div class="camera-state"><div class="spinner"></div>正在开启相机…</div></div><div class="camera-controls"><button class="camera-alternate" data-action="upload">${icon('image')} 从相册选择</button><button class="shutter" data-action="shutter" aria-label="拍摄照片" disabled></button><button class="camera-alternate" data-action="manual">${icon('edit')} 文字记录</button></div><div class="camera-tip">拍摄后先裁切题目，再选择学科与错误原因。</div>`,'','camera-modal');try{if(!navigator.mediaDevices?.getUserMedia)throw new Error('unsupported');const media=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1600},height:{ideal:1200}},audio:false});if(token!==cameraToken){media.getTracks().forEach(t=>t.stop());return;}stream=media;const area=overlay.querySelector('.video-area');area.innerHTML='<video autoplay playsinline muted aria-label="相机预览"></video><div class="camera-guide"></div>';const video=area.querySelector('video');video.srcObject=media;await video.play();if(token===cameraToken)overlay.querySelector('.shutter').disabled=false;}catch(e){if(token!==cameraToken)return;if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}const denied=e.name==='NotAllowedError';const message=denied?(window.AndroidArchive?'请在手机设置 → 应用 → 拾光错题本 → 权限中允许相机，也可以从相册选择照片。':'请在浏览器的网站权限中允许相机，也可以从相册选择照片。'):e.name==='NotFoundError'?'没有检测到相机。你可以上传已经拍好的题目照片。':'暂时无法使用相机。请检查相机是否被其他应用占用，或从相册选择照片。';overlay.querySelector('.video-area').innerHTML=`<div class="camera-state">${icon('camera')}<h3>${denied?'给相机一点权限':'也可以，从一张照片开始。'}</h3><p>${message}</p><button class="primary" data-action="upload">${icon('image')} 从相册选择</button></div>`;}}
 function shutter(){const video=overlay.querySelector('video');if(!video?.videoWidth)return toast('相机还没准备好，请稍后再试。');const scale=Math.min(1,3200/Math.max(video.videoWidth,video.videoHeight));const canvas=document.createElement('canvas');canvas.width=Math.round(video.videoWidth*scale);canvas.height=Math.round(video.videoHeight*scale);canvas.getContext('2d').drawImage(video,0,0,canvas.width,canvas.height);const photo=canvas.toDataURL('image/jpeg',.85);stopCamera();beginCrop(photo);}
 function choosePhoto(){readDraft();stopCamera();photoRequestId++;document.querySelector('#photo-input').click();}
 async function loadPhoto(file){if(!file)return;const request=++photoRequestId;const ownerDraft=draft;if(!file.type.startsWith('image/'))return toast('请选择图片文件。');if(file.size>25*1024*1024)return toast('图片过大，请选择小于 25 MB 的照片。');toast('正在整理照片…');try{const url=URL.createObjectURL(file);const img=new Image();try{await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(new Error('decode'));img.src=url;});if(request!==photoRequestId||draft!==ownerDraft)return;const factor=Math.min(1,3200/Math.max(img.naturalWidth,img.naturalHeight));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.naturalWidth*factor));c.height=Math.max(1,Math.round(img.naturalHeight*factor));const ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);const photo=c.toDataURL('image/jpeg',.85);stopCamera();beginCrop(photo);}finally{URL.revokeObjectURL(url);}}catch{if(request===photoRequestId)toast('暂时无法读取这张照片，请转换为 JPG、PNG 或 WebP 后重试。');}}
 function confirmDiscard(){readDraft();if(draft&&(draft.title.trim()||draft.notes.trim()||draft.photo||draft.reasons.length)){modal('离开这次记录？','',`<div class="modal-content"><p class="confirm-copy">这道错题还没有保存。离开后，本次填写的内容将被丢弃。</p></div>`,`<button class="secondary" data-action="resume-editor">继续编辑</button><button class="primary" data-action="discard">放弃记录</button>`,'small-modal');}else closeModal();}
-function openStorage(){modal('好好保存，每一份积累。','照片和记录保存在当前设备，无需登录即可使用。',`<div class="modal-content"><div class="storage-row"><div><h3>导出备份</h3><p>包含 ${records.length} 道真实错题、照片与笔记</p></div><button class="secondary" data-action="export">${icon('download')} 导出</button></div><div class="storage-row"><div><h3>从备份恢复</h3><p>支持导入拾光导出的 JSON 文件</p></div><button class="secondary" data-action="import">${icon('upload')} 导入</button></div><p class="storage-note">网页与 Android 的功能保持一致，记录保存在各自设备中，通过 JSON 存档互相迁移。清除浏览器数据或卸载 App 会删除本地记录，请定期导出存档。</p><p class="storage-note">${state.demo?'当前为示例体验模式。示例题目不会混入你的记录，也不会被导出。':'当前正在查看你的真实记录。'}</p></div>`,'','small-modal');}
+function openStorage(){modal('好好保存，每一份积累。','照片和记录保存在当前设备，无需登录即可使用。',`<div class="modal-content"><div class="storage-row"><div><h3>导出备份</h3><p>包含 ${records.length} 道真实错题、收藏夹和自定义话语</p></div><button class="secondary" data-action="export">${icon('download')} 导出</button></div><div class="storage-row"><div><h3>从备份恢复</h3><p>支持新版和旧版拾光 JSON 存档</p></div><button class="secondary" data-action="import">${icon('upload')} 导入</button></div><p class="storage-note">记录保存在当前浏览器或 App 中，可用 JSON 存档迁移到其他设备。导入新版存档时会恢复其中的话语设置。清除浏览器数据或卸载 App 会删除本地记录，请定期导出存档。</p><p class="storage-note">${state.demo?'当前为示例体验模式。示例题目不会混入你的记录，也不会被导出。':'当前正在查看你的真实记录。'}</p></div>`,'','small-modal');}
 let archiveBusy = false;
 async function exportBackup(){
   if(archiveBusy)return toast('正在导出，请先完成当前保存。');
-  if(!records.length)return toast('还没有真实错题可导出。先记录一道题，示例题目不会加入存档。');
-  const data={app:'shiguang',version:1,exportedAt:new Date().toISOString(),notes:records};
+  const data=createBackup(records,folders,quoteSettings);
   const filename='拾光错题备份-'+localDate()+'.json';
   if(window.AndroidArchive){
     archiveBusy=true;toast('正在准备存档，请选择保存位置…');
-    try {const result=await saveAndroidArchive(window.AndroidArchive,filename,data);toast(result.message);}
-    catch(error){toast(error.message||'导出失败，请重试。');}
-    finally {archiveBusy=false;}
-    return;
+    try{const result=await saveAndroidArchive(window.AndroidArchive,filename,data);toast(result.message);}
+    catch(error){toast(error.message||'导出失败，请重试。');}finally{archiveBusy=false;}return;
   }
   const url=URL.createObjectURL(new Blob([JSON.stringify(data)],{type:'application/json'}));
-  const a=document.createElement('a');a.href=url;a.download=filename;a.click();
-  setTimeout(()=>URL.revokeObjectURL(url),2000);toast('已导出 '+records.length+' 道错题的备份');
+  const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),60000);toast('已导出错题、收藏夹和自定义话语');
 }
-async function readBackup(file){if(!file)return;if(file.size>50*1024*1024)toast('正在读取较大的备份，请稍候…');try{const list=validateBackup(JSON.parse(await file.text()));restorePending=list;const existing=new Set(records.map(n=>n.id));const updates=list.filter(n=>existing.has(n.id)).length;modal('恢复这些记录？','',`<div class="modal-content"><p class="confirm-copy">这份备份包含 ${list.length} 道错题，将新增 ${list.length-updates} 道${updates?`，并更新 ${updates} 道相同编号的记录`:''}。现有的其他记录会保留。</p></div>`,`<button class="secondary" data-action="close-modal">取消</button><button class="primary" data-action="restore-confirm">确认恢复</button>`,'small-modal');}catch(e){toast(e instanceof SyntaxError?'文件内容无法读取，请选择有效的拾光备份。':e.message);}}
-async function restoreBackup(){if(!restorePending||busy)return;busy=true;try{await writeNotes(restorePending);const map=new Map(records.map(n=>[n.id,n]));for(const n of restorePending)map.set(n.id,n);records=[...map.values()];state.demo=false;persistPreference();busy=false;closeModal();navigate('library');toast('备份已恢复，所有记录都在这里。');}catch(e){busy=false;showStorageError(e);}}
+async function readBackup(file){
+  if(!file)return;if(file.size>50*1024*1024)toast('正在读取较大的备份，请稍候…');
+  try{
+    const archive=validateArchive(JSON.parse(await file.text()));restorePending=archive;
+    const existing=new Set(records.map(n=>n.id)),updates=archive.notes.filter(n=>existing.has(n.id)).length;
+    modal('恢复这份存档？','确认后恢复到当前设备。','<div class="modal-content"><p class="confirm-copy">包含 '+archive.notes.length+' 道错题，将新增 '+(archive.notes.length-updates)+' 道'+(updates?'，并更新 '+updates+' 道相同编号的记录':'')+'。现有其他记录会保留。</p><p class="confirm-copy">'+(archive.version===2?'收藏夹会合并，同编号使用存档中的名称，同名但不同编号会加上“导入”后缀。自定义话语、自动轮换开关和间隔将使用存档中的设置。':'这是一份旧版存档，不包含话语设置；当前自定义话语和收藏夹名称会保留。')+'</p></div>','<button class="secondary" data-action="close-modal">取消</button><button class="primary" data-action="restore-confirm">确认恢复</button>','small-modal');
+  }catch(e){toast(e instanceof SyntaxError?'文件内容无法读取，请选择有效的拾光备份。':e.message);}
+}
+async function restoreBackup(){
+  if(!restorePending||busy)return;busy=true;
+  try{
+    const next=planRestore({notes:records,folders,quoteSettings},restorePending);
+    await writeLibrary(db,next);records=next.notes;folders=next.folders;quoteSettings=next.quoteSettings;quoteIndex=0;
+    state.demo=false;persistPreference();busy=false;closeModal();navigate('library');toast('存档已恢复，错题与设置都已保存。');
+  }catch(e){busy=false;showStorageError(e);}
+}
+
+function unfiledLink(){
+  const count=activeRecords().filter(n=>n.subject==='unfiled').length;
+  return count?'<button class="unfiled-link" data-action="folder" data-id="unfiled">'+icon('folder')+' 未分类 <span>'+count+' 道题目，随时可以重新整理</span>'+icon('arrow')+'</button>':'';
+}
+function openFolderManager(error='',value=''){
+  const quick=availablePresets(folders);
+  modal('收藏夹，由你定义。','添加、改名或整理，让每个疑问都有自己的位置。',
+    '<div class="modal-content folder-manager">'+(error?'<p class="form-error" role="alert">'+esc(error)+'</p>':'')+
+    '<form id="folder-form"><label class="field-label" for="folder-name">自定义收藏夹</label><div class="folder-input-row"><input id="folder-name" name="name" maxlength="40" required placeholder="例如：期末复习、易错公式" value="'+esc(value)+'"><button class="primary" type="submit">'+icon('plus')+' 添加</button></div></form>'+
+    '<section class="quick-folders"><div class="folder-section-head"><h3>学科快捷添加</h3>'+(quick.length?'<button class="text-btn" data-action="add-all-folders">一键添加全部</button>':'')+'</div><p class="file-note">'+(quick.length?'只显示尚未添加的学科，点击即可添加。':'九门学科已全部添加。删除后，可在这里重新添加。')+'</p><div class="quick-folder-grid">'+quick.map(f=>'<button class="quick-folder" data-action="add-preset-folder" data-id="'+f.id+'" style="'+colors(f)+'"><span>'+esc(f.symbol)+'</span>'+esc(f.name)+icon('plus')+'</button>').join('')+'</div></section>'+
+    '<section class="managed-folders"><div class="folder-section-head"><h3>我的收藏夹</h3><span>'+folders.length+' 个</span></div>'+(folders.length?folders.map(f=>'<div class="managed-folder"><span class="managed-symbol" style="'+colors(f)+'">'+esc(f.symbol)+'</span><div class="managed-folder-name"><strong>'+esc(f.name)+'</strong><span>'+records.filter(n=>n.subject===f.id).length+' 道真实错题</span></div><button class="icon-btn" data-action="rename-folder" data-id="'+f.id+'" aria-label="编辑'+esc(f.name)+'名称">'+icon('edit')+'</button><button class="icon-btn folder-delete" data-action="delete-folder" data-id="'+f.id+'" aria-label="删除'+esc(f.name)+'收藏夹">'+icon('trash')+'</button></div>').join(''):'<p class="file-note">还没有收藏夹，试试上面的快捷添加。</p>')+'</section></div>',
+    '<button class="primary" data-action="close-modal">完成</button>','folder-manager-modal');
+}
+async function saveFolderList(next,message){
+  if(busy)return;busy=true;
+  try{next=validateFolders(next);await writeLibrary(db,{folders:next,quoteSettings});folders=next;busy=false;render();openFolderManager();toast(message);}
+  catch(e){busy=false;showStorageError(e);}
+}
+function addCustomFolder(){
+  const value=document.querySelector('#folder-name').value;
+  try{const folder=createFolder(value,folders,crypto.randomUUID());return saveFolderList([...folders,folder],'已添加 '+folder.name);}
+  catch(e){openFolderManager(e.message,value);}
+}
+function editFolder(id,error='',value=null){
+  const f=folders.find(f=>f.id===id);if(!f)return;
+  modal('给收藏夹换个名字','里面的题目、照片和笔记都会保留。','<div class="modal-content">'+(error?'<p class="form-error" role="alert">'+esc(error)+'</p>':'')+'<form id="rename-folder-form" data-id="'+id+'"><div class="form-field"><label for="rename-folder-name">收藏夹名称</label><input id="rename-folder-name" name="name" maxlength="40" required value="'+esc(value??f.name)+'" autofocus></div></form></div>','<button class="secondary" data-action="manage-folders">返回</button><button class="primary" type="submit" form="rename-folder-form">保存名称</button>','small-modal');
+}
+function renameFolder(form){
+  const id=form.dataset.id,value=form.elements.name.value;
+  try{const name=folderName(value,folders,id);return saveFolderList(folders.map(f=>f.id===id?{...f,name,symbol:f.preset?f.symbol:Array.from(name)[0]}:f),'收藏夹名称已更新');}
+  catch(e){editFolder(id,e.message,value);}
+}
+function confirmDeleteFolder(id){
+  const f=folders.find(f=>f.id===id);if(!f)return;
+  const count=records.filter(n=>n.subject===id).length;
+  modal('删除这个收藏夹？',esc(f.name),'<div class="modal-content"><p class="confirm-copy">'+(count?'里面的 '+count+' 道错题将移到你选择的位置，照片、笔记和记录时间都会保留。':'这个收藏夹没有真实错题。删除后可以重新添加。')+'</p>'+(count?'<div class="form-field"><label for="folder-move-target">将题目移入</label><select id="folder-move-target">'+[UNFILED,...folders.filter(f=>f.id!==id)].map(f=>'<option value="'+f.id+'">'+esc(f.name)+'</option>').join('')+'</select></div>':'')+'</div>','<button class="secondary" data-action="manage-folders">保留收藏夹</button><button class="primary danger-primary" data-action="confirm-delete-folder" data-id="'+id+'">删除收藏夹</button>','small-modal');
+}
+async function deleteFolder(id){
+  if(busy)return;const target=document.querySelector('#folder-move-target')?.value||'unfiled';busy=true;
+  try{
+    const next=removeFolder(folders,records,id,target);await writeLibrary(db,{...next,quoteSettings});folders=next.folders;records=next.notes;
+    if(state.subject===id){state.subject='all';if(state.page==='subject')state.page='folders';}
+    busy=false;render();openFolderManager();toast('收藏夹已删除，题目已保留。');
+  }catch(e){busy=false;showStorageError(e);}
+}
+function openChangelog(){
+  modal('每一点更新，都为更好地记录。','拾光 · 版本更新记录','<div class="modal-content release-list">'+RELEASES.map((r,index)=>'<article class="release-item"><div class="release-heading"><h3>v'+esc(r.version)+'</h3>'+(index===0?'<span class="release-current">当前版本</span>':'')+(r.date?'<time>'+esc(r.date)+'</time>':'')+'</div><h4>'+esc(r.title)+'</h4><ul>'+r.changes.map(text=>'<li>'+esc(text)+'</li>').join('')+'</ul></article>').join('')+'</div>','<button class="primary" data-action="close-modal">知道了</button>','changelog-modal');
+}
 
 document.addEventListener('click',async event=>{
   const button=event.target.closest('[data-action]');if(!button||button.disabled)return;const a=button.dataset.action,id=button.dataset.id;
@@ -540,6 +764,13 @@ document.addEventListener('click',async event=>{
   if(a==='shutter')return shutter();
   if(a==='close-modal')return cropCleanup?cancelCrop():draft?confirmDiscard():closeModal();
   if(a==='settings')return openSettings();
+  if(a==='changelog')return openChangelog();
+  if(a==='manage-folders')return openFolderManager();
+  if(a==='add-preset-folder'){const f=availablePresets(folders).find(f=>f.id===id);if(f)return saveFolderList([...folders,{...f}],'已添加 '+f.name);return;}
+  if(a==='add-all-folders')return saveFolderList([...folders,...availablePresets(folders).map(f=>({...f}))],'快捷学科已全部添加');
+  if(a==='rename-folder')return editFolder(id);
+  if(a==='delete-folder')return confirmDeleteFolder(id);
+  if(a==='confirm-delete-folder')return deleteFolder(id);
   if(a==='next-quote'){nextQuote();syncQuoteRotation();return;}
   if(a==='default-quotes'){const v=settingsValues();return openSettings({...v,quotes:DEFAULT_QUOTES.join('\n')});}
   if(a==='crop-photo'){readDraft();return beginCrop(draft.photo);}
@@ -560,7 +791,7 @@ document.addEventListener('click',async event=>{
   if(a==='draft-subject'){draft.subject=id;overlay.querySelectorAll('[data-action="draft-subject"]').forEach(b=>{b.classList.toggle('selected',b.dataset.id===id);b.setAttribute('aria-pressed',String(b.dataset.id===id));});return;}
   if(a==='draft-reason'){if(!draft.reasons.includes(id)&&draft.reasons.length>=20)return toast('最多可以选择 20 个原因。');draft.reasons=draft.reasons.includes(id)?draft.reasons.filter(r=>r!==id):[...draft.reasons,id];button.classList.toggle('selected',draft.reasons.includes(id));button.setAttribute('aria-pressed',String(draft.reasons.includes(id)));return;}
   if(a==='add-reason'){const el=document.querySelector('#custom-reason');const r=el.value.trim();if(!r)return el.focus();if(draft.reasons.length>=20)return toast('最多可以选择 20 个原因。');readDraft();draft.reasons=[...new Set([...draft.reasons,r])];openEditor();return;}
-  if(a==='export-note'){const note=findNote(id);if(!note)return;if(imageExportCleanup)imageExportCleanup();imageExportCleanup=mountNoteExport({root:overlay,note,subject:subjectOf(note.subject),renderModal:modal,icon,onBack:()=>openDetail(id),onMessage:toast});return;}
+  if(a==='export-note'){const note=findNote(id);if(!note)return;if(imageExportCleanup)imageExportCleanup();imageExportCleanup=mountNoteExport({root:overlay,note,subject:subjectOf(note.subject),quote:randomQuote(quoteSettings),renderModal:modal,icon,onBack:()=>openDetail(id),onMessage:toast});return;}
   if(a==='detail')return openDetail(id);
   if(a==='edit-note'||a==='copy-example'){const n=findNote(id);if(!n)return;draft={...n,reasons:[...n.reasons],createdAt:localInput(a==='copy-example'?new Date():new Date(n.createdAt))};delete draft.paper;delete draft.example;if(a==='copy-example'){draft.id=null;draft.mastered=false;}return openEditor();}
   if(a==='master-note'){const n=findNote(id);if(!n)return;busy=true;try{const updated={...n,mastered:!n.mastered};await writeNotes([updated]);records=records.map(r=>r.id===id?updated:r);busy=false;closeModal();render();toast(updated.mastered?'又掌握了一道，积累正在发生。':'已放回待复习列表');}catch(e){busy=false;showStorageError(e);}return;}
@@ -572,7 +803,7 @@ document.addEventListener('click',async event=>{
   if(a==='import')return document.querySelector('#restore-input').click();
   if(a==='restore-confirm')return restoreBackup();
 });
-document.addEventListener('submit',e=>{if(e.target.id==='quote-form'){e.preventDefault();saveQuoteSettings();return;}if(e.target.id==='note-form'){e.preventDefault();saveDraft();}});
+document.addEventListener('submit',e=>{if(e.target.id==='folder-form'){e.preventDefault();addCustomFolder();return;}if(e.target.id==='rename-folder-form'){e.preventDefault();renameFolder(e.target);return;}if(e.target.id==='quote-form'){e.preventDefault();saveQuoteSettings();return;}if(e.target.id==='note-form'){e.preventDefault();saveDraft();}});
 document.addEventListener('change',e=>{if(e.target.id==='photo-input'){const f=e.target.files[0];e.target.value='';loadPhoto(f);}if(e.target.id==='restore-input'){const f=e.target.files[0];e.target.value='';readBackup(f);}if(e.target.id==='reason-filter'){state.reason=e.target.value;render();}if(e.target.id==='time-filter'){state.time=e.target.value;render();}if(e.target.id==='timeline-date'&&e.target.value){state.date=e.target.value;render();}});
 let searchTimer;
 document.addEventListener('input',e=>{if(e.target.id==='custom-quotes'){const line=e.target.value.split(/\r?\n/).find(s=>s.trim());document.querySelector('#quote-preview').textContent=line||'在下面写下你想对自己说的话。';}if(e.target.id==='search-field'){state.query=e.target.value;clearTimeout(searchTimer);searchTimer=setTimeout(()=>{const pos=document.querySelector('#search-field')?.selectionStart;render();const field=document.querySelector('#search-field');field?.focus();if(field?.type==='text')field.setSelectionRange(pos,pos);},160);}});
@@ -580,7 +811,17 @@ document.addEventListener('keydown',e=>{if(e.target.id==='custom-reason'&&e.key=
 window.addEventListener('pagehide',()=>{stopCamera();clearInterval(quoteTimer);photoRequestId++;});
 window.addEventListener('pageshow',()=>syncQuoteRotation());
 window.addEventListener('beforeunload',e=>{if(draft){readDraft();if(draft.title||draft.photo||draft.notes){e.preventDefault();e.returnValue='';}}});
-async function init(){app.innerHTML='<div class="loading"><div class="spinner"></div>正在打开你的错题本…</div>';try{db=await openDB();records=await readAll();db.onversionchange=()=>{db.close();db=null;storageError='本地数据库已更新，请刷新页面继续使用。';render();};try{const pref=localStorage.getItem('shiguang-demo');state.demo=pref==='yes'||(!pref&&records.length===0);}catch{state.demo=records.length===0;}}catch(e){storageError='当前无法使用本地存储，暂时可浏览示例。请检查设备空间，并更新浏览器或 Android System WebView 后重试。';state.demo=true;}render();}
+async function init(){
+  app.innerHTML='<div class="loading"><div class="spinner"></div>正在打开你的错题本…</div>';
+  try{
+    db=await openDB();records=await readAll();const saved=await readSettings(db);
+    if(saved){folders=validateFolders(saved.folders);quoteSettings=normalizeQuoteSettings(saved.quoteSettings);}
+    else await writeLibrary(db,{folders,quoteSettings});
+    db.onversionchange=()=>{db.close();db=null;storageError='本地数据库已更新，请刷新页面继续使用。';render();};
+    try{const pref=localStorage.getItem('shiguang-demo');state.demo=pref==='yes'||(!pref&&records.length===0);}catch{state.demo=records.length===0;}
+  }catch(e){storageError='当前无法使用本地存储，暂时可浏览示例。'+(e.message||'请检查设备空间并更新浏览器后重试。');state.demo=true;}
+  render();
+}
 init();
 
 window.shiguangBack=()=>{
