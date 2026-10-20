@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="480" viewBox="0 0 1280 480" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">拾光 · 错题本</title>
+  <desc id="desc">把每一次出错，变成进步。拍照记录、分类整理、按时回看。免登录，支持 Web 和 Android。</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1280" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFD"/><stop offset="1" stop-color="#EAF2FF"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="862" y1="128" x2="1042" y2="338" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4094FF"/><stop offset="1" stop-color="#0869E7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="480" rx="28" fill="url(#background)"/>
+  <circle cx="1002" cy="240" r="204" stroke="#D8E6FB"/>
+  <circle cx="1002" cy="240" r="166" stroke="#D8E6FB"/>
+  <circle cx="1002" cy="240" r="126" fill="#E2EDFE"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+    <text x="64" y="73" fill="#61758F" font-size="15" font-weight="600" letter-spacing="4">A LITTLE BETTER EVERY DAY</text>
+    <text x="64" y="162" fill="#192638" font-size="58" font-weight="700">拾光</text>
+    <text x="210" y="160" fill="#5C6F87" font-size="34" font-weight="500">· 错题本</text>
+    <text x="64" y="227" fill="#1C2C43" font-size="33" font-weight="600">把每一次出错，变成进步。</text>
+    <text x="64" y="272" fill="#63758C" font-size="20">记录没想明白的题，也留下想明白的过程。</text>
+    <g font-size="17" font-weight="500">
+      <rect x="64" y="314" width="118" height="42" rx="21" fill="white" stroke="#DCE5F1"/>
+      <text x="123" y="341" text-anchor="middle" fill="#286ABF">拍照记录</text>
+      <rect x="194" y="314" width="118" height="42" rx="21" fill="white" stroke="#DCE5F1"/>
+      <text x="253" y="341" text-anchor="middle" fill="#286ABF">分类整理</text>
+      <rect x="324" y="314" width="118" height="42" rx="21" fill="white" stroke="#DCE5F1"/>
+      <text x="383" y="341" text-anchor="middle" fill="#286ABF">按时回看</text>
+    </g>
+    <text x="64" y="418" fill="#647992" font-size="16" letter-spacing="1">Web + Android</text>
+    <circle cx="215" cy="412" r="2" fill="#95A7BD"/>
+    <text x="232" y="418" fill="#647992" font-size="16">免登录 · 本地保存 · 单文件网页版</text>
+    <rect x="904" y="146" width="196" height="196" rx="54" fill="#1665C5" opacity=".07"/>
+    <rect x="904" y="138" width="196" height="196" rx="54" fill="url(#blue)"/>
+    <path d="M947 185h38c21 0 37 16 37 37v63h-38c-21 0-37-16-37-37v-63Z" fill="white"/>
+    <path d="M1022 190h23v99h-23V190Z" fill="white" opacity=".55"/>
+    <path d="M962 204h24M962 220h29M962 236h20" stroke="#D2E5FF" stroke-width="5" stroke-linecap="round"/>
+    <text x="1002" y="383" text-anchor="middle" fill="#5F789A" font-size="14" letter-spacing="4">SHIGUANG NOTE</text>
+  </g>
+</svg>
