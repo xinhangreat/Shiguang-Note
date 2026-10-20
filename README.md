@@ -32,7 +32,7 @@
 
 | 使用方式 | 适合的场景 | 入口 |
 | :--- | :--- | :--- |
-| **在线网页版** | 打开浏览器即可记录，无需注册 | [打开拾光](https://shiguang-note1.pages.dev/)) |
+| **在线网页版** | 打开浏览器即可记录，无需注册 | [打开拾光](https://shiguang-note1.pages.dev/) |
 | **单文件网页版** | 保存一份到自己的设备，HTML、样式和脚本均已内嵌 | [下载 index.html](https://github.com/xinhangreat/Shiguang-Note/releases/download/V.1.2.0/index.html) |
 | **安卓 App** | 在手机上拍照、整理和复习错题 | [下载 shiguang-1.2.0.apk](https://github.com/xinhangreat/Shiguang-Note/releases/download/V.1.2.0/shiguang-1.2.0.apk) |
 
